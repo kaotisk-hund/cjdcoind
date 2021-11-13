@@ -28,7 +28,7 @@ functionality - this was an intentional design decision.  You will not be
 able to make or receive payments with `pktd` directly.
 
 Example wallet functionality is provided in the included, separate,
-[pktwallet](https://github.com/pkt-cash/pktd/pktwallet) package.
+[pktwallet](https://github.com/pkt-cash/pktd/tree/master/pktwallet) package.
 
 ## Requirements
 
