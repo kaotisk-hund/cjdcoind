@@ -1,7 +1,7 @@
 on:
   push:
     tags:
-      - pktd-v*.*.*
+      - cjdcoind-v*.*.*
 
 jobs:
   release:

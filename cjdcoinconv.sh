@@ -14,14 +14,14 @@ FIND=`which find`
 test "x$FIND" = "x" && die "find not found"
 
 usage() {
-    echo "pktconv.sh OPTIONS COMMAND"
+    echo "cjdconv.sh OPTIONS COMMAND"
     echo "  OPTIONS"
     echo "      --dryrun            # Don't actually change anything"
     echo "  COMMANDS"
     echo "      imports             # Update imported files"
     echo "      rimports            # Revert imported files back to btcd"
-    echo "      btcwallet           # change the string btcwallet to pktwallet in the code"
-    echo "      rbtcwallet          # change the string pktwallet back to btcwallet in the code"
+    echo "      cjdwallet           # change the string btcwallet to cjdwallet in the code"
+    echo "      rcjdwallet          # change the string cjdwallet back to btcwallet in the code"
     echo "      btcd                # change the string btcd to cjdcoind in the code"
     echo "      rbtcd               # change the string cjdcoind back to btcd in the code"
 }
