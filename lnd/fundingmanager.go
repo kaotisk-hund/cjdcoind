@@ -78,7 +78,7 @@ const (
 	// Protocol.
 	maxLtcFundingAmount = MaxBtcFundingAmount * chainreg.BtcToLtcConversionRate
 
-	// 10mn PKT chan limit
+	// 10mn CJD chan limit
 	maxPktFundingAmount = btcutil.Amount(1 << 30 * 10000000)
 )
 

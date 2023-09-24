@@ -258,7 +258,7 @@ func TestDust(t *testing.T) {
 		},
 		{
 			// Maximum allowed value is never dust.
-			"max PKT amount is never dust",
+			"max CJD amount is never dust",
 			wire.TxOut{Value: globalcfg.PktDefaults().MaxUnits, PkScript: pkScript},
 			btcutil.Amount(globalcfg.PktDefaults().MaxUnits),
 			false,

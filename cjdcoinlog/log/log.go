@@ -430,7 +430,7 @@ var b *backend
 
 func init() {
 	b = newBackend(os.Stdout)
-	cjdcoinlog := os.Getenv("PKTLOG")
+	cjdcoinlog := os.Getenv("CJDLOG")
 	if cjdcoinlog != "" {
 		if err := SetLogLevels(cjdcoinlog); err != nil {
 			Errorf("Error setting log parame: ", err.String())

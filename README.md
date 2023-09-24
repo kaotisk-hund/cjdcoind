@@ -3,16 +3,16 @@ cjdcoind
 
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://Copyfree.org)
 
-`cjdcoind` is the primary full node *PKT Cash* implementation, written in Go.
+`cjdcoind` is the primary full node *CJD coin* implementation, written in Go.
 
-The PKT Cash project is currently under active development and considered 
+The CJD coin project is currently under active development and considered 
 to be beta quality software.
 
 In particular, the development branch of `cjdcoind` is highly experimental, 
 and should generally not be used in a production environment or on the
-PKT Cash mainnet.
+CJD coin mainnet.
 
-`cjdcoind` is the primary mainnet node software for the PKT blockchain.
+`cjdcoind` is the primary mainnet node software for the CJD blockchain.
 It is known to correctly download, validate, and serve the chain,
 using rules for block acceptance based on Bitcoin Core, with the
 addition of PacketCrypt Proofs. 

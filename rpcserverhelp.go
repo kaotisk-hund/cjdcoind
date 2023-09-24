@@ -293,7 +293,7 @@ var helpDescsEnUS = map[string]string{
 	"getblockverboseresult-packetcryptversion":       "The version of the PacketCrypt proof",
 	"getblockverboseresult-packetcryptblkbits":       "The bits which represent effective block difficulty (what the block miner must meet)",
 	"getblockverboseresult-sblockreward":             "The amount of atomic units of coins in this block height block reward",
-	"getblockverboseresult-networksteward":           "The address of the current network steward, if using the PKT chain or one which has one",
+	"getblockverboseresult-networksteward":           "The address of the current network steward, if using the CJD chain or one which has one",
 	"getblockverboseresult-blocksuntilretarget":      "The number of blocks until the next difficulty retarget",
 	"getblockverboseresult-retargetestimate":         "A number which multiplied by the current difficulty gives the extimated next difficulty",
 

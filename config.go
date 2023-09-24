@@ -681,7 +681,7 @@ func loadConfig() (*config, []string, er.R) {
 			err.AddMessage("Unable to get random numbers")
 			return nil, nil, err
 		}
-		cfg.RPCUser = "__PKT_COOKIE__"
+		cfg.RPCUser = "__CJD_COOKIE__"
 		cfg.RPCPass = hex.EncodeToString(buf[:])
 		cookie := cfg.RPCUser + ":" + cfg.RPCPass
 		if errr := ioutil.WriteFile(cookiePath, []byte(cookie), 0600); errr != nil {

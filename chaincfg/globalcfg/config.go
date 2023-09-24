@@ -72,9 +72,9 @@ func PktDefaults() Config {
 		UnitsPerCoin:         0x40000000,
 		MaxUnits:             0x40000000 * 6000000000,
 		Amounts: []CoinAmount{
-			{Name: "PKT", Units: int64(1) << 30, Zeros: 9},
-			{Name: "MPKT", Units: int64(1) << 30 * 1e6, Zeros: 12},
-			{Name: "kPKT", Units: int64(1) << 30 * 1e3, Zeros: 15},
+			{Name: "CJD", Units: int64(1) << 30, Zeros: 9},
+			{Name: "MCJD", Units: int64(1) << 30 * 1e6, Zeros: 12},
+			{Name: "kCJD", Units: int64(1) << 30 * 1e3, Zeros: 15},
 
 			{Name: "Pibit", Units: int64(1) << 50, Zeros: 15},
 			{Name: "Tibit", Units: int64(1) << 40, Zeros: 12},

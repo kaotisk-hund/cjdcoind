@@ -241,7 +241,7 @@ type Config struct {
 	LtcdMode      *lncfg.Btcd     `group:"ltcd" namespace:"ltcd"`
 	LitecoindMode *lncfg.Bitcoind `group:"litecoind" namespace:"litecoind"`
 
-	Pkt *lncfg.Chain `group:"PKT" namespace:"cjdcoin"`
+	Pkt *lncfg.Chain `group:"CJD" namespace:"cjdcoin"`
 
 	Autopilot *lncfg.AutoPilot `group:"Autopilot" namespace:"autopilot"`
 
@@ -830,7 +830,7 @@ func ValidateConfig(cfg Config, usageMessage string) (*Config, er.R) {
 	}
 
 	if !cfg.Bitcoin.Active && !cfg.Litecoin.Active && !cfg.Pkt.Active {
-		// Default to PKT
+		// Default to CJD
 		cfg.Pkt.Active = true
 	}
 

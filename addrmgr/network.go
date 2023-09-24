@@ -39,7 +39,7 @@ var (
 	// by RFC4193 (FC00::/7).
 	rfc4193Net = ipNet("FC00::", 7, 128)
 
-	// cjdnsNet is half of rfc4193Net which is often routable for PKT nodes
+	// cjdnsNet is half of rfc4193Net which is often routable for CJD nodes
 	cjdnsNet = ipNet("FC00::", 8, 128)
 
 	// rfc4380Net specifies the IPv6 teredo tunneling over UDP address block

@@ -233,7 +233,7 @@ func (b *BlockChain) calcNextRequiredDifficulty(lastNode *blockNode, newBlockTim
 		// For networks that support it, allow special reduction of the
 		// required difficulty once too much time has elapsed without
 		// mining a block.
-		// PKT blockchain had this enabled up until height 50000 so this
+		// CJD blockchain had this enabled up until height 50000 so this
 		// is necessary in order to be able to sync.
 		if b.chainParams.ReduceMinDifficulty ||
 			(b.chainParams.HDCoinType == 390 && lastNode.height < 50000) {

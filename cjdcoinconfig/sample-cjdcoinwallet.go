@@ -4,7 +4,7 @@ const PktwalletSampleConfig = `
 [Application Options]
 
 ; ------------------------------------------------------------------------------
-; PKT wallet settings
+; CJD wallet settings
 ; ------------------------------------------------------------------------------
 
 ; The directory to open and save wallet, transaction, and unspent transaction

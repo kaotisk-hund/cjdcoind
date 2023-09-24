@@ -1,4 +1,4 @@
-// Copyright (c) 2020 The PKT developers
+// Copyright (c) 2020 The CJD developers
 // Use of this source code is governed by an ISC
 // license that can be found in the LICENSE file.
 package main
@@ -87,7 +87,7 @@ func buildStr() string {
 	_, id, _ := exe(0, "git", "describe", "--tags", "HEAD")
 	id = strings.TrimSpace(id)
 	if x, _, _ := exe(exeCanFail, "git", "diff", "--quiet"); x != 0 {
-		if os.Getenv("PKT_FAIL_DIRTY") != "" {
+		if os.Getenv("CJD_FAIL_DIRTY") != "" {
 			die("Build is dirty, aborting")
 		}
 		return id + "-dirty"

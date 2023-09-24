@@ -50,7 +50,7 @@ const (
 	maxRequestedTxns = (wire.MaxInvPerMsg - 100)
 
 	// maxStallDuration is the time after which we will disconnect our
-	// current sync peer if we haven't made progress. For PKTD, it's
+	// current sync peer if we haven't made progress. For CJDD, it's
 	// not unreasonable to expect progress within one minute vs. the
 	// default of three minutes due the use of meshnet connections.
 	maxStallDuration = 1 * time.Minute
