@@ -1,6 +1,6 @@
 package watchtower
 
-import "github.com/pkt-cash/pktd/btcutil/er"
+import "github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
 var (
 	Err = er.NewErrorType("watchtower")

@@ -12,9 +12,9 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 // mainNetGenesisHash is the hash of the first block in the block chain for the

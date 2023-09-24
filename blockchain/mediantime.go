@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 const (
@@ -185,7 +185,7 @@ func (m *medianTime) AddTimeSample(sourceID string, timeVal time.Time) {
 			// Warn if none of the time samples are close.
 			if !remoteHasCloseTime {
 				log.Warnf("Please check your date and time " +
-					"are correct!  pktd will not work " +
+					"are correct!  cjdcoind will not work " +
 					"properly with an invalid time")
 			}
 		}

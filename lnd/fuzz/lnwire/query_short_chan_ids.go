@@ -3,7 +3,7 @@
 package lnwirefuzz
 
 import (
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // Fuzz_query_short_chan_ids is used by go-fuzz.

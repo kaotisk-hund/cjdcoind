@@ -3,8 +3,8 @@ package sphinx
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // OnionErrorEncrypter is a struct that's used to implement onion error

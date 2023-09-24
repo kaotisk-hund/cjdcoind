@@ -5,10 +5,10 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/record"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/record"
 )
 
 type decodePayloadTest struct {

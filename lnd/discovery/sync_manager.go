@@ -5,13 +5,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/lnd/lnpeer"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/routing/route"
-	"github.com/pkt-cash/pktd/lnd/ticker"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnpeer"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/routing/route"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 const (

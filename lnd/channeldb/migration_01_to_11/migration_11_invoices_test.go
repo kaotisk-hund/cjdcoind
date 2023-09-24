@@ -6,11 +6,11 @@ import (
 	"time"
 
 	litecoinCfg "github.com/ltcsuite/ltcd/chaincfg"
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	bitcoinCfg "github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/lnd/channeldb/kvdb"
-	"github.com/pkt-cash/pktd/lnd/zpay32"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	bitcoinCfg "github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/kvdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/zpay32"
 )
 
 var (

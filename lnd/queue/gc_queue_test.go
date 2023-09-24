@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/lnd/queue"
+	"github.com/kaotisk-hund/cjdcoind/lnd/queue"
 )
 
 // testItem is an item type we'll be using to test the GCQueue.

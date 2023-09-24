@@ -8,10 +8,10 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
 )
 
 // RejectCode represents a numeric value by which a remote peer indicates

@@ -3,7 +3,7 @@ package wtwire
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // CreateSessionCode is an error code returned by a watchtower in response to a

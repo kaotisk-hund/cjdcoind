@@ -18,15 +18,15 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/pktlog/log"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/blockchain"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/blockchain"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 const (
@@ -60,7 +60,7 @@ const (
 	// https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6292573/ - While we are
 	// not yet reducing this to millisecond timeframes or eliminating it,
 	// testing with the 2s interval in simulation (10,000 nodes) as well as
-	// on the pkt mainnet has been successful, without any negative effect.
+	// on the cjdcoin mainnet has been successful, without any negative effect.
 	//
 	// XXX(trn): TODO: Implement and test using per-node and per message
 	// poisson-distributed delays, as used by Bitcoin Core, post-0.13.0.

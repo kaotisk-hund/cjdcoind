@@ -7,8 +7,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/pktwallet/walletdb"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb"
 	"github.com/stretchr/testify/require"
 )
 

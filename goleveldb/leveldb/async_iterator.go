@@ -9,7 +9,7 @@ package leveldb
 import (
 	"encoding/binary"
 
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/iterator"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/iterator"
 )
 
 // asyncIterator wraps the iterator. It uses a background goroutine to perform raw iteration.

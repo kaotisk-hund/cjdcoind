@@ -5,7 +5,7 @@
 package database
 
 import (
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // Err identifies a kind of error for the database

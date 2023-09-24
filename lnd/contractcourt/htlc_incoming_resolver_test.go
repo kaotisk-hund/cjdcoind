@@ -6,17 +6,17 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	sphinx "github.com/pkt-cash/pktd/lightning-onion"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/channeldb/kvdb"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/invoices"
-	"github.com/pkt-cash/pktd/lnd/lntest/mock"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwallet"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	sphinx "github.com/kaotisk-hund/cjdcoind/lightning-onion"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/kvdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/invoices"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntest/mock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 const (

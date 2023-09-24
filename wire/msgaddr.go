@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 // MaxAddrPerMsg is the maximum number of addresses that can be in a single

@@ -7,7 +7,7 @@
 
 
 BINARY_FOLDER=.
-RPM_PACKAGE_NAME=pktd
+RPM_PACKAGE_NAME=cjdcoind
 
 ./do
 echo "Binary built. Building GEM now."

@@ -10,9 +10,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/txsort"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/txsort"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // TestSort ensures the transaction sorting works according to the BIP.

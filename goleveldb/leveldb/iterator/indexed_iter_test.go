@@ -11,9 +11,9 @@ import (
 
 	. "github.com/onsi/ginkgo"
 
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/comparer"
-	. "github.com/pkt-cash/pktd/goleveldb/leveldb/iterator"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/testutil"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/comparer"
+	. "github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/iterator"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/testutil"
 )
 
 type keyValue struct {

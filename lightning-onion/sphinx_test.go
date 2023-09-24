@@ -10,10 +10,10 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
 )
 
 // BOLT 4 Test Vectors
@@ -151,7 +151,7 @@ func TestBolt4Packet(t *testing.T) {
 	}
 
 	sessionKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), bolt4SessionKey)
-	pkt, err := NewOnionPacket(
+	cjdcoin, err := NewOnionPacket(
 		&route, sessionKey, bolt4AssocData, DeterministicPacketFiller,
 	)
 	if err != nil {
@@ -159,7 +159,7 @@ func TestBolt4Packet(t *testing.T) {
 	}
 
 	var b bytes.Buffer
-	if err := pkt.Encode(&b); err != nil {
+	if err := cjdcoin.Encode(&b); err != nil {
 		t.Fatalf("unable to decode onion packet: %v", err)
 	}
 
@@ -879,7 +879,7 @@ func TestVariablePayloadOnion(t *testing.T) {
 
 	// With all the required data assembled, we'll craft a new packet.
 	sessionKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), sessionKeyBytes)
-	pkt, err := NewOnionPacket(
+	cjdcoin, err := NewOnionPacket(
 		&route, sessionKey, associatedData, DeterministicPacketFiller,
 	)
 	if err != nil {
@@ -887,7 +887,7 @@ func TestVariablePayloadOnion(t *testing.T) {
 	}
 
 	var b bytes.Buffer
-	if err := pkt.Encode(&b); err != nil {
+	if err := cjdcoin.Encode(&b); err != nil {
 		t.Fatalf("unable to decode onion packet: %v", err)
 	}
 

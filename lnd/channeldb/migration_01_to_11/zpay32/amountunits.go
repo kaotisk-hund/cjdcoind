@@ -3,8 +3,8 @@ package zpay32
 import (
 	"strconv"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 var (

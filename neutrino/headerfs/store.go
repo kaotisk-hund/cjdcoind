@@ -5,17 +5,17 @@ import (
 	"encoding/hex"
 	"sync"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 
-	"github.com/pkt-cash/pktd/blockchain"
-	"github.com/pkt-cash/pktd/btcutil/gcs/builder"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/genesis"
-	"github.com/pkt-cash/pktd/pktwallet/waddrmgr"
-	"github.com/pkt-cash/pktd/pktwallet/walletdb"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/blockchain"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/gcs/builder"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/genesis"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/waddrmgr"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // BlockHeaderStore is an interface that provides an abstraction for a generic

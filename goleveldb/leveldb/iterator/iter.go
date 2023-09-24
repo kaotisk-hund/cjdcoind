@@ -11,7 +11,7 @@ package iterator
 import (
 	"errors"
 
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/util"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/util"
 )
 
 var (

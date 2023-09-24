@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // Bip32Derivation encapsulates the data for the input and output

@@ -1,4 +1,4 @@
-module github.com/pkt-cash/pktd
+module github.com/kaotisk-hund/cjdcoind
 
 go 1.14
 

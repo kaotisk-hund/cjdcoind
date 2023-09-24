@@ -11,10 +11,10 @@ import (
 	"golang.org/x/crypto/chacha20poly1305"
 	"golang.org/x/crypto/hkdf"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/lnd/keychain"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/lnd/keychain"
 )
 
 const (
@@ -741,11 +741,11 @@ func (b *Machine) WriteMessage(p []byte) er.R {
 	// NOT include the MAC.
 	fullLength := uint16(len(p))
 
-	var pktLen [2]byte
-	binary.BigEndian.PutUint16(pktLen[:], fullLength)
+	var cjdcoinLen [2]byte
+	binary.BigEndian.PutUint16(cjdcoinLen[:], fullLength)
 
 	// First, generate the encrypted+MAC'd length prefix for the packet.
-	b.nextHeaderSend = b.sendCipher.Encrypt(nil, nil, pktLen[:])
+	b.nextHeaderSend = b.sendCipher.Encrypt(nil, nil, cjdcoinLen[:])
 
 	// Finally, generate the encrypted packet itself.
 	b.nextBodySend = b.sendCipher.Encrypt(nil, nil, p)
@@ -831,12 +831,12 @@ func (b *Machine) Flush(w io.Writer) (int, er.R) {
 // ReadMessage attempts to read the next message from the passed io.Reader. In
 // the case of an authentication error, a non-nil error is returned.
 func (b *Machine) ReadMessage(r io.Reader) ([]byte, er.R) {
-	pktLen, err := b.ReadHeader(r)
+	cjdcoinLen, err := b.ReadHeader(r)
 	if err != nil {
 		return nil, err
 	}
 
-	buf := make([]byte, pktLen)
+	buf := make([]byte, cjdcoinLen)
 	return b.ReadBody(r, buf)
 }
 
@@ -856,7 +856,7 @@ func (b *Machine) ReadHeader(r io.Reader) (uint32, er.R) {
 	}
 
 	// Attempt to decrypt+auth the packet length present in the stream.
-	pktLenBytes, err := b.recvCipher.Decrypt(
+	cjdcoinLenBytes, err := b.recvCipher.Decrypt(
 		nil, nil, b.nextCipherHeader[:],
 	)
 	if err != nil {
@@ -864,9 +864,9 @@ func (b *Machine) ReadHeader(r io.Reader) (uint32, er.R) {
 	}
 
 	// Compute the packet length that we will need to read off the wire.
-	pktLen := uint32(binary.BigEndian.Uint16(pktLenBytes)) + macSize
+	cjdcoinLen := uint32(binary.BigEndian.Uint16(cjdcoinLenBytes)) + macSize
 
-	return pktLen, nil
+	return cjdcoinLen, nil
 }
 
 // ReadBody attempts to ready the next message body from the passed io.Reader.

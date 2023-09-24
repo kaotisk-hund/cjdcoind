@@ -11,11 +11,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/coinset"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/wire/constants"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/coinset"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/wire/constants"
 )
 
 type TestCoin struct {

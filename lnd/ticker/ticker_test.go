@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
 )
 
 const interval = 50 * time.Millisecond

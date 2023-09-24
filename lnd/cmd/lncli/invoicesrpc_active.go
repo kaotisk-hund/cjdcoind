@@ -9,7 +9,7 @@ import (
 
 	"strconv"
 
-	"github.com/pkt-cash/pktd/lnd/lnrpc/invoicesrpc"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc/invoicesrpc"
 	"github.com/urfave/cli"
 )
 

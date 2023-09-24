@@ -8,9 +8,9 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
 )
 
 // ShortChanIDEncoding is an enum-like type that represents exactly how a set

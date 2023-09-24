@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"math"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // MaxRecordSize is the maximum size of a particular record that will be parsed

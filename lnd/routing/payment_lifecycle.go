@@ -5,14 +5,14 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	sphinx "github.com/pkt-cash/pktd/lightning-onion"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/routing/route"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	sphinx "github.com/kaotisk-hund/cjdcoind/lightning-onion"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/routing/route"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 // paymentLifecycle holds all information about the current state of a payment

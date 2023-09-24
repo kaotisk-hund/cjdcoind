@@ -6,12 +6,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/subscribe"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/subscribe"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 // HtlcNotifier notifies clients of htlc forwards, failures and settles for
@@ -380,15 +380,15 @@ func (h *HtlcNotifier) NotifySettleEvent(key HtlcKey, eventType HtlcEventType) {
 // case, we replace the incoming htlc id with zero so that the notifier
 // consistently reports zero circuit keys for events that terminate or
 // originate at our node.
-func newHtlcKey(pkt *htlcPacket) HtlcKey {
+func newHtlcKey(cjdcoin *htlcPacket) HtlcKey {
 	htlcKey := HtlcKey{
 		IncomingCircuit: channeldb.CircuitKey{
-			ChanID: pkt.incomingChanID,
-			HtlcID: pkt.incomingHTLCID,
+			ChanID: cjdcoin.incomingChanID,
+			HtlcID: cjdcoin.incomingHTLCID,
 		},
 		OutgoingCircuit: CircuitKey{
-			ChanID: pkt.outgoingChanID,
-			HtlcID: pkt.outgoingHTLCID,
+			ChanID: cjdcoin.outgoingChanID,
+			HtlcID: cjdcoin.outgoingHTLCID,
 		},
 	}
 
@@ -396,7 +396,7 @@ func newHtlcKey(pkt *htlcPacket) HtlcKey {
 	// initiated at our node. If this is the case, our internal pid is in
 	// the incoming htlc ID, so we overwrite it with 0 for notification
 	// purposes.
-	if pkt.incomingChanID == hop.Source {
+	if cjdcoin.incomingChanID == hop.Source {
 		htlcKey.IncomingCircuit.HtlcID = 0
 	}
 
@@ -404,12 +404,12 @@ func newHtlcKey(pkt *htlcPacket) HtlcKey {
 }
 
 // newHtlcInfo returns HtlcInfo for the packet provided.
-func newHtlcInfo(pkt *htlcPacket) HtlcInfo {
+func newHtlcInfo(cjdcoin *htlcPacket) HtlcInfo {
 	return HtlcInfo{
-		IncomingTimeLock: pkt.incomingTimeout,
-		OutgoingTimeLock: pkt.outgoingTimeout,
-		IncomingAmt:      pkt.incomingAmount,
-		OutgoingAmt:      pkt.amount,
+		IncomingTimeLock: cjdcoin.incomingTimeout,
+		OutgoingTimeLock: cjdcoin.outgoingTimeout,
+		IncomingAmt:      cjdcoin.incomingAmount,
+		OutgoingAmt:      cjdcoin.amount,
 	}
 }
 
@@ -417,12 +417,12 @@ func newHtlcInfo(pkt *htlcPacket) HtlcInfo {
 // packet. Sends that originate at our node have the source (zero) incoming
 // channel ID. Receives to our node have the exit (zero) outgoing channel ID
 // and forwards have both fields set.
-func getEventType(pkt *htlcPacket) HtlcEventType {
+func getEventType(cjdcoin *htlcPacket) HtlcEventType {
 	switch {
-	case pkt.incomingChanID == hop.Source:
+	case cjdcoin.incomingChanID == hop.Source:
 		return HtlcEventTypeSend
 
-	case pkt.outgoingChanID == hop.Exit:
+	case cjdcoin.outgoingChanID == hop.Exit:
 		return HtlcEventTypeReceive
 
 	default:

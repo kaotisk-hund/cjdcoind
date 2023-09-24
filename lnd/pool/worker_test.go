@@ -7,10 +7,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/lnd/buffer"
-	"github.com/pkt-cash/pktd/lnd/pool"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/lnd/buffer"
+	"github.com/kaotisk-hund/cjdcoind/lnd/pool"
 )
 
 type workerPoolTest struct {

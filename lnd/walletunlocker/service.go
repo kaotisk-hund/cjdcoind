@@ -6,16 +6,16 @@ import (
 	"os"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/lnd/aezeed"
-	"github.com/pkt-cash/pktd/lnd/chanbackup"
-	"github.com/pkt-cash/pktd/lnd/keychain"
-	"github.com/pkt-cash/pktd/lnd/lnrpc"
-	"github.com/pkt-cash/pktd/lnd/lnwallet"
-	"github.com/pkt-cash/pktd/lnd/lnwallet/btcwallet"
-	"github.com/pkt-cash/pktd/lnd/macaroons"
-	"github.com/pkt-cash/pktd/pktwallet/wallet"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/aezeed"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chanbackup"
+	"github.com/kaotisk-hund/cjdcoind/lnd/keychain"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet/btcwallet"
+	"github.com/kaotisk-hund/cjdcoind/lnd/macaroons"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/wallet"
 )
 
 var (

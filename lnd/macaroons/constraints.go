@@ -5,7 +5,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 	"google.golang.org/grpc/peer"
 
 	"gopkg.in/macaroon-bakery.v2/bakery/checkers"

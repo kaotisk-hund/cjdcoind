@@ -4,15 +4,15 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/gcs/builder"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/neutrino"
-	"github.com/pkt-cash/pktd/pktlog/log"
-	"github.com/pkt-cash/pktd/rpcclient"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/gcs/builder"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/neutrino"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
+	"github.com/kaotisk-hund/cjdcoind/rpcclient"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // CfFilteredChainView is an implementation of the FilteredChainView interface

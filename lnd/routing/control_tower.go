@@ -3,11 +3,11 @@ package routing
 import (
 	"sync"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/multimutex"
-	"github.com/pkt-cash/pktd/lnd/queue"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/multimutex"
+	"github.com/kaotisk-hund/cjdcoind/lnd/queue"
 )
 
 // ControlTower tracks all outgoing payments made, whose primary purpose is to

@@ -8,10 +8,10 @@ import (
 	"crypto/rand"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
 )
 
 // genRandomSig returns a random message, a signature of the message under the

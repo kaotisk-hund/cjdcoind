@@ -7,7 +7,7 @@ package blockchain
 import (
 	"testing"
 
-	"github.com/pkt-cash/pktd/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
 )
 
 // TestNotifications ensures that notification callbacks are fired on events.

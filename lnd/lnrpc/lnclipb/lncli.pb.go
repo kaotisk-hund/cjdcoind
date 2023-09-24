@@ -6,7 +6,7 @@ package lnclipb
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	verrpc "github.com/pkt-cash/pktd/lnd/lnrpc/verrpc"
+	verrpc "github.com/kaotisk-hund/cjdcoind/lnd/lnrpc/verrpc"
 	math "math"
 )
 

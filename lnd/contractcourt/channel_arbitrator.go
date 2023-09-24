@@ -7,19 +7,19 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/channeldb/kvdb"
-	"github.com/pkt-cash/pktd/lnd/input"
-	"github.com/pkt-cash/pktd/lnd/labels"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwallet"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/sweep"
-	"github.com/pkt-cash/pktd/pktlog/log"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/kvdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/input"
+	"github.com/kaotisk-hund/cjdcoind/lnd/labels"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/sweep"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 var (
@@ -1000,7 +1000,7 @@ func (c *ChannelArbitrator) stateStep(
 		// Now that we know we'll need to act, we'll process the htlc
 		// actions, wen create the structures we need to resolve all
 		// outstanding contracts.
-		htlcResolvers, pktsToSend, err := c.prepContractResolutions(
+		htlcResolvers, cjdcoinsToSend, err := c.prepContractResolutions(
 			contractResolutions, triggerHeight, trigger,
 			confCommitSet,
 		)
@@ -1013,17 +1013,17 @@ func (c *ChannelArbitrator) stateStep(
 		log.Debugf("ChannelArbitrator(%v): sending resolution message=%v",
 			c.cfg.ChanPoint,
 			log.C(func() string {
-				return spew.Sdump(pktsToSend)
+				return spew.Sdump(cjdcoinsToSend)
 			}))
 
 		// With the commitment broadcast, we'll then send over all
 		// messages we can send immediately.
-		if len(pktsToSend) != 0 {
-			err := c.cfg.DeliverResolutionMsg(pktsToSend...)
+		if len(cjdcoinsToSend) != 0 {
+			err := c.cfg.DeliverResolutionMsg(cjdcoinsToSend...)
 			if err != nil {
 				// TODO(roasbeef): make sure packet sends are
 				// idempotent
-				log.Errorf("unable to send pkts: %v", err)
+				log.Errorf("unable to send cjdcoins: %v", err)
 				return StateError, closeTx, err
 			}
 		}

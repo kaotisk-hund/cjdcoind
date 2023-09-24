@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/grpc-ecosystem/go-grpc-prometheus"
-	"github.com/pkt-cash/pktd/lnd/lncfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lncfg"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 

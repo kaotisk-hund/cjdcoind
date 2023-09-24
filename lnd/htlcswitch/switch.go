@@ -8,21 +8,21 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/channeldb/kvdb"
-	"github.com/pkt-cash/pktd/lnd/clock"
-	"github.com/pkt-cash/pktd/lnd/contractcourt"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwallet"
-	"github.com/pkt-cash/pktd/lnd/lnwallet/chainfee"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/ticker"
-	"github.com/pkt-cash/pktd/pktlog/log"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/kvdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/clock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/contractcourt"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet/chainfee"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 const (
@@ -77,7 +77,7 @@ var (
 // plexPacket encapsulates switch packet and adds error channel to receive
 // error from request handler.
 type plexPacket struct {
-	pkt *htlcPacket
+	cjdcoin *htlcPacket
 	err chan er.R
 }
 
@@ -723,7 +723,7 @@ func (s *Switch) routeAsync(packet *htlcPacket, errChan chan er.R,
 	linkQuit chan struct{}) er.R {
 
 	command := &plexPacket{
-		pkt: packet,
+		cjdcoin: packet,
 		err: errChan,
 	}
 
@@ -740,21 +740,21 @@ func (s *Switch) routeAsync(packet *htlcPacket, errChan chan er.R,
 // getLocalLink handles the addition of a htlc for a send that originates from
 // our node. It returns the link that the htlc should be forwarded outwards on,
 // and a link error if the htlc cannot be forwarded.
-func (s *Switch) getLocalLink(pkt *htlcPacket, htlc *lnwire.UpdateAddHTLC) (
+func (s *Switch) getLocalLink(cjdcoin *htlcPacket, htlc *lnwire.UpdateAddHTLC) (
 	ChannelLink, *LinkError) {
 
 	// Try to find links by node destination.
 	s.indexMtx.RLock()
-	link, err := s.getLinkByShortID(pkt.outgoingChanID)
+	link, err := s.getLinkByShortID(cjdcoin.outgoingChanID)
 	s.indexMtx.RUnlock()
 	if err != nil {
-		log.Errorf("Link %v not found", pkt.outgoingChanID)
+		log.Errorf("Link %v not found", cjdcoin.outgoingChanID)
 		return nil, NewLinkError(&lnwire.FailUnknownNextPeer{})
 	}
 
 	if !link.EligibleToForward() {
 		log.Errorf("Link %v is not available to forward",
-			pkt.outgoingChanID)
+			cjdcoin.outgoingChanID)
 
 		// The update does not need to be populated as the error
 		// will be returned back to the router.
@@ -771,7 +771,7 @@ func (s *Switch) getLocalLink(pkt *htlcPacket, htlc *lnwire.UpdateAddHTLC) (
 	)
 	if htlcErr != nil {
 		log.Errorf("Link %v policy for local forward not "+
-			"satisfied", pkt.outgoingChanID)
+			"satisfied", cjdcoin.outgoingChanID)
 		return nil, htlcErr
 	}
 	return link, nil
@@ -789,18 +789,18 @@ func (s *Switch) getLocalLink(pkt *htlcPacket, htlc *lnwire.UpdateAddHTLC) (
 //  4. Teardown the closing circuit in the circuit map
 //
 // NOTE: This method MUST be spawned as a goroutine.
-func (s *Switch) handleLocalResponse(pkt *htlcPacket) {
+func (s *Switch) handleLocalResponse(cjdcoin *htlcPacket) {
 	defer s.wg.Done()
 
-	paymentID := pkt.incomingHTLCID
+	paymentID := cjdcoin.incomingHTLCID
 
 	// The error reason will be unencypted in case this a local
 	// failure or a converted error.
-	unencrypted := pkt.localFailure || pkt.convertedError
+	unencrypted := cjdcoin.localFailure || cjdcoin.convertedError
 	n := &networkResult{
-		msg:          pkt.htlc,
+		msg:          cjdcoin.htlc,
 		unencrypted:  unencrypted,
-		isResolution: pkt.isResolution,
+		isResolution: cjdcoin.isResolution,
 	}
 
 	// Store the result to the db. This will also notify subscribers about
@@ -818,10 +818,10 @@ func (s *Switch) handleLocalResponse(pkt *htlcPacket) {
 	// If this response is contained in a forwarding package, we'll start by
 	// acking the settle/fail so that we don't continue to retransmit the
 	// HTLC internally.
-	if pkt.destRef != nil {
-		if err := s.ackSettleFail(*pkt.destRef); err != nil {
+	if cjdcoin.destRef != nil {
+		if err := s.ackSettleFail(*cjdcoin.destRef); err != nil {
 			log.Warnf("Unable to ack settle/fail reference: %s: %v",
-				*pkt.destRef, err)
+				*cjdcoin.destRef, err)
 			return
 		}
 	}
@@ -833,17 +833,17 @@ func (s *Switch) handleLocalResponse(pkt *htlcPacket) {
 	// will be executed when a provided resolution message comes through.
 	// This can only happen if the circuit is still open, which is why this
 	// ordering is chosen.
-	if err := s.teardownCircuit(pkt); err != nil {
+	if err := s.teardownCircuit(cjdcoin); err != nil {
 		log.Warnf("Unable to teardown circuit %s: %v",
-			pkt.inKey(), err)
+			cjdcoin.inKey(), err)
 		return
 	}
 
 	// Finally, notify on the htlc failure or success that has been handled.
-	key := newHtlcKey(pkt)
-	eventType := getEventType(pkt)
+	key := newHtlcKey(cjdcoin)
+	eventType := getEventType(cjdcoin)
 
-	switch pkt.htlc.(type) {
+	switch cjdcoin.htlc.(type) {
 	case *lnwire.UpdateFulfillHTLC:
 		s.cfg.HtlcNotifier.NotifySettleEvent(key, eventType)
 
@@ -1285,12 +1285,12 @@ func (s *Switch) failAddPacket(packet *htlcPacket, failure *LinkError) er.R {
 // attempts to determine the source that forwarded this htlc. This method will
 // set the incoming chan and htlc ID of the given packet if the source was
 // found, and will properly [re]encrypt any failure messages.
-func (s *Switch) closeCircuit(pkt *htlcPacket) (*PaymentCircuit, er.R) {
+func (s *Switch) closeCircuit(cjdcoin *htlcPacket) (*PaymentCircuit, er.R) {
 	// If the packet has its source, that means it was failed locally by
 	// the outgoing link. We fail it here to make sure only one response
 	// makes it through the switch.
-	if pkt.hasSource {
-		circuit, err := s.circuits.FailCircuit(pkt.inKey())
+	if cjdcoin.hasSource {
+		circuit, err := s.circuits.FailCircuit(cjdcoin.inKey())
 		switch {
 
 		// Circuit successfully closed.
@@ -1318,25 +1318,25 @@ func (s *Switch) closeCircuit(pkt *htlcPacket) (*PaymentCircuit, er.R) {
 
 	// Otherwise, this is packet was received from the remote party.  Use
 	// circuit map to find the incoming link to receive the settle/fail.
-	circuit, err := s.circuits.CloseCircuit(pkt.outKey())
+	circuit, err := s.circuits.CloseCircuit(cjdcoin.outKey())
 	switch {
 
 	// Open circuit successfully closed.
 	case err == nil:
-		pkt.incomingChanID = circuit.Incoming.ChanID
-		pkt.incomingHTLCID = circuit.Incoming.HtlcID
-		pkt.circuit = circuit
-		pkt.sourceRef = &circuit.AddRef
+		cjdcoin.incomingChanID = circuit.Incoming.ChanID
+		cjdcoin.incomingHTLCID = circuit.Incoming.HtlcID
+		cjdcoin.circuit = circuit
+		cjdcoin.sourceRef = &circuit.AddRef
 
-		pktType := "SETTLE"
-		if _, ok := pkt.htlc.(*lnwire.UpdateFailHTLC); ok {
-			pktType = "FAIL"
+		cjdcoinType := "SETTLE"
+		if _, ok := cjdcoin.htlc.(*lnwire.UpdateFailHTLC); ok {
+			cjdcoinType = "FAIL"
 		}
 
 		log.Debugf("Closed completed %s circuit for %x: "+
-			"(%s, %d) <-> (%s, %d)", pktType, pkt.circuit.PaymentHash,
-			pkt.incomingChanID, pkt.incomingHTLCID,
-			pkt.outgoingChanID, pkt.outgoingHTLCID)
+			"(%s, %d) <-> (%s, %d)", cjdcoinType, cjdcoin.circuit.PaymentHash,
+			cjdcoin.incomingChanID, cjdcoin.incomingHTLCID,
+			cjdcoin.outgoingChanID, cjdcoin.outgoingHTLCID)
 
 		return circuit, nil
 
@@ -1348,22 +1348,22 @@ func (s *Switch) closeCircuit(pkt *htlcPacket) (*PaymentCircuit, er.R) {
 	// Failed to close circuit because it does not exist. This is likely
 	// because the circuit was already successfully closed.
 	case ErrUnknownCircuit.Is(err):
-		if pkt.destRef != nil {
+		if cjdcoin.destRef != nil {
 			// Add this SettleFailRef to the set of pending settle/fail entries
 			// awaiting acknowledgement.
-			s.pendingSettleFails = append(s.pendingSettleFails, *pkt.destRef)
+			s.pendingSettleFails = append(s.pendingSettleFails, *cjdcoin.destRef)
 		}
 
 		// If this is a settle, we will not log an error message as settles
 		// are expected to hit the ErrUnknownCircuit case. The only way fails
 		// can hit this case if the link restarts after having just sent a fail
 		// to the switch.
-		_, isSettle := pkt.htlc.(*lnwire.UpdateFulfillHTLC)
+		_, isSettle := cjdcoin.htlc.(*lnwire.UpdateFulfillHTLC)
 		if !isSettle {
 			err := er.Errorf("unable to find target channel "+
 				"for HTLC fail: channel ID = %s, "+
-				"HTLC ID = %d", pkt.outgoingChanID,
-				pkt.outgoingHTLCID)
+				"HTLC ID = %d", cjdcoin.outgoingChanID,
+				cjdcoin.outgoingHTLCID)
 			log.Error(err)
 
 			return nil, err
@@ -1389,13 +1389,13 @@ func (s *Switch) ackSettleFail(settleFailRefs ...channeldb.SettleFailRef) er.R {
 
 // teardownCircuit removes a pending or open circuit from the switch's circuit
 // map and prints useful logging statements regarding the outcome.
-func (s *Switch) teardownCircuit(pkt *htlcPacket) er.R {
-	var pktType string
-	switch htlc := pkt.htlc.(type) {
+func (s *Switch) teardownCircuit(cjdcoin *htlcPacket) er.R {
+	var cjdcoinType string
+	switch htlc := cjdcoin.htlc.(type) {
 	case *lnwire.UpdateFulfillHTLC:
-		pktType = "SETTLE"
+		cjdcoinType = "SETTLE"
 	case *lnwire.UpdateFailHTLC:
-		pktType = "FAIL"
+		cjdcoinType = "FAIL"
 	default:
 		err := er.Errorf("cannot tear down packet of type: %T", htlc)
 		log.Errorf(err.String())
@@ -1403,40 +1403,40 @@ func (s *Switch) teardownCircuit(pkt *htlcPacket) er.R {
 	}
 
 	switch {
-	case pkt.circuit.HasKeystone():
-		log.Debugf("Tearing down open circuit with %s pkt, removing circuit=%v "+
-			"with keystone=%v", pktType, pkt.inKey(), pkt.outKey())
+	case cjdcoin.circuit.HasKeystone():
+		log.Debugf("Tearing down open circuit with %s cjdcoin, removing circuit=%v "+
+			"with keystone=%v", cjdcoinType, cjdcoin.inKey(), cjdcoin.outKey())
 
-		err := s.circuits.DeleteCircuits(pkt.inKey())
+		err := s.circuits.DeleteCircuits(cjdcoin.inKey())
 		if err != nil {
 			log.Warnf("Failed to tear down open circuit (%s, %d) <-> (%s, %d) "+
-				"with payment_hash-%v using %s pkt",
-				pkt.incomingChanID, pkt.incomingHTLCID,
-				pkt.outgoingChanID, pkt.outgoingHTLCID,
-				pkt.circuit.PaymentHash, pktType)
+				"with payment_hash-%v using %s cjdcoin",
+				cjdcoin.incomingChanID, cjdcoin.incomingHTLCID,
+				cjdcoin.outgoingChanID, cjdcoin.outgoingHTLCID,
+				cjdcoin.circuit.PaymentHash, cjdcoinType)
 			return err
 		}
 
 		log.Debugf("Closed completed %s circuit for %x: "+
-			"(%s, %d) <-> (%s, %d)", pktType, pkt.circuit.PaymentHash,
-			pkt.incomingChanID, pkt.incomingHTLCID,
-			pkt.outgoingChanID, pkt.outgoingHTLCID)
+			"(%s, %d) <-> (%s, %d)", cjdcoinType, cjdcoin.circuit.PaymentHash,
+			cjdcoin.incomingChanID, cjdcoin.incomingHTLCID,
+			cjdcoin.outgoingChanID, cjdcoin.outgoingHTLCID)
 
 	default:
 		log.Debugf("Tearing down incomplete circuit with %s for inkey=%v",
-			pktType, pkt.inKey())
+			cjdcoinType, cjdcoin.inKey())
 
-		err := s.circuits.DeleteCircuits(pkt.inKey())
+		err := s.circuits.DeleteCircuits(cjdcoin.inKey())
 		if err != nil {
 			log.Warnf("Failed to tear down pending %s circuit for %x: "+
-				"(%s, %d)", pktType, pkt.circuit.PaymentHash,
-				pkt.incomingChanID, pkt.incomingHTLCID)
+				"(%s, %d)", cjdcoinType, cjdcoin.circuit.PaymentHash,
+				cjdcoin.incomingChanID, cjdcoin.incomingHTLCID)
 			return err
 		}
 
 		log.Debugf("Removed pending onion circuit for %x: "+
-			"(%s, %d)", pkt.circuit.PaymentHash,
-			pkt.incomingChanID, pkt.incomingHTLCID)
+			"(%s, %d)", cjdcoin.circuit.PaymentHash,
+			cjdcoin.incomingChanID, cjdcoin.incomingHTLCID)
 	}
 
 	return nil
@@ -1593,7 +1593,7 @@ out:
 			go s.cfg.LocalChannelClose(peerPub[:], req)
 
 		case resolutionMsg := <-s.resolutionMsgs:
-			pkt := &htlcPacket{
+			cjdcoin := &htlcPacket{
 				outgoingChanID: resolutionMsg.SourceChan,
 				outgoingHTLCID: resolutionMsg.HtlcIndex,
 				isResolution:   true,
@@ -1604,21 +1604,21 @@ out:
 			// outgoing HTLC. Based on this, we'll map the message
 			// to the proper htlcPacket.
 			if resolutionMsg.Failure != nil {
-				pkt.htlc = &lnwire.UpdateFailHTLC{}
+				cjdcoin.htlc = &lnwire.UpdateFailHTLC{}
 			} else {
-				pkt.htlc = &lnwire.UpdateFulfillHTLC{
+				cjdcoin.htlc = &lnwire.UpdateFulfillHTLC{
 					PaymentPreimage: *resolutionMsg.PreImage,
 				}
 			}
 
 			log.Infof("Received outside contract resolution, "+
-				"mapping to: %v", spew.Sdump(pkt))
+				"mapping to: %v", spew.Sdump(cjdcoin))
 
 			// We don't check the error, as the only failure we can
 			// encounter is due to the circuit already being
 			// closed. This is fine, as processing this message is
 			// meant to be idempotent.
-			err := s.handlePacketForward(pkt)
+			err := s.handlePacketForward(cjdcoin)
 			if err != nil {
 				log.Errorf("Unable to forward resolution msg: %v", err)
 			}
@@ -1630,7 +1630,7 @@ out:
 		// packet concretely, then either forward it along, or
 		// interpret a return packet to a locally initialized one.
 		case cmd := <-s.htlcPlex:
-			cmd.err <- s.handlePacketForward(cmd.pkt)
+			cmd.err <- s.handlePacketForward(cmd.cjdcoin)
 
 		// When this time ticks, then it indicates that we should
 		// collect all the forwarding events since the last internal,

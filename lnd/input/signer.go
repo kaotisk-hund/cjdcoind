@@ -1,8 +1,8 @@
 package input
 
 import (
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // Signer represents an abstract object capable of generating raw signatures as

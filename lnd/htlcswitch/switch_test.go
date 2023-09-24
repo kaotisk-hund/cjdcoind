@@ -9,14 +9,14 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
 )
 
 var zeroCircuit = channeldb.CircuitKey{}
@@ -385,8 +385,8 @@ func TestSwitchForward(t *testing.T) {
 	}
 
 	select {
-	case pkt := <-aliceChannelLink.packets:
-		if err := aliceChannelLink.deleteCircuit(pkt); err != nil {
+	case cjdcoin := <-aliceChannelLink.packets:
+		if err := aliceChannelLink.deleteCircuit(cjdcoin); err != nil {
 			t.Fatalf("unable to remove circuit: %v", err)
 		}
 	case <-time.After(time.Second):
@@ -570,8 +570,8 @@ func TestSwitchForwardFailAfterFullAdd(t *testing.T) {
 	// Pull packet from alice's link, as it should have gone through
 	// successfully.
 	select {
-	case pkt := <-aliceChannelLink.packets:
-		if err := aliceChannelLink.completeCircuit(pkt); err != nil {
+	case cjdcoin := <-aliceChannelLink.packets:
+		if err := aliceChannelLink.completeCircuit(cjdcoin); err != nil {
 			t.Fatalf("unable to remove circuit: %v", err)
 		}
 	case <-time.After(time.Second):
@@ -1117,8 +1117,8 @@ func TestSwitchForwardFailAfterHalfAdd(t *testing.T) {
 	// After detecting an incomplete forward, the fail packet should have
 	// been returned to the sender.
 	select {
-	case pkt := <-aliceChannelLink.packets:
-		linkErr := pkt.linkFailure
+	case cjdcoin := <-aliceChannelLink.packets:
+		linkErr := cjdcoin.linkFailure
 		if linkErr.FailureDetail != OutgoingFailureIncompleteForward {
 			t.Fatalf("expected incomplete forward, got: %v",
 				linkErr.FailureDetail)
@@ -1889,8 +1889,8 @@ func TestSwitchCancel(t *testing.T) {
 	}
 
 	select {
-	case pkt := <-aliceChannelLink.packets:
-		if err := aliceChannelLink.completeCircuit(pkt); err != nil {
+	case cjdcoin := <-aliceChannelLink.packets:
+		if err := aliceChannelLink.completeCircuit(cjdcoin); err != nil {
 			t.Fatalf("unable to remove circuit: %v", err)
 		}
 
@@ -2031,8 +2031,8 @@ func TestSwitchAddSamePayment(t *testing.T) {
 	}
 
 	select {
-	case pkt := <-aliceChannelLink.packets:
-		if err := aliceChannelLink.completeCircuit(pkt); err != nil {
+	case cjdcoin := <-aliceChannelLink.packets:
+		if err := aliceChannelLink.completeCircuit(cjdcoin); err != nil {
 			t.Fatalf("unable to remove circuit: %v", err)
 		}
 
@@ -2057,8 +2057,8 @@ func TestSwitchAddSamePayment(t *testing.T) {
 	}
 
 	select {
-	case pkt := <-aliceChannelLink.packets:
-		if err := aliceChannelLink.completeCircuit(pkt); err != nil {
+	case cjdcoin := <-aliceChannelLink.packets:
+		if err := aliceChannelLink.completeCircuit(cjdcoin); err != nil {
 			t.Fatalf("unable to remove circuit: %v", err)
 		}
 

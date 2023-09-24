@@ -8,11 +8,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
-	"github.com/pkt-cash/pktd/integration/rpctest"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/integration/rpctest"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
 )
 
 var (

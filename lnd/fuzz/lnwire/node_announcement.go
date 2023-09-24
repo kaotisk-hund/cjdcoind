@@ -6,7 +6,7 @@ import (
 	"bytes"
 	"reflect"
 
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // Fuzz_node_announcement is used by go-fuzz.

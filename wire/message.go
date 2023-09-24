@@ -10,10 +10,10 @@ import (
 	"io"
 	"unicode/utf8"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
 )
 
 // MessageHeaderSize is the number of bytes in a bitcoin message header.

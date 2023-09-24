@@ -5,7 +5,7 @@ package kvdb
 import (
 	"context"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // TestBackend is conditionally set to bdb when the kvdb_etcd build tag is

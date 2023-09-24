@@ -1,7 +1,7 @@
 package invoices
 
 import (
-	"github.com/pkt-cash/pktd/lnd/record"
+	"github.com/kaotisk-hund/cjdcoind/lnd/record"
 )
 
 // Payload abstracts access to any additional fields provided in the final hop's

@@ -8,16 +8,16 @@ import (
 	"bytes"
 	"encoding/binary"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/cryptocycle"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/difficulty"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/pcutil"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/randhash/interpret"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/randhash/randgen"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/randhash/util"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/cryptocycle"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/difficulty"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/pcutil"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/randhash/interpret"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/randhash/randgen"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/randhash/util"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 const announceMerkleDepth int = 13

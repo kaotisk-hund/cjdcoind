@@ -3,8 +3,8 @@ package autopilot
 import (
 	"runtime"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // TopCentrality is a simple greedy technique to create connections to nodes

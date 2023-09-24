@@ -6,17 +6,17 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/watchtower/blob"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtdb"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtmock"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtserver"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtwire"
-	"github.com/pkt-cash/pktd/txscript"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/blob"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtmock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtserver"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtwire"
+	"github.com/kaotisk-hund/cjdcoind/txscript"
 )
 
 var (

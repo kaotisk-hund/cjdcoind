@@ -25,8 +25,8 @@
 //          "fmt"
 //          "log"
 //
-//          "github.com/pkt-cash/pktd/btcutil"
-//          "github.com/pkt-cash/pktd/chaincfg"
+//          "github.com/kaotisk-hund/cjdcoind/btcutil"
+//          "github.com/kaotisk-hund/cjdcoind/chaincfg"
 //  )
 //
 //  var testnet = flag.Bool("testnet", false, "operate on the testnet Bitcoin network")

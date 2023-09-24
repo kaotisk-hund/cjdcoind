@@ -3,7 +3,7 @@ package wtwire
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // Error is a generic error message that can be sent to a client if a request

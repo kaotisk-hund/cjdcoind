@@ -8,10 +8,10 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/lnd/channeldb/kvdb"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/kvdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 
-	"github.com/pkt-cash/pktd/lnd/routing/route"
+	"github.com/kaotisk-hund/cjdcoind/lnd/routing/route"
 )
 
 const testMaxRecords = 2

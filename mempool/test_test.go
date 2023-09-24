@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
 )
 
 func TestMain(m *testing.M) {

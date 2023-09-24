@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 var (
@@ -75,10 +75,10 @@ func BenchmarkProcessPacket(b *testing.B) {
 	b.StartTimer()
 
 	var (
-		pkt *ProcessedPacket
+		cjdcoin *ProcessedPacket
 	)
 	for i := 0; i < b.N; i++ {
-		pkt, err = path[0].ProcessOnionPacket(sphinxPacket, nil, uint32(i))
+		cjdcoin, err = path[0].ProcessOnionPacket(sphinxPacket, nil, uint32(i))
 		if err != nil {
 			b.Fatalf("unable to process packet %d: %v", i, err)
 		}
@@ -96,5 +96,5 @@ func BenchmarkProcessPacket(b *testing.B) {
 		b.StartTimer()
 	}
 
-	p = pkt
+	p = cjdcoin
 }

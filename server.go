@@ -22,26 +22,26 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/pkt-cash/pktd/addrmgr"
-	"github.com/pkt-cash/pktd/blockchain"
-	"github.com/pkt-cash/pktd/blockchain/indexers"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/bloom"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/connmgr"
-	"github.com/pkt-cash/pktd/database"
-	"github.com/pkt-cash/pktd/mempool"
-	"github.com/pkt-cash/pktd/mining"
-	"github.com/pkt-cash/pktd/mining/cpuminer"
-	"github.com/pkt-cash/pktd/netsync"
-	"github.com/pkt-cash/pktd/peer"
-	"github.com/pkt-cash/pktd/pktconfig/version"
-	"github.com/pkt-cash/pktd/pktlog/log"
-	"github.com/pkt-cash/pktd/txscript"
-	"github.com/pkt-cash/pktd/wire"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/addrmgr"
+	"github.com/kaotisk-hund/cjdcoind/blockchain"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/indexers"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/bloom"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/connmgr"
+	"github.com/kaotisk-hund/cjdcoind/database"
+	"github.com/kaotisk-hund/cjdcoind/mempool"
+	"github.com/kaotisk-hund/cjdcoind/mining"
+	"github.com/kaotisk-hund/cjdcoind/mining/cpuminer"
+	"github.com/kaotisk-hund/cjdcoind/netsync"
+	"github.com/kaotisk-hund/cjdcoind/peer"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
+	"github.com/kaotisk-hund/cjdcoind/txscript"
+	"github.com/kaotisk-hund/cjdcoind/wire"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 const (
@@ -2106,7 +2106,7 @@ func (s *server) peerHandler() {
 	if !cfg.DisableDNSSeed {
 		// Add peers discovered through DNS to the address manager.
 		connmgr.SeedFromDNS(activeNetParams.Params, defaultRequiredServices,
-			pktdLookup, func(addrs []*wire.NetAddress) {
+			cjdcoindLookup, func(addrs []*wire.NetAddress) {
 				// Bitcoind uses a lookup of the dns seeder here. This
 				// is rather strange since the values looked up by the
 				// DNS seed lookups will vary quite a lot.
@@ -2446,7 +2446,7 @@ out:
 			// listen port?
 			// XXX this assumes timeout is in seconds.
 			listenPort, err := s.nat.AddPortMapping("tcp", int(lport), int(lport),
-				"pktd listen port", 20*60)
+				"cjdcoind listen port", 20*60)
 			if err != nil {
 				log.Warnf("can't add UPnP port mapping: %v", err)
 			}
@@ -2538,7 +2538,7 @@ func setupRPCListeners() ([]net.Listener, er.R) {
 	return listeners, nil
 }
 
-// newServer returns a new pktd server configured to listen on addr for the
+// newServer returns a new cjdcoind server configured to listen on addr for the
 // bitcoin network type specified by chainParams.  Use start to begin accepting
 // connections from peers.
 func newServer(listenAddrs, agentBlacklist, agentWhitelist []string,
@@ -2553,7 +2553,7 @@ func newServer(listenAddrs, agentBlacklist, agentWhitelist []string,
 		services &^= protocol.SFNodeCF
 	}
 
-	amgr := addrmgr.New(cfg.DataDir, pktdLookup)
+	amgr := addrmgr.New(cfg.DataDir, cjdcoindLookup)
 
 	var listeners []net.Listener
 	var nat NAT
@@ -2826,7 +2826,7 @@ func newServer(listenAddrs, agentBlacklist, agentWhitelist []string,
 		OnAccept:       s.inboundPeerConnected,
 		RetryDuration:  connectionRetryInterval,
 		TargetOutbound: uint32(targetOutbound),
-		Dial:           pktdDial,
+		Dial:           cjdcoindDial,
 		OnConnection:   s.outboundPeerConnected,
 		GetNewAddress:  newAddressFunc,
 	})
@@ -2996,7 +2996,7 @@ func addrStringToNetAddr(addr string) (net.Addr, er.R) {
 	}
 
 	// Attempt to look up an IP address associated with the parsed host.
-	ips, err := pktdLookup(host)
+	ips, err := cjdcoindLookup(host)
 	if err != nil {
 		return nil, err
 	}

@@ -1,6 +1,6 @@
 package record
 
-import "github.com/pkt-cash/pktd/btcutil/er"
+import "github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
 const (
 	// CustomTypeStart is the start of the custom tlv type range as defined

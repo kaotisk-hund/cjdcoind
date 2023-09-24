@@ -12,8 +12,8 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/opt"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/testutil"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/opt"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/testutil"
 )
 
 var _ = testutil.Defer(func() {

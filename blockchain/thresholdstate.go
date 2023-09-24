@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
 )
 
 // ThresholdState define the various threshold states used when voting on

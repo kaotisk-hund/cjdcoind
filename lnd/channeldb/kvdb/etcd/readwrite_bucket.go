@@ -5,8 +5,8 @@ package etcd
 import (
 	"strconv"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/pktwallet/walletdb"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb"
 )
 
 // readWriteBucket stores the bucket id and the buckets transaction.

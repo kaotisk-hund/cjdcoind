@@ -8,8 +8,8 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
 )
 
 // Amount represents the base bitcoin monetary unit (colloquially referred
@@ -35,7 +35,7 @@ func round(f float64) Amount {
 // NewAmount is for specifically for converting BTC to Satoshi.
 // For creating a new Amount with an int64 value which denotes a quantity of Satoshi,
 // do a simple type conversion from type int64 to Amount.
-// See GoDoc for example: http://godoc.org/github.com/pkt-cash/btcutil#example-Amount
+// See GoDoc for example: http://godoc.org/github.com/cjdcoin-cash/btcutil#example-Amount
 func NewAmount(f float64) (Amount, er.R) {
 	// The amount is only considered invalid if it cannot be represented
 	// as an integer type.  This may happen if f is NaN or +-Infinity.

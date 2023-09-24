@@ -3,11 +3,11 @@ package chainreg
 import (
 	litecoinCfg "github.com/ltcsuite/ltcd/chaincfg"
 	litecoinWire "github.com/ltcsuite/ltcd/wire"
-	"github.com/pkt-cash/pktd/chaincfg"
-	bitcoinCfg "github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/lnd/keychain"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	bitcoinCfg "github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/lnd/keychain"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 // BitcoinNetParams couples the p2p parameters of a network with the

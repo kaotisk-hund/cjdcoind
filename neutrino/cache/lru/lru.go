@@ -4,9 +4,9 @@ import (
 	"container/list"
 	"sync"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/neutrino/cache"
+	"github.com/kaotisk-hund/cjdcoind/neutrino/cache"
 )
 
 // elementMap is an alias for a map from a generic interface to a list.Element.

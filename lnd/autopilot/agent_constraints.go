@@ -1,7 +1,7 @@
 package autopilot
 
 import (
-	"github.com/pkt-cash/pktd/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
 )
 
 // AgentConstraints is an interface the agent will query to determine what

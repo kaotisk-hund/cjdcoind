@@ -3,8 +3,8 @@ package lnwire
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // FundingCreated is sent from Alice (the initiator) to Bob (the responder),

@@ -3,7 +3,7 @@ package watchtowerrpc
 import (
 	"net"
 
-	"github.com/pkt-cash/pktd/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
 )
 
 // WatchtowerBackend abstracts access to the watchtower information that is

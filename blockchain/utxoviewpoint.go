@@ -8,14 +8,14 @@ package blockchain
 import (
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
-	"github.com/pkt-cash/pktd/database"
-	"github.com/pkt-cash/pktd/txscript"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/database"
+	"github.com/kaotisk-hund/cjdcoind/txscript"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // txoFlags is a bitmask defining additional information and state for a
@@ -335,7 +335,7 @@ func dirtyGuessIsNetworkStewardPayment(entry *UtxoEntry) {
 	if entry.packedFlags|tfCoinBase != tfCoinBase {
 		return
 	}
-	subsidy := pktCalcBlockSubsidy(pktPeriodForBlock(entry.blockHeight))
+	subsidy := cjdcoinCalcBlockSubsidy(cjdcoinPeriodForBlock(entry.blockHeight))
 	tax := PktCalcNetworkStewardPayout(subsidy)
 	if entry.amount == tax {
 		entry.packedFlags |= tfNetworkSteward

@@ -3,9 +3,9 @@ package wtdb
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/watchtower/blob"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtpolicy"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/blob"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtpolicy"
 )
 
 var (

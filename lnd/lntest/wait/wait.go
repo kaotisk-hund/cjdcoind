@@ -3,7 +3,7 @@ package wait
 import (
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // Predicate is a helper test function that will wait for a timeout period of

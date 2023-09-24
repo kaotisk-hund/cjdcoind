@@ -4,10 +4,10 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/neutrino/blockntfns"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/neutrino/blockntfns"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // createTx is a helper method to create random transactions that spend

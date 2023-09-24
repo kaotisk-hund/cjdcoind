@@ -10,15 +10,15 @@ import (
 	"os"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/cryptocycle"
-	"github.com/pkt-cash/pktd/blockchain/testdata"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/cryptocycle"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/testdata"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 

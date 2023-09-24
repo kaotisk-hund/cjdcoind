@@ -12,21 +12,21 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/go-errors/errors"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/contractcourt"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hodl"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/invoices"
-	"github.com/pkt-cash/pktd/lnd/lnpeer"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwallet"
-	"github.com/pkt-cash/pktd/lnd/lnwallet/chainfee"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/queue"
-	"github.com/pkt-cash/pktd/lnd/ticker"
-	"github.com/pkt-cash/pktd/pktlog/log"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/contractcourt"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hodl"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/invoices"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnpeer"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet/chainfee"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/queue"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 func init() {
@@ -290,7 +290,7 @@ type ChannelLinkConfig struct {
 // receive the outcome of the link processing. This channel must be buffered to
 // prevent the link from blocking.
 type localUpdateAddMsg struct {
-	pkt *htlcPacket
+	cjdcoin *htlcPacket
 	err chan er.R
 }
 
@@ -1133,12 +1133,12 @@ func (l *channelLink) htlcManager() {
 		// A message from the switch was just received. This indicates
 		// that the link is an intermediate hop in a multi-hop HTLC
 		// circuit.
-		case pkt := <-l.downstream:
-			l.handleDownstreamPkt(pkt)
+		case cjdcoin := <-l.downstream:
+			l.handleDownstreamPkt(cjdcoin)
 
 		// A message containing a locally initiated add was received.
 		case msg := <-l.localUpdateAdd:
-			msg.err <- l.handleDownstreamUpdateAdd(msg.pkt)
+			msg.err <- l.handleDownstreamUpdateAdd(msg.cjdcoin)
 
 		// A message from the connected peer was just received. This
 		// indicates that we have a new incoming HTLC, either directly
@@ -1284,8 +1284,8 @@ func (l *channelLink) randomFeeUpdateTimeout() time.Duration {
 
 // handleDownstreamUpdateAdd processes an UpdateAddHTLC packet sent from the
 // downstream HTLC Switch.
-func (l *channelLink) handleDownstreamUpdateAdd(pkt *htlcPacket) er.R {
-	htlc, ok := pkt.htlc.(*lnwire.UpdateAddHTLC)
+func (l *channelLink) handleDownstreamUpdateAdd(cjdcoin *htlcPacket) er.R {
+	htlc, ok := cjdcoin.htlc.(*lnwire.UpdateAddHTLC)
 	if !ok {
 		return er.New("not an UpdateAddHTLC packet")
 	}
@@ -1295,7 +1295,7 @@ func (l *channelLink) handleDownstreamUpdateAdd(pkt *htlcPacket) er.R {
 	// mailbox, and the HTLC being added to the commitment state.
 	if l.cfg.HodlMask.Active(hodl.AddOutgoing) {
 		log.Warnf(hodl.AddOutgoing.Warning())
-		l.mailBox.AckPacket(pkt.inKey())
+		l.mailBox.AckPacket(cjdcoin.inKey())
 		return nil
 	}
 
@@ -1303,7 +1303,7 @@ func (l *channelLink) handleDownstreamUpdateAdd(pkt *htlcPacket) er.R {
 	// so we add the new HTLC to our local log, then update the
 	// commitment chains.
 	htlc.ChanID = l.ChanID()
-	openCircuitRef := pkt.inKey()
+	openCircuitRef := cjdcoin.inKey()
 	index, err := l.channel.AddHTLC(htlc, &openCircuitRef)
 	if err != nil {
 		// The HTLC was unable to be added to the state machine,
@@ -1320,7 +1320,7 @@ func (l *channelLink) handleDownstreamUpdateAdd(pkt *htlcPacket) er.R {
 		// the switch, since the circuit was never fully opened,
 		// and the forwarding package shows it as
 		// unacknowledged.
-		l.mailBox.FailAdd(pkt)
+		l.mailBox.FailAdd(cjdcoin)
 
 		return er.E(NewDetailedLinkError(
 			lnwire.NewTemporaryChannelFailure(nil),
@@ -1333,28 +1333,28 @@ func (l *channelLink) handleDownstreamUpdateAdd(pkt *htlcPacket) er.R {
 		htlc.PaymentHash[:], index,
 		l.channel.PendingLocalUpdateCount())
 
-	pkt.outgoingChanID = l.ShortChanID()
-	pkt.outgoingHTLCID = index
+	cjdcoin.outgoingChanID = l.ShortChanID()
+	cjdcoin.outgoingHTLCID = index
 	htlc.ID = index
 
 	log.Debugf("queueing keystone of ADD open circuit: %s->%s",
-		pkt.inKey(), pkt.outKey())
+		cjdcoin.inKey(), cjdcoin.outKey())
 
-	l.openedCircuits = append(l.openedCircuits, pkt.inKey())
-	l.keystoneBatch = append(l.keystoneBatch, pkt.keystone())
+	l.openedCircuits = append(l.openedCircuits, cjdcoin.inKey())
+	l.keystoneBatch = append(l.keystoneBatch, cjdcoin.keystone())
 
 	_ = l.cfg.Peer.SendMessage(false, htlc)
 
 	// Send a forward event notification to htlcNotifier.
 	l.cfg.HtlcNotifier.NotifyForwardingEvent(
-		newHtlcKey(pkt),
+		newHtlcKey(cjdcoin),
 		HtlcInfo{
-			IncomingTimeLock: pkt.incomingTimeout,
-			IncomingAmt:      pkt.incomingAmount,
+			IncomingTimeLock: cjdcoin.incomingTimeout,
+			IncomingAmt:      cjdcoin.incomingAmount,
 			OutgoingTimeLock: htlc.Expiry,
 			OutgoingAmt:      htlc.Amount,
 		},
-		getEventType(pkt),
+		getEventType(cjdcoin),
 	)
 
 	l.tryBatchUpdateCommitTx()
@@ -1368,12 +1368,12 @@ func (l *channelLink) handleDownstreamUpdateAdd(pkt *htlcPacket) er.R {
 // cleared HTLCs with the upstream peer.
 //
 // TODO(roasbeef): add sync ntfn to ensure switch always has consistent view?
-func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
-	switch htlc := pkt.htlc.(type) {
+func (l *channelLink) handleDownstreamPkt(cjdcoin *htlcPacket) {
+	switch htlc := cjdcoin.htlc.(type) {
 	case *lnwire.UpdateAddHTLC:
 		// Handle add message. The returned error can be ignored,
 		// because it is also sent through the mailbox.
-		_ = l.handleDownstreamUpdateAdd(pkt)
+		_ = l.handleDownstreamUpdateAdd(cjdcoin)
 
 	case *lnwire.UpdateFulfillHTLC:
 		// If hodl.SettleOutgoing mode is active, we exit early to
@@ -1382,19 +1382,19 @@ func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
 		// commitment state.
 		if l.cfg.HodlMask.Active(hodl.SettleOutgoing) {
 			log.Warnf(hodl.SettleOutgoing.Warning())
-			l.mailBox.AckPacket(pkt.inKey())
+			l.mailBox.AckPacket(cjdcoin.inKey())
 			return
 		}
 
 		// An HTLC we forward to the switch has just settled somewhere
 		// upstream. Therefore we settle the HTLC within the our local
 		// state machine.
-		inKey := pkt.inKey()
+		inKey := cjdcoin.inKey()
 		err := l.channel.SettleHTLC(
 			htlc.PaymentPreimage,
-			pkt.incomingHTLCID,
-			pkt.sourceRef,
-			pkt.destRef,
+			cjdcoin.incomingHTLCID,
+			cjdcoin.sourceRef,
+			cjdcoin.destRef,
 			&inKey,
 		)
 		if err != nil {
@@ -1408,7 +1408,7 @@ func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
 			// continue reforwarding.
 			errr := er.Wrapped(err)
 			if _, ok := errr.(lnwallet.ErrUnknownHtlcIndex); ok {
-				l.cleanupSpuriousResponse(pkt)
+				l.cleanupSpuriousResponse(cjdcoin)
 			}
 
 			// Remove the packet from the link's mailbox to ensure
@@ -1419,15 +1419,15 @@ func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
 		}
 
 		log.Debugf("queueing removal of SETTLE closed circuit: "+
-			"%s->%s", pkt.inKey(), pkt.outKey())
+			"%s->%s", cjdcoin.inKey(), cjdcoin.outKey())
 
-		l.closedCircuits = append(l.closedCircuits, pkt.inKey())
+		l.closedCircuits = append(l.closedCircuits, cjdcoin.inKey())
 
 		// With the HTLC settled, we'll need to populate the wire
 		// message to target the specific channel and HTLC to be
 		// canceled.
 		htlc.ChanID = l.ChanID()
-		htlc.ID = pkt.incomingHTLCID
+		htlc.ID = cjdcoin.incomingHTLCID
 
 		// Then we send the HTLC settle message to the connected peer
 		// so we can continue the propagation of the settle message.
@@ -1435,8 +1435,8 @@ func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
 
 		// Send a settle event notification to htlcNotifier.
 		l.cfg.HtlcNotifier.NotifySettleEvent(
-			newHtlcKey(pkt),
-			getEventType(pkt),
+			newHtlcKey(cjdcoin),
+			getEventType(cjdcoin),
 		)
 
 		// Immediately update the commitment tx to minimize latency.
@@ -1449,18 +1449,18 @@ func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
 		// state.
 		if l.cfg.HodlMask.Active(hodl.FailOutgoing) {
 			log.Warnf(hodl.FailOutgoing.Warning())
-			l.mailBox.AckPacket(pkt.inKey())
+			l.mailBox.AckPacket(cjdcoin.inKey())
 			return
 		}
 
 		// An HTLC cancellation has been triggered somewhere upstream,
 		// we'll remove then HTLC from our local state machine.
-		inKey := pkt.inKey()
+		inKey := cjdcoin.inKey()
 		err := l.channel.FailHTLC(
-			pkt.incomingHTLCID,
+			cjdcoin.incomingHTLCID,
 			htlc.Reason,
-			pkt.sourceRef,
-			pkt.destRef,
+			cjdcoin.sourceRef,
+			cjdcoin.destRef,
 			&inKey,
 		)
 		if err != nil {
@@ -1474,7 +1474,7 @@ func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
 			// reforwarding.
 			errr := er.Wrapped(err)
 			if _, ok := errr.(lnwallet.ErrUnknownHtlcIndex); ok {
-				l.cleanupSpuriousResponse(pkt)
+				l.cleanupSpuriousResponse(cjdcoin)
 			}
 
 			// Remove the packet from the link's mailbox to ensure
@@ -1485,16 +1485,16 @@ func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
 		}
 
 		log.Debugf("queueing removal of FAIL closed circuit: %s->%s",
-			pkt.inKey(), pkt.outKey())
+			cjdcoin.inKey(), cjdcoin.outKey())
 
-		l.closedCircuits = append(l.closedCircuits, pkt.inKey())
+		l.closedCircuits = append(l.closedCircuits, cjdcoin.inKey())
 
 		// With the HTLC removed, we'll need to populate the wire
 		// message to target the specific channel and HTLC to be
 		// canceled. The "Reason" field will have already been set
 		// within the switch.
 		htlc.ChanID = l.ChanID()
-		htlc.ID = pkt.incomingHTLCID
+		htlc.ID = cjdcoin.incomingHTLCID
 
 		// We send the HTLC message to the peer which initially created
 		// the HTLC.
@@ -1504,17 +1504,17 @@ func (l *channelLink) handleDownstreamPkt(pkt *htlcPacket) {
 		// further down the route so we notify a forwarding failure.
 		// Otherwise, we notify a link failure because it failed at our
 		// node.
-		if pkt.linkFailure != nil {
+		if cjdcoin.linkFailure != nil {
 			l.cfg.HtlcNotifier.NotifyLinkFailEvent(
-				newHtlcKey(pkt),
-				newHtlcInfo(pkt),
-				getEventType(pkt),
-				pkt.linkFailure,
+				newHtlcKey(cjdcoin),
+				newHtlcInfo(cjdcoin),
+				getEventType(cjdcoin),
+				cjdcoin.linkFailure,
 				false,
 			)
 		} else {
 			l.cfg.HtlcNotifier.NotifyForwardingFailEvent(
-				newHtlcKey(pkt), getEventType(pkt),
+				newHtlcKey(cjdcoin), getEventType(cjdcoin),
 			)
 		}
 
@@ -1537,15 +1537,15 @@ func (l *channelLink) tryBatchUpdateCommitTx() {
 // associated with this packet. If successful in doing so, it will also purge
 // the open circuit from the circuit map and remove the packet from the link's
 // mailbox.
-func (l *channelLink) cleanupSpuriousResponse(pkt *htlcPacket) {
-	inKey := pkt.inKey()
+func (l *channelLink) cleanupSpuriousResponse(cjdcoin *htlcPacket) {
+	inKey := cjdcoin.inKey()
 
 	log.Debugf("cleaning up spurious response for incoming "+
 		"circuit-key=%v", inKey)
 
 	// If the htlc packet doesn't have a source reference, it is unsafe to
 	// proceed, as skipping this ack may cause the htlc to be reforwarded.
-	if pkt.sourceRef == nil {
+	if cjdcoin.sourceRef == nil {
 		log.Errorf("uanble to cleanup response for incoming "+
 			"circuit-key=%v, does not contain source reference",
 			inKey)
@@ -1555,7 +1555,7 @@ func (l *channelLink) cleanupSpuriousResponse(pkt *htlcPacket) {
 	// If the source reference is present,  we will try to prevent this link
 	// from resending the packet to the switch. To do so, we ack the AddRef
 	// of the incoming HTLC belonging to this link.
-	err := l.channel.AckAddHtlcs(*pkt.sourceRef)
+	err := l.channel.AckAddHtlcs(*cjdcoin.sourceRef)
 	if err != nil {
 		log.Errorf("unable to ack AddRef for incoming "+
 			"circuit-key=%v: %v", inKey, err)
@@ -1577,8 +1577,8 @@ func (l *channelLink) cleanupSpuriousResponse(pkt *htlcPacket) {
 	// Even if this fails, we will proceed in trying to delete the circuit.
 	// When retransmitting responses, the destination references will be
 	// cleaned up if an open circuit is not found in the circuit map.
-	if pkt.destRef != nil {
-		err := l.channel.AckSettleFails(*pkt.destRef)
+	if cjdcoin.destRef != nil {
+		err := l.channel.AckSettleFails(*cjdcoin.destRef)
 		if err != nil {
 			log.Errorf("unable to ack SettleFailRef "+
 				"for incoming circuit-key=%v: %v",
@@ -2375,26 +2375,26 @@ func (l *channelLink) String() string {
 // another peer or if the update was created by user
 //
 // NOTE: Part of the ChannelLink interface.
-func (l *channelLink) HandleSwitchPacket(pkt *htlcPacket) er.R {
+func (l *channelLink) HandleSwitchPacket(cjdcoin *htlcPacket) er.R {
 	log.Tracef("received switch packet inkey=%v, outkey=%v",
-		pkt.inKey(), pkt.outKey())
+		cjdcoin.inKey(), cjdcoin.outKey())
 
-	return l.mailBox.AddPacket(pkt)
+	return l.mailBox.AddPacket(cjdcoin)
 }
 
 // HandleLocalAddPacket handles a locally-initiated UpdateAddHTLC packet. It
 // will be processed synchronously.
 //
 // NOTE: Part of the ChannelLink interface.
-func (l *channelLink) HandleLocalAddPacket(pkt *htlcPacket) er.R {
-	log.Tracef("received switch packet outkey=%v", pkt.outKey())
+func (l *channelLink) HandleLocalAddPacket(cjdcoin *htlcPacket) er.R {
+	log.Tracef("received switch packet outkey=%v", cjdcoin.outKey())
 
 	// Create a buffered result channel to prevent the link from blocking.
 	errChan := make(chan er.R, 1)
 
 	select {
 	case l.localUpdateAdd <- &localUpdateAddMsg{
-		pkt: pkt,
+		cjdcoin: cjdcoin,
 		err: errChan,
 	}:
 	case <-l.quit:
@@ -2991,12 +2991,12 @@ func (l *channelLink) forwardBatch(packets ...*htlcPacket) {
 	// mailbox. This could happen if a packet fails and is buffered in the
 	// mailbox, and the incoming link flaps.
 	var filteredPkts = make([]*htlcPacket, 0, len(packets))
-	for _, pkt := range packets {
-		if l.mailBox.HasPacket(pkt.inKey()) {
+	for _, cjdcoin := range packets {
+		if l.mailBox.HasPacket(cjdcoin.inKey()) {
 			continue
 		}
 
-		filteredPkts = append(filteredPkts, pkt)
+		filteredPkts = append(filteredPkts, cjdcoin)
 	}
 
 	if err := l.cfg.ForwardPackets(l.quit, filteredPkts...); err != nil {

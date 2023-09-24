@@ -3,9 +3,9 @@
 package signrpc
 
 import (
-	"github.com/pkt-cash/pktd/lnd/input"
-	"github.com/pkt-cash/pktd/lnd/keychain"
-	"github.com/pkt-cash/pktd/lnd/macaroons"
+	"github.com/kaotisk-hund/cjdcoind/lnd/input"
+	"github.com/kaotisk-hund/cjdcoind/lnd/keychain"
+	"github.com/kaotisk-hund/cjdcoind/lnd/macaroons"
 )
 
 // Config is the primary configuration struct for the signer RPC server. It

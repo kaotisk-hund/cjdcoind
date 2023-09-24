@@ -3,8 +3,8 @@ package routing
 import (
 	"time"
 
-	"github.com/pkt-cash/pktd/lnd/routing/route"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/lnd/routing/route"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 // missionControlState is an object that manages the internal mission control

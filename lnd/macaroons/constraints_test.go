@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/lnd/macaroons"
+	"github.com/kaotisk-hund/cjdcoind/lnd/macaroons"
 	macaroon "gopkg.in/macaroon.v2"
 )
 

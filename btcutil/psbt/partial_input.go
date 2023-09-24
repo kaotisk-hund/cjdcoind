@@ -6,9 +6,9 @@ import (
 	"io"
 	"sort"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/txscript/params"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/txscript/params"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // PInput is a struct encapsulating all the data that can be attached to any

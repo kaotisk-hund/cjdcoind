@@ -4,13 +4,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/clock"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/queue"
-	"github.com/pkt-cash/pktd/lnd/zpay32"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/clock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/queue"
+	"github.com/kaotisk-hund/cjdcoind/lnd/zpay32"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 // invoiceExpiry holds and invoice's payment hash and its expiry. This

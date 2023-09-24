@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
 	"github.com/stretchr/testify/require"
 )
 

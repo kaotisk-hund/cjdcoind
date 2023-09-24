@@ -12,9 +12,9 @@ import (
 	"github.com/json-iterator/go"
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // AddNodeSubCmd defines the type used in the addnode JSON-RPC command for the

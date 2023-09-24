@@ -18,25 +18,25 @@ import (
 	"time"
 
 	flags "github.com/jessevdk/go-flags"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
-	"github.com/pkt-cash/pktd/lnd/autopilot"
-	"github.com/pkt-cash/pktd/lnd/chainreg"
-	"github.com/pkt-cash/pktd/lnd/chanbackup"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/discovery"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hodl"
-	"github.com/pkt-cash/pktd/lnd/input"
-	"github.com/pkt-cash/pktd/lnd/lncfg"
-	"github.com/pkt-cash/pktd/lnd/lnrpc/routerrpc"
-	"github.com/pkt-cash/pktd/lnd/lnrpc/signrpc"
-	"github.com/pkt-cash/pktd/lnd/routing"
-	"github.com/pkt-cash/pktd/lnd/tor"
-	"github.com/pkt-cash/pktd/neutrino"
-	"github.com/pkt-cash/pktd/pktconfig/version"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/autopilot"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainreg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chanbackup"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/discovery"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hodl"
+	"github.com/kaotisk-hund/cjdcoind/lnd/input"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lncfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc/routerrpc"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc/signrpc"
+	"github.com/kaotisk-hund/cjdcoind/lnd/routing"
+	"github.com/kaotisk-hund/cjdcoind/lnd/tor"
+	"github.com/kaotisk-hund/cjdcoind/neutrino"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 const (
@@ -241,7 +241,7 @@ type Config struct {
 	LtcdMode      *lncfg.Btcd     `group:"ltcd" namespace:"ltcd"`
 	LitecoindMode *lncfg.Bitcoind `group:"litecoind" namespace:"litecoind"`
 
-	Pkt *lncfg.Chain `group:"PKT" namespace:"pkt"`
+	Pkt *lncfg.Chain `group:"PKT" namespace:"cjdcoin"`
 
 	Autopilot *lncfg.AutoPilot `group:"Autopilot" namespace:"autopilot"`
 
@@ -850,7 +850,7 @@ func ValidateConfig(cfg Config, usageMessage string) (*Config, er.R) {
 
 	case cfg.Pkt.Active:
 		cfg.ActiveNetParams = chainreg.PktMainNetParams
-		// Calling it /pkt/mainnet makes life easier
+		// Calling it /cjdcoin/mainnet makes life easier
 		cfg.ActiveNetParams.Name = "mainnet"
 		cfg.Pkt.ChainDir = filepath.Join(cfg.DataDir,
 			defaultChainSubDirname,

@@ -14,13 +14,13 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	rpc "github.com/pkt-cash/pktd/rpcclient"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	rpc "github.com/kaotisk-hund/cjdcoind/rpcclient"
 )
 
-// nodeConfig contains all the args, and data required to launch a pktd process
+// nodeConfig contains all the args, and data required to launch a cjdcoind process
 // and connect the rpc client to it.
 type nodeConfig struct {
 	rpcUser    string
@@ -44,9 +44,9 @@ type nodeConfig struct {
 
 // newConfig returns a newConfig with all default values.
 func newConfig(prefix, certFile, keyFile string, extra []string) (*nodeConfig, er.R) {
-	pktdPath, err := pktdExecutablePath()
+	cjdcoindPath, err := cjdcoindExecutablePath()
 	if err != nil {
-		pktdPath = "pktd"
+		cjdcoindPath = "cjdcoind"
 	}
 
 	a := &nodeConfig{
@@ -56,7 +56,7 @@ func newConfig(prefix, certFile, keyFile string, extra []string) (*nodeConfig, e
 		rpcPass:   "pass",
 		extra:     extra,
 		prefix:    prefix,
-		exe:       pktdPath,
+		exe:       cjdcoindPath,
 		endpoint:  "ws",
 		certFile:  certFile,
 		keyFile:   keyFile,
@@ -89,7 +89,7 @@ func (n *nodeConfig) setDefaults() er.R {
 	return nil
 }
 
-// arguments returns an array of arguments that be used to launch the pktd
+// arguments returns an array of arguments that be used to launch the cjdcoind
 // process.
 func (n *nodeConfig) arguments() []string {
 	args := []string{}
@@ -137,7 +137,7 @@ func (n *nodeConfig) arguments() []string {
 	return args
 }
 
-// command returns the exec.Cmd which will be used to start the pktd process.
+// command returns the exec.Cmd which will be used to start the cjdcoind process.
 func (n *nodeConfig) command() *exec.Cmd {
 	cmd := exec.Command(n.exe, n.arguments()...)
 	cmd.Stdout = os.Stdout
@@ -146,7 +146,7 @@ func (n *nodeConfig) command() *exec.Cmd {
 }
 
 // rpcConnConfig returns the rpc connection config that can be used to connect
-// to the pktd process that is launched via Start().
+// to the cjdcoind process that is launched via Start().
 func (n *nodeConfig) rpcConnConfig() rpc.ConnConfig {
 	return rpc.ConnConfig{
 		Host:                 n.rpcListen,
@@ -179,7 +179,7 @@ func (n *nodeConfig) cleanup() er.R {
 }
 
 // node houses the necessary state required to configure, launch, and manage a
-// pktd process.
+// cjdcoind process.
 type node struct {
 	config *nodeConfig
 
@@ -191,7 +191,7 @@ type node struct {
 
 // newNode creates a new node instance according to the passed config. dataDir
 // will be used to hold a file recording the pid of the launched process, and
-// as the base for the log and data directories for pktd.
+// as the base for the log and data directories for cjdcoind.
 func newNode(config *nodeConfig, dataDir string) (*node, er.R) {
 	return &node{
 		config:  config,
@@ -200,13 +200,13 @@ func newNode(config *nodeConfig, dataDir string) (*node, er.R) {
 	}, nil
 }
 
-// start creates a new pktd process, and writes its pid in a file reserved for
+// start creates a new cjdcoind process, and writes its pid in a file reserved for
 // recording the pid of the launched process. This file can be used to
 // terminate the process in case of a hang, or panic. In the case of a failing
 // test case, or panic, it is important that the process be stopped via stop(),
 // otherwise, it will persist unless explicitly killed.
 func (n *node) start() er.R {
-	fmt.Printf("Launching pktd with arguments: %v\n", n.cmd.Args)
+	fmt.Printf("Launching cjdcoind with arguments: %v\n", n.cmd.Args)
 	if err := n.cmd.Start(); err != nil {
 		return er.E(err)
 	}
@@ -229,7 +229,7 @@ func (n *node) start() er.R {
 	return nil
 }
 
-// stop interrupts the running pktd process process, and waits until it exits
+// stop interrupts the running cjdcoind process process, and waits until it exits
 // properly. On windows, interrupt is not supported, so a kill signal is used
 // instead
 func (n *node) stop() er.R {
@@ -259,7 +259,7 @@ func (n *node) cleanup() er.R {
 	return n.config.cleanup()
 }
 
-// shutdown terminates the running pktd process, and cleans up all
+// shutdown terminates the running cjdcoind process, and cleans up all
 // file/directories created by node.
 func (n *node) shutdown() er.R {
 	if err := n.stop(); err != nil {

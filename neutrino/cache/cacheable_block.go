@@ -1,8 +1,8 @@
 package cache
 
 import (
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // CacheableBlock is a wrapper around the btcutil.Block type which provides a

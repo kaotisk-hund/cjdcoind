@@ -6,11 +6,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pkt-cash/pktd/lnd"
-	"github.com/pkt-cash/pktd/lnd/lnrpc"
-	"github.com/pkt-cash/pktd/lnd/lnrpc/routerrpc"
-	"github.com/pkt-cash/pktd/lnd/lntest"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc/routerrpc"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntest"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 func testHtlcErrorPropagation(net *lntest.NetworkHarness, t *harnessTest) {

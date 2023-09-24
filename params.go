@@ -6,13 +6,13 @@
 package main
 
 import (
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 // activeNetParams is a pointer to the parameters specific to the
 // currently active bitcoin network.
-var activeNetParams = &pktMainNetParams
+var activeNetParams = &cjdcoinMainNetParams
 
 // params is used to group parameters for various networks such as the main
 // network and test networks.
@@ -23,9 +23,9 @@ type params struct {
 
 // mainNetParams contains parameters specific to the main network
 // (protocol.MainNet).  NOTE: The RPC port is intentionally different than the
-// reference implementation because pktd does not handle wallet requests.  The
+// reference implementation because cjdcoind does not handle wallet requests.  The
 // separate wallet process listens on the well-known port and forwards requests
-// it does not handle on to pktd.  This approach allows the wallet process
+// it does not handle on to cjdcoind.  This approach allows the wallet process
 // to emulate the full reference implementation RPC API.
 var mainNetParams = params{
 	Params:  &chaincfg.MainNetParams,
@@ -49,17 +49,17 @@ var testNet3Params = params{
 	rpcPort: "18334",
 }
 
-// pktTestNetParams contains parameters specific to the pkt.cash test network
+// cjdcoinTestNetParams contains parameters specific to the cjdcoin.cash test network
 // (wire.PktTestNetParams).  NOTE: The RPC port is intentionally different
 // than the reference implementation - see the mainNetParams comment for details.
-var pktTestNetParams = params{
+var cjdcoinTestNetParams = params{
 	Params:  &chaincfg.PktTestNetParams,
 	rpcPort: "64513",
 }
 
-// pktMainNetParams contains parameters specific to the pkt.cash main network
+// cjdcoinMainNetParams contains parameters specific to the cjdcoin.cash main network
 // (wire.PktMainNet).
-var pktMainNetParams = params{
+var cjdcoinMainNetParams = params{
 	Params:  &chaincfg.PktMainNetParams,
 	rpcPort: "64765",
 }
@@ -72,7 +72,7 @@ var simNetParams = params{
 }
 
 // netName returns the name used when referring to a bitcoin network.  At the
-// time of writing, pktd currently places blocks for testnet version 3 in the
+// time of writing, cjdcoind currently places blocks for testnet version 3 in the
 // data and log directory "testnet", which does not match the Name field of the
 // chaincfg parameters.  This function can be used to override this directory
 // name as "testnet" when the passed active network matches protocol.TestNet3.

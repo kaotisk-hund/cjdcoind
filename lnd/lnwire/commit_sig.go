@@ -3,7 +3,7 @@ package lnwire
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // CommitSig is sent by either side to stage any pending HTLC's in the

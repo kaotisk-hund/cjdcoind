@@ -1,10 +1,10 @@
 package wtserver
 
 import (
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtdb"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtwire"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtwire"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 // handleDeleteSession processes a DeleteSession request for a client with given

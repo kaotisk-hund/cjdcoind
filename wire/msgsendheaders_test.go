@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 // TestSendHeaders tests the MsgSendHeaders API against the latest protocol

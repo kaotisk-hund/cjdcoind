@@ -19,13 +19,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/pkt-cash/pktd/goleveldb/leveldb"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/errors"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/filter"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/opt"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/storage"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/table"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/util"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/errors"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/filter"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/opt"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/storage"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/table"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/util"
 )
 
 var (

@@ -5,7 +5,7 @@ package healthcheck
 import (
 	"syscall"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // AvailableDiskSpaceRatio returns ratio of available disk space to total

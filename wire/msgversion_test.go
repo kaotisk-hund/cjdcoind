@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 
 	"github.com/davecgh/go-spew/spew"
 )
@@ -388,7 +388,7 @@ func TestVersionOptionalFields(t *testing.T) {
 	// uaVersion is a version message that contains all fields through
 	// the UserAgent field.
 	uaVersion := nonceVersion
-	uaVersion.UserAgent = "/pktdtest:0.0.1/"
+	uaVersion.UserAgent = "/cjdcoindtest:0.0.1/"
 	uaVersionEncoded := make([]byte, len(baseVersionEncoded)-4)
 	copy(uaVersionEncoded, baseVersionEncoded)
 
@@ -472,7 +472,7 @@ var baseVersion = &MsgVersion{
 		Port:      8333,
 	},
 	Nonce:     123123, // 0x1e0f3
-	UserAgent: "/pktdtest:0.0.1/",
+	UserAgent: "/cjdcoindtest:0.0.1/",
 	LastBlock: 234234, // 0x392fa
 }
 
@@ -517,7 +517,7 @@ var baseVersionBIP0037 = &MsgVersion{
 		Port:      8333,
 	},
 	Nonce:     123123, // 0x1e0f3
-	UserAgent: "/pktdtest:0.0.1/",
+	UserAgent: "/cjdcoindtest:0.0.1/",
 	LastBlock: 234234, // 0x392fa
 }
 

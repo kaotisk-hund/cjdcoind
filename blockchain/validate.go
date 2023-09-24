@@ -14,18 +14,18 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/txscript/opcode"
-	"github.com/pkt-cash/pktd/txscript/params"
-	"github.com/pkt-cash/pktd/wire/ruleerror"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/txscript/opcode"
+	"github.com/kaotisk-hund/cjdcoind/txscript/params"
+	"github.com/kaotisk-hund/cjdcoind/wire/ruleerror"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
-	"github.com/pkt-cash/pktd/txscript"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/txscript"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 const (
@@ -198,16 +198,16 @@ func bitcoinCalcBlockSubsidy(height int32, chainParams *chaincfg.Params) int64 {
 	return bitcoinBaseSubsidy >> uint(height/chainParams.SubsidyReductionInterval)
 }
 
-// pktBlocksPerPeriod is the number of blocks which will elapse per payout period
-const pktBlocksPerPeriod int32 = 144000
+// cjdcoinBlocksPerPeriod is the number of blocks which will elapse per payout period
+const cjdcoinBlocksPerPeriod int32 = 144000
 
-func pktPeriodForBlock(height int32) int32 {
-	return height / pktBlocksPerPeriod
+func cjdcoinPeriodForBlock(height int32) int32 {
+	return height / cjdcoinBlocksPerPeriod
 }
 
-// pktCalcBlockSubsidy gets the amount of new money per block during a
+// cjdcoinCalcBlockSubsidy gets the amount of new money per block during a
 // particular block period. Be careful, this is periods, not block height.
-func pktCalcBlockSubsidy(period int32) int64 {
+func cjdcoinCalcBlockSubsidy(period int32) int64 {
 	periods := big.NewInt(int64(period))
 	a := big.NewInt(9)
 	a.Exp(a, periods, nil)
@@ -219,11 +219,11 @@ func pktCalcBlockSubsidy(period int32) int64 {
 }
 
 // CalcBlockSubsidy returns the amount of new money which should be created
-// in the block at the given height. It starts as 4166 pkt per block at block
+// in the block at the given height. It starts as 4166 cjdcoin per block at block
 // zero and then degrades by 10% every 144000 blocks.
 func CalcBlockSubsidy(height int32, chainParams *chaincfg.Params) int64 {
 	if chainParams.GlobalConf.HasNetworkSteward {
-		return pktCalcBlockSubsidy(pktPeriodForBlock(height))
+		return cjdcoinCalcBlockSubsidy(cjdcoinPeriodForBlock(height))
 	}
 	return bitcoinCalcBlockSubsidy(height, chainParams)
 }
@@ -236,13 +236,13 @@ func PktCalcNetworkStewardPayout(subsidy int64) int64 {
 
 // PktCalcTotalMoney gets the total amount of money at a given block height
 func PktCalcTotalMoney(height int32) int64 {
-	p := pktPeriodForBlock(height)
+	p := cjdcoinPeriodForBlock(height)
 	total := int64(0)
 	for i := int32(0); i < p; i++ {
-		total += pktCalcBlockSubsidy(i) * int64(pktBlocksPerPeriod)
+		total += cjdcoinCalcBlockSubsidy(i) * int64(cjdcoinBlocksPerPeriod)
 	}
-	upto := p * pktBlocksPerPeriod
-	return total + pktCalcBlockSubsidy(p)*int64(height-upto)
+	upto := p * cjdcoinBlocksPerPeriod
+	return total + cjdcoinCalcBlockSubsidy(p)*int64(height-upto)
 }
 
 // CheckTransactionSanity performs some preliminary checks on a transaction to

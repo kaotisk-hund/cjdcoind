@@ -29,30 +29,30 @@ import (
 	jsoniter "github.com/json-iterator/go"
 
 	"github.com/gorilla/websocket"
-	"github.com/pkt-cash/pktd/blockchain"
-	"github.com/pkt-cash/pktd/blockchain/indexers"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/difficulty"
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcjson"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
-	"github.com/pkt-cash/pktd/database"
-	"github.com/pkt-cash/pktd/mempool"
-	"github.com/pkt-cash/pktd/mining"
-	"github.com/pkt-cash/pktd/mining/cpuminer"
-	"github.com/pkt-cash/pktd/peer"
-	"github.com/pkt-cash/pktd/pktconfig/version"
-	"github.com/pkt-cash/pktd/pktlog/log"
-	"github.com/pkt-cash/pktd/txscript"
-	"github.com/pkt-cash/pktd/txscript/scriptbuilder"
-	"github.com/pkt-cash/pktd/wire"
-	"github.com/pkt-cash/pktd/wire/constants"
-	"github.com/pkt-cash/pktd/wire/protocol"
-	"github.com/pkt-cash/pktd/wire/ruleerror"
+	"github.com/kaotisk-hund/cjdcoind/blockchain"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/indexers"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/difficulty"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcjson"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/database"
+	"github.com/kaotisk-hund/cjdcoind/mempool"
+	"github.com/kaotisk-hund/cjdcoind/mining"
+	"github.com/kaotisk-hund/cjdcoind/mining/cpuminer"
+	"github.com/kaotisk-hund/cjdcoind/peer"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
+	"github.com/kaotisk-hund/cjdcoind/txscript"
+	"github.com/kaotisk-hund/cjdcoind/txscript/scriptbuilder"
+	"github.com/kaotisk-hund/cjdcoind/wire"
+	"github.com/kaotisk-hund/cjdcoind/wire/constants"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/wire/ruleerror"
 )
 
 // API version constants
@@ -174,9 +174,9 @@ var rpcHandlersBeforeInit = map[string]commandHandler{
 	"version":                handleVersion,
 }
 
-// list of commands that we recognize, but for which pktd has no support because
+// list of commands that we recognize, but for which cjdcoind has no support because
 // it lacks support for wallet functionality. For these commands the user
-// should ask a connected instance of pktwallet.
+// should ask a connected instance of cjdcoinwallet.
 var rpcAskWallet = map[string]struct{}{
 	"addmultisigaddress":     {},
 	"addp2shscript":          {},
@@ -338,7 +338,7 @@ func handleUnimplemented(s *rpcServer, cmd interface{}, closeChan <-chan struct{
 
 // handleAskWallet is the handler for commands that are recognized as valid, but
 // are unable to answer correctly since it involves wallet state.
-// These commands will be implemented in pktwallet.
+// These commands will be implemented in cjdcoinwallet.
 func handleAskWallet(s *rpcServer, cmd interface{}, closeChan <-chan struct{}) (interface{}, er.R) {
 	return nil, btcjson.NewRPCError(
 		btcjson.ErrRPCNoWallet,
@@ -971,7 +971,7 @@ func handleGetAddedNodeInfo(s *rpcServer, cmd interface{}, closeChan <-chan stru
 			ipList = make([]string, 1)
 			ipList[0] = host
 		default:
-			ips, err := pktdLookup(host)
+			ips, err := cjdcoindLookup(host)
 			if err != nil {
 				ipList = make([]string, 1)
 				ipList[0] = host
@@ -3722,7 +3722,7 @@ func handleStop(s *rpcServer, cmd interface{}, closeChan <-chan struct{}) (inter
 	case s.requestProcessShutdown <- struct{}{}:
 	default:
 	}
-	return "pktd stopping.", nil
+	return "cjdcoind stopping.", nil
 }
 
 // handleSubmitBlock implements the submitblock command.
@@ -3903,7 +3903,7 @@ func handleVerifyMessage(s *rpcServer, cmd interface{}, closeChan <-chan struct{
 // NOTE: This is a btcsuite extension ported from github.com/decred/dcrd.
 func handleVersion(s *rpcServer, cmd interface{}, closeChan <-chan struct{}) (interface{}, er.R) {
 	result := map[string]btcjson.VersionResult{
-		"pktdjsonrpcapi": {
+		"cjdcoindjsonrpcapi": {
 			VersionString: jsonrpcSemverString,
 			Major:         jsonrpcSemverMajor,
 			Minor:         jsonrpcSemverMinor,
@@ -4373,7 +4373,7 @@ func (s *rpcServer) jsonRPCRead(w http.ResponseWriter, r *http.Request, isAdmin 
 
 // jsonAuthFail sends a message back to the client if the http auth is rejected.
 func jsonAuthFail(w http.ResponseWriter) {
-	w.Header().Add("WWW-Authenticate", `Basic realm="pktd RPC"`)
+	w.Header().Add("WWW-Authenticate", `Basic realm="cjdcoind RPC"`)
 	http.Error(w, "401 Unauthorized.", http.StatusUnauthorized)
 }
 
@@ -4458,7 +4458,7 @@ func (s *rpcServer) Start() {
 func genCertPair(certFile, keyFile string) er.R {
 	log.Infof("Generating TLS certificates...")
 
-	org := "pktd autogenerated cert"
+	org := "cjdcoind autogenerated cert"
 	validUntil := time.Now().Add(10 * 365 * 24 * time.Hour)
 	cert, key, err := btcutil.NewTLSCertPair(org, validUntil, nil)
 	if err != nil {

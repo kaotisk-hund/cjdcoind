@@ -7,7 +7,7 @@ package addrmgr
 import (
 	"net"
 
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 var (

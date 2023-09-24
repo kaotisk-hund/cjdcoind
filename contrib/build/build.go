@@ -96,7 +96,7 @@ func buildStr() string {
 }
 
 func ldflags() string {
-	return "-X github.com/pkt-cash/pktd/pktconfig/version.appBuild=" + buildStr()
+	return "-X github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version.appBuild=" + buildStr()
 }
 
 func test() {
@@ -124,9 +124,9 @@ func main() {
 		os.Setenv(a[0:i], a[i+1:])
 	}
 
-	build("pktd", ".", &conf)
-	build("pktwallet", "./pktwallet", &conf)
-	build("pktctl", "./cmd/pktctl", &conf)
+	build("cjdcoind", ".", &conf)
+	build("cjdcoinwallet", "./cjdcoinwallet", &conf)
+	build("cjdcoinctl", "./cmd/cjdcoinctl", &conf)
 	build("checksig", "./cmd/checksig", &conf)
 	build("pld", "./lnd/cmd/lnd", &conf)
 	build("pldctl", "./lnd/cmd/lncli", &conf)
@@ -135,5 +135,5 @@ func main() {
 	} else {
 		fmt.Println("Pass the --test flag if you want to run the tests as well")
 	}
-	fmt.Println("Everything looks good, type `./bin/pktwallet --create` to make a wallet")
+	fmt.Println("Everything looks good, type `./bin/cjdcoinwallet --create` to make a wallet")
 }

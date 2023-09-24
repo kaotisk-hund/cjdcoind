@@ -7,16 +7,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs"
-	"github.com/pkt-cash/pktd/lnd/watchtower/blob"
-	"github.com/pkt-cash/pktd/lnd/watchtower/lookout"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtdb"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtmock"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtpolicy"
-	"github.com/pkt-cash/pktd/wire"
-	"github.com/pkt-cash/pktd/wire/constants"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/blob"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/lookout"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtmock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtpolicy"
+	"github.com/kaotisk-hund/cjdcoind/wire"
+	"github.com/kaotisk-hund/cjdcoind/wire/constants"
 )
 
 type mockPunisher struct {

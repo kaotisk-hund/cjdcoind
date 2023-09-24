@@ -1,7 +1,7 @@
 package sphinx
 
 import (
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // ErrAlreadyCommitted signals that an entry could not be added to the

@@ -3,15 +3,15 @@ package btcwallet
 import (
 	"strconv"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 
-	"github.com/pkt-cash/pktd/lnd/lnwallet"
-	"github.com/pkt-cash/pktd/neutrino"
-	"github.com/pkt-cash/pktd/pktwallet/chain"
-	"github.com/pkt-cash/pktd/pktwallet/waddrmgr"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet"
+	"github.com/kaotisk-hund/cjdcoind/neutrino"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/chain"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/waddrmgr"
 )
 
 var (

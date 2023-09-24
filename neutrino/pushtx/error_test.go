@@ -3,10 +3,10 @@ package pushtx_test
 import (
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/neutrino/pushtx"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/neutrino/pushtx"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // TestParseBroadcastErrorCode ensures that we properly construct a

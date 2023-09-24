@@ -8,11 +8,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/neutrino/banman"
-	"github.com/pkt-cash/pktd/pktwallet/walletdb"
-	_ "github.com/pkt-cash/pktd/pktwallet/walletdb/bdb"
+	"github.com/kaotisk-hund/cjdcoind/neutrino/banman"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb"
+	_ "github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb/bdb"
 )
 
 // createTestBanStore creates a test Store backed by a boltdb instance.

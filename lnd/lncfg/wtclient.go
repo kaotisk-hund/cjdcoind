@@ -3,7 +3,7 @@ package lncfg
 import (
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // WtClient holds the configuration options for the daemon's watchtower client.

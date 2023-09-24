@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/clock"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/clock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 const testExpiry = time.Minute
@@ -33,7 +33,7 @@ func TestMailBoxCouriers(t *testing.T) {
 	// We'll add a set of random packets to the mailbox.
 	sentPackets := make([]*htlcPacket, numPackets)
 	for i := 0; i < numPackets; i++ {
-		pkt := &htlcPacket{
+		cjdcoin := &htlcPacket{
 			outgoingChanID: lnwire.NewShortChanIDFromInt(uint64(prand.Int63())),
 			incomingChanID: lnwire.NewShortChanIDFromInt(uint64(prand.Int63())),
 			amount:         lnwire.MilliSatoshi(prand.Int63()),
@@ -41,9 +41,9 @@ func TestMailBoxCouriers(t *testing.T) {
 				ID: uint64(i),
 			},
 		}
-		sentPackets[i] = pkt
+		sentPackets[i] = cjdcoin
 
-		err := ctx.mailbox.AddPacket(pkt)
+		err := ctx.mailbox.AddPacket(cjdcoin)
 		if err != nil {
 			t.Fatalf("unable to add packet: %v", err)
 		}
@@ -74,9 +74,9 @@ func TestMailBoxCouriers(t *testing.T) {
 		if i%2 == 0 {
 			select {
 			case <-timeout:
-				t.Fatalf("didn't recv pkt after timeout")
-			case pkt := <-ctx.mailbox.PacketOutBox():
-				recvdPackets = append(recvdPackets, pkt)
+				t.Fatalf("didn't recv cjdcoin after timeout")
+			case cjdcoin := <-ctx.mailbox.PacketOutBox():
+				recvdPackets = append(recvdPackets, cjdcoin)
 			}
 		} else {
 			select {
@@ -110,7 +110,7 @@ func TestMailBoxCouriers(t *testing.T) {
 			spew.Sdump(sentMessages), spew.Sdump(recvdMessages))
 	}
 
-	// Now that we've received all of the intended msgs/pkts, ack back half
+	// Now that we've received all of the intended msgs/cjdcoins, ack back half
 	// of the packets.
 	for _, recvdPkt := range recvdPackets[:halfPackets] {
 		ctx.mailbox.AckPacket(recvdPkt.inKey())
@@ -137,9 +137,9 @@ func TestMailBoxCouriers(t *testing.T) {
 		if i%2 == 0 {
 			select {
 			case <-timeout:
-				t.Fatalf("didn't recv pkt after timeout")
-			case pkt := <-ctx.mailbox.PacketOutBox():
-				recvdPackets2 = append(recvdPackets2, pkt)
+				t.Fatalf("didn't recv cjdcoin after timeout")
+			case cjdcoin := <-ctx.mailbox.PacketOutBox():
+				recvdPackets2 = append(recvdPackets2, cjdcoin)
 			}
 		} else {
 			select {
@@ -219,10 +219,10 @@ func newMailboxContext(t *testing.T, startTime time.Time,
 }
 
 func (c *mailboxContext) forward(_ chan struct{},
-	pkts ...*htlcPacket) er.R {
+	cjdcoins ...*htlcPacket) er.R {
 
-	for _, pkt := range pkts {
-		c.forwards <- pkt
+	for _, cjdcoin := range cjdcoins {
+		c.forwards <- cjdcoin
 	}
 
 	return nil
@@ -233,7 +233,7 @@ func (c *mailboxContext) sendAdds(start, num int) []*htlcPacket {
 
 	sentPackets := make([]*htlcPacket, num)
 	for i := 0; i < num; i++ {
-		pkt := &htlcPacket{
+		cjdcoin := &htlcPacket{
 			outgoingChanID: lnwire.NewShortChanIDFromInt(
 				uint64(prand.Int63())),
 			incomingChanID: lnwire.NewShortChanIDFromInt(
@@ -244,9 +244,9 @@ func (c *mailboxContext) sendAdds(start, num int) []*htlcPacket {
 				ID: uint64(start + i),
 			},
 		}
-		sentPackets[i] = pkt
+		sentPackets[i] = cjdcoin
 
-		err := c.mailbox.AddPacket(pkt)
+		err := c.mailbox.AddPacket(cjdcoin)
 		if err != nil {
 			c.t.Fatalf("unable to add packet: %v", err)
 		}
@@ -255,18 +255,18 @@ func (c *mailboxContext) sendAdds(start, num int) []*htlcPacket {
 	return sentPackets
 }
 
-func (c *mailboxContext) receivePkts(pkts []*htlcPacket) {
+func (c *mailboxContext) receivePkts(cjdcoins []*htlcPacket) {
 	c.t.Helper()
 
-	for i, expPkt := range pkts {
+	for i, expPkt := range cjdcoins {
 		select {
-		case pkt := <-c.mailbox.PacketOutBox():
-			if reflect.DeepEqual(expPkt, pkt) {
+		case cjdcoin := <-c.mailbox.PacketOutBox():
+			if reflect.DeepEqual(expPkt, cjdcoin) {
 				continue
 			}
 
 			c.t.Fatalf("inkey mismatch #%d, want: %v vs "+
-				"got: %v", i, expPkt.inKey(), pkt.inKey())
+				"got: %v", i, expPkt.inKey(), cjdcoin.inKey())
 
 		case <-time.After(50 * time.Millisecond):
 			c.t.Fatalf("did not receive fail for index %d", i)
@@ -292,8 +292,8 @@ func (c *mailboxContext) checkFails(adds []*htlcPacket) {
 	}
 
 	select {
-	case pkt := <-c.forwards:
-		c.t.Fatalf("unexpected forward: %v", pkt)
+	case cjdcoin := <-c.forwards:
+		c.t.Fatalf("unexpected forward: %v", cjdcoin)
 	case <-time.After(50 * time.Millisecond):
 	}
 }
@@ -394,7 +394,7 @@ func TestMailBoxPacketPrioritization(t *testing.T) {
 	//  - Settle2
 	sentPackets := make([]*htlcPacket, numPackets)
 	for i := 0; i < numPackets; i++ {
-		pkt := &htlcPacket{
+		cjdcoin := &htlcPacket{
 			outgoingChanID: aliceChanID,
 			outgoingHTLCID: uint64(i),
 			incomingChanID: bobChanID,
@@ -407,18 +407,18 @@ func TestMailBoxPacketPrioritization(t *testing.T) {
 			// First and last packets are a Settle. A non-Add is
 			// sent first to make the test deterministic w/o needing
 			// to sleep.
-			pkt.htlc = &lnwire.UpdateFulfillHTLC{ID: uint64(i)}
+			cjdcoin.htlc = &lnwire.UpdateFulfillHTLC{ID: uint64(i)}
 		case 1, 2:
 			// Next two packets are Adds.
-			pkt.htlc = &lnwire.UpdateAddHTLC{ID: uint64(i)}
+			cjdcoin.htlc = &lnwire.UpdateAddHTLC{ID: uint64(i)}
 		case 3:
 			// Last packet is a Fail.
-			pkt.htlc = &lnwire.UpdateFailHTLC{ID: uint64(i)}
+			cjdcoin.htlc = &lnwire.UpdateFailHTLC{ID: uint64(i)}
 		}
 
-		sentPackets[i] = pkt
+		sentPackets[i] = cjdcoin
 
-		err := ctx.mailbox.AddPacket(pkt)
+		err := ctx.mailbox.AddPacket(cjdcoin)
 		if err != nil {
 			t.Fatalf("failed to add packet: %v", err)
 		}
@@ -435,7 +435,7 @@ func TestMailBoxPacketPrioritization(t *testing.T) {
 	// or Add2 due to the prioritization between the split queue.
 	for i := 0; i < numPackets; i++ {
 		select {
-		case pkt := <-ctx.mailbox.PacketOutBox():
+		case cjdcoin := <-ctx.mailbox.PacketOutBox():
 			var expPkt *htlcPacket
 			switch i {
 			case 0:
@@ -455,9 +455,9 @@ func TestMailBoxPacketPrioritization(t *testing.T) {
 				expPkt = sentPackets[2]
 			}
 
-			if !reflect.DeepEqual(expPkt, pkt) {
+			if !reflect.DeepEqual(expPkt, cjdcoin) {
 				t.Fatalf("recvd packet mismatch %d, want: %v, got: %v",
-					i, spew.Sdump(expPkt), spew.Sdump(pkt))
+					i, spew.Sdump(expPkt), spew.Sdump(cjdcoin))
 			}
 
 		case <-time.After(50 * time.Millisecond):
@@ -508,15 +508,15 @@ func TestMailBoxDuplicateAddPacket(t *testing.T) {
 	ctx.mailbox.Start()
 	defer ctx.mailbox.Stop()
 
-	addTwice := func(t *testing.T, pkt *htlcPacket) {
+	addTwice := func(t *testing.T, cjdcoin *htlcPacket) {
 		// The first add should succeed.
-		err := ctx.mailbox.AddPacket(pkt)
+		err := ctx.mailbox.AddPacket(cjdcoin)
 		if err != nil {
 			t.Fatalf("unable to add packet: %v", err)
 		}
 
 		// Adding again with the same incoming circuit key should fail.
-		err = ctx.mailbox.AddPacket(pkt)
+		err = ctx.mailbox.AddPacket(cjdcoin)
 		if !ErrPacketAlreadyExists.Is(err) {
 			t.Fatalf("expected ErrPacketAlreadyExists, got: %v", err)
 		}
@@ -553,7 +553,7 @@ func TestMailOrchestrator(t *testing.T) {
 			}, nil
 		},
 		forwardPackets: func(_ chan struct{},
-			pkts ...*htlcPacket) er.R {
+			cjdcoins ...*htlcPacket) er.R {
 			return nil
 		},
 		clock:  clock.NewTestClock(time.Now()),
@@ -570,7 +570,7 @@ func TestMailOrchestrator(t *testing.T) {
 	chanID1, chanID2, aliceChanID, bobChanID := genIDs()
 	sentPackets := make([]*htlcPacket, halfPackets)
 	for i := 0; i < halfPackets; i++ {
-		pkt := &htlcPacket{
+		cjdcoin := &htlcPacket{
 			outgoingChanID: aliceChanID,
 			outgoingHTLCID: uint64(i),
 			incomingChanID: bobChanID,
@@ -580,9 +580,9 @@ func TestMailOrchestrator(t *testing.T) {
 				ID: uint64(i),
 			},
 		}
-		sentPackets[i] = pkt
+		sentPackets[i] = cjdcoin
 
-		mo.Deliver(pkt.outgoingChanID, pkt)
+		mo.Deliver(cjdcoin.outgoingChanID, cjdcoin)
 	}
 
 	// Now, initialize a new mailbox for Alice's chanid.
@@ -611,9 +611,9 @@ func TestMailOrchestrator(t *testing.T) {
 		timeout := time.After(5 * time.Second)
 		select {
 		case <-timeout:
-			t.Fatalf("didn't recv pkt %d after timeout", i)
-		case pkt := <-mailbox.PacketOutBox():
-			recvdPackets = append(recvdPackets, pkt)
+			t.Fatalf("didn't recv cjdcoin %d after timeout", i)
+		case cjdcoin := <-mailbox.PacketOutBox():
+			recvdPackets = append(recvdPackets, cjdcoin)
 		}
 	}
 
@@ -638,7 +638,7 @@ func TestMailOrchestrator(t *testing.T) {
 	// orchestrator. We should be able to receive each of these in order.
 	recvdPackets = make([]*htlcPacket, 0, len(sentPackets))
 	for i := 0; i < halfPackets; i++ {
-		pkt := &htlcPacket{
+		cjdcoin := &htlcPacket{
 			outgoingChanID: aliceChanID,
 			outgoingHTLCID: uint64(halfPackets + i),
 			incomingChanID: bobChanID,
@@ -648,16 +648,16 @@ func TestMailOrchestrator(t *testing.T) {
 				ID: uint64(halfPackets + i),
 			},
 		}
-		sentPackets[i] = pkt
+		sentPackets[i] = cjdcoin
 
-		mo.Deliver(pkt.incomingChanID, pkt)
+		mo.Deliver(cjdcoin.incomingChanID, cjdcoin)
 
 		timeout := time.After(50 * time.Millisecond)
 		select {
 		case <-timeout:
-			t.Fatalf("didn't recv pkt %d after timeout", halfPackets+i)
-		case pkt := <-mailbox.PacketOutBox():
-			recvdPackets = append(recvdPackets, pkt)
+			t.Fatalf("didn't recv cjdcoin %d after timeout", halfPackets+i)
+		case cjdcoin := <-mailbox.PacketOutBox():
+			recvdPackets = append(recvdPackets, cjdcoin)
 		}
 	}
 

@@ -3,7 +3,7 @@
 package autopilotrpc
 
 import (
-	"github.com/pkt-cash/pktd/lnd/autopilot"
+	"github.com/kaotisk-hund/cjdcoind/lnd/autopilot"
 )
 
 // Config is the primary configuration struct for the autopilot RPC server. It

@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
 )
 
 func TestMilliSatoshiConversion(t *testing.T) {

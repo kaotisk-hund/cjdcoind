@@ -1,7 +1,7 @@
 package buffer
 
 import (
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // WriteSize represents the size of the maximum plaintext message than can be

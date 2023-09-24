@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/pkt-cash/pktd/btcjson"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/integration/rpctest"
-	"github.com/pkt-cash/pktd/rpcclient"
+	"github.com/kaotisk-hund/cjdcoind/btcjson"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/integration/rpctest"
+	"github.com/kaotisk-hund/cjdcoind/rpcclient"
 )
 
 // logDirPattern is the pattern of the name of the temporary log directory.

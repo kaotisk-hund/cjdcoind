@@ -3,8 +3,8 @@
 package zpay32fuzz
 
 import (
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/lnd/zpay32"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/zpay32"
 )
 
 // Fuzz_decode is used by go-fuzz.

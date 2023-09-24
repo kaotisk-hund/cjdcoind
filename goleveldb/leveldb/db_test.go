@@ -27,14 +27,14 @@ import (
 
 	"github.com/onsi/gomega"
 
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/comparer"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/errors"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/filter"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/iterator"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/opt"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/storage"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/testutil"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/util"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/comparer"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/errors"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/filter"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/iterator"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/opt"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/storage"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/testutil"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/util"
 )
 
 func tkey(i int) []byte {

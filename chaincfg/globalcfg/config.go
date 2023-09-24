@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 // Package globalcfg contains configuration which must be available
-// anywhere in the project, do not import anything which is part of pktd.
+// anywhere in the project, do not import anything which is part of cjdcoind.
 package globalcfg
 
 import (
@@ -18,7 +18,7 @@ const (
 	// This is the default value
 	PowSha256 ProofOfWork = iota
 
-	// PowPacketCrypt is the PoW used by chains such as pkt.cash
+	// PowPacketCrypt is the PoW used by chains such as cjdcoin.cash
 	PowPacketCrypt
 )
 

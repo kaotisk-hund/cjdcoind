@@ -18,7 +18,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // NewTLSCertPair returns a new PEM-encoded x.509 certificate pair

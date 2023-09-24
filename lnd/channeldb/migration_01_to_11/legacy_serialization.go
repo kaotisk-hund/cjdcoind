@@ -3,7 +3,7 @@ package migration_01_to_11
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // deserializeCloseChannelSummaryV6 reads the v6 database format for

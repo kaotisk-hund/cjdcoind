@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/channeldb/kvdb"
-	"github.com/pkt-cash/pktd/lnd/channeldb/migration12"
-	"github.com/pkt-cash/pktd/lnd/channeldb/migtest"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/kvdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/migration12"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/migtest"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
 )
 
 var (

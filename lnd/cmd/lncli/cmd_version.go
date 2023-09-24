@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/lnrpc/lnclipb"
-	"github.com/pkt-cash/pktd/lnd/lnrpc/verrpc"
-	"github.com/pkt-cash/pktd/pktconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc/lnclipb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc/verrpc"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
 	"github.com/urfave/cli"
 )
 

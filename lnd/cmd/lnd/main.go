@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/jessevdk/go-flags"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd"
-	"github.com/pkt-cash/pktd/lnd/signal"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd"
+	"github.com/kaotisk-hund/cjdcoind/lnd/signal"
 )
 
 func main() {

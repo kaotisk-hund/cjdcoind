@@ -10,14 +10,14 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/genesis"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/genesis"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/database"
-	_ "github.com/pkt-cash/pktd/database/ffldb"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/database"
+	_ "github.com/kaotisk-hund/cjdcoind/database/ffldb"
 )
 
 // This example demonstrates creating a new database.
@@ -25,8 +25,8 @@ func ExampleCreate() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/pkt-cash/pktd/database"
-	// 	_ "github.com/pkt-cash/pktd/database/ffldb"
+	// 	"github.com/kaotisk-hund/cjdcoind/database"
+	// 	_ "github.com/kaotisk-hund/cjdcoind/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.
@@ -51,8 +51,8 @@ func Example_basicUsage() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/pkt-cash/pktd/database"
-	// 	_ "github.com/pkt-cash/pktd/database/ffldb"
+	// 	"github.com/kaotisk-hund/cjdcoind/database"
+	// 	_ "github.com/kaotisk-hund/cjdcoind/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.
@@ -117,8 +117,8 @@ func Example_blockStorageAndRetrieval() {
 	// This example assumes the ffldb driver is imported.
 	//
 	// import (
-	// 	"github.com/pkt-cash/pktd/database"
-	// 	_ "github.com/pkt-cash/pktd/database/ffldb"
+	// 	"github.com/kaotisk-hund/cjdcoind/database"
+	// 	_ "github.com/kaotisk-hund/cjdcoind/database/ffldb"
 	// )
 
 	// Create a database and schedule it to be closed and removed on exit.

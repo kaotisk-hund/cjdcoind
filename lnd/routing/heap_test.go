@@ -7,7 +7,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/pkt-cash/pktd/lnd/routing/route"
+	"github.com/kaotisk-hund/cjdcoind/lnd/routing/route"
 )
 
 // TestHeapOrdering ensures that the items inserted into the heap are properly

@@ -3,7 +3,7 @@ package lncfg_test
 import (
 	"testing"
 
-	"github.com/pkt-cash/pktd/lnd/lncfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lncfg"
 )
 
 const (

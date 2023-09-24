@@ -8,9 +8,9 @@ import (
 	"net"
 	"testing"
 
-	"github.com/pkt-cash/pktd/addrmgr"
-	"github.com/pkt-cash/pktd/wire"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/addrmgr"
+	"github.com/kaotisk-hund/cjdcoind/wire"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 // TestIPTypes ensures the various functions which determine the type of an IP

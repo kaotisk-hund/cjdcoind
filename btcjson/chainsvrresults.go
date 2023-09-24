@@ -8,7 +8,7 @@ package btcjson
 import (
 	jsoniter "github.com/json-iterator/go"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // GetBlockHeaderVerboseResult models the data from the getblockheader command when

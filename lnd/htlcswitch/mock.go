@@ -13,23 +13,23 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	sphinx "github.com/pkt-cash/pktd/lightning-onion"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/clock"
-	"github.com/pkt-cash/pktd/lnd/contractcourt"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/invoices"
-	"github.com/pkt-cash/pktd/lnd/lnpeer"
-	"github.com/pkt-cash/pktd/lnd/lntest/mock"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwallet/chainfee"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/ticker"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	sphinx "github.com/kaotisk-hund/cjdcoind/lightning-onion"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/clock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/contractcourt"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/invoices"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnpeer"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntest/mock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet/chainfee"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 type mockPreimageCache struct {
@@ -656,14 +656,14 @@ type mockChannelLink struct {
 // completeCircuit is a helper method for adding the finalized payment circuit
 // to the switch's circuit map. In testing, this should be executed after
 // receiving an htlc from the downstream packets channel.
-func (f *mockChannelLink) completeCircuit(pkt *htlcPacket) er.R {
-	switch htlc := pkt.htlc.(type) {
+func (f *mockChannelLink) completeCircuit(cjdcoin *htlcPacket) er.R {
+	switch htlc := cjdcoin.htlc.(type) {
 	case *lnwire.UpdateAddHTLC:
-		pkt.outgoingChanID = f.shortChanID
-		pkt.outgoingHTLCID = f.htlcID
+		cjdcoin.outgoingChanID = f.shortChanID
+		cjdcoin.outgoingHTLCID = f.htlcID
 		htlc.ID = f.htlcID
 
-		keystone := Keystone{pkt.inKey(), pkt.outKey()}
+		keystone := Keystone{cjdcoin.inKey(), cjdcoin.outKey()}
 		if err := f.htlcSwitch.openCircuits(keystone); err != nil {
 			return err
 		}
@@ -671,19 +671,19 @@ func (f *mockChannelLink) completeCircuit(pkt *htlcPacket) er.R {
 		f.htlcID++
 
 	case *lnwire.UpdateFulfillHTLC, *lnwire.UpdateFailHTLC:
-		err := f.htlcSwitch.teardownCircuit(pkt)
+		err := f.htlcSwitch.teardownCircuit(cjdcoin)
 		if err != nil {
 			return err
 		}
 	}
 
-	f.mailBox.AckPacket(pkt.inKey())
+	f.mailBox.AckPacket(cjdcoin.inKey())
 
 	return nil
 }
 
-func (f *mockChannelLink) deleteCircuit(pkt *htlcPacket) er.R {
-	return f.htlcSwitch.deleteCircuits(pkt.inKey())
+func (f *mockChannelLink) deleteCircuit(cjdcoin *htlcPacket) er.R {
+	return f.htlcSwitch.deleteCircuits(cjdcoin.inKey())
 }
 
 func newMockChannelLink(htlcSwitch *Switch, chanID lnwire.ChannelID,
@@ -699,13 +699,13 @@ func newMockChannelLink(htlcSwitch *Switch, chanID lnwire.ChannelID,
 	}
 }
 
-func (f *mockChannelLink) HandleSwitchPacket(pkt *htlcPacket) er.R {
-	f.mailBox.AddPacket(pkt)
+func (f *mockChannelLink) HandleSwitchPacket(cjdcoin *htlcPacket) er.R {
+	f.mailBox.AddPacket(cjdcoin)
 	return nil
 }
 
-func (f *mockChannelLink) HandleLocalAddPacket(pkt *htlcPacket) er.R {
-	_ = f.mailBox.AddPacket(pkt)
+func (f *mockChannelLink) HandleLocalAddPacket(cjdcoin *htlcPacket) er.R {
+	_ = f.mailBox.AddPacket(cjdcoin)
 	return nil
 }
 

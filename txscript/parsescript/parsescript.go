@@ -3,9 +3,9 @@ package parsescript
 import (
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/txscript/opcode"
-	"github.com/pkt-cash/pktd/txscript/txscripterr"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/txscript/opcode"
+	"github.com/kaotisk-hund/cjdcoind/txscript/txscripterr"
 )
 
 // opcodeArray holds details about all possible opcodes such as how many bytes

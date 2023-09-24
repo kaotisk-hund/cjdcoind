@@ -3,7 +3,7 @@ package netann
 import (
 	"time"
 
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // ChanStatus is a type that enumerates the possible states a ChanStatusManager

@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	sphinx "github.com/pkt-cash/pktd/lightning-onion"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	sphinx "github.com/kaotisk-hund/cjdcoind/lightning-onion"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // EncrypterType establishes an enum used in serialization to indicate how to

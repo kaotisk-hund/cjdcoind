@@ -3,7 +3,7 @@
 package wtwirefuzz
 
 import (
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtwire"
 )
 
 // Fuzz_init is used by go-fuzz.

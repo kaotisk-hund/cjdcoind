@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/pktwallet/snacl"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/snacl"
 	"gopkg.in/macaroon.v2"
 )
 

@@ -8,9 +8,9 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/txscript/scriptnum"
-	"github.com/pkt-cash/pktd/txscript/txscripterr"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/txscript/scriptnum"
+	"github.com/kaotisk-hund/cjdcoind/txscript/txscripterr"
 )
 
 // asBool gets the boolean value of the byte array.

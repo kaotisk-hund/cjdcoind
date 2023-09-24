@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/pktconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
 
 	"github.com/btcsuite/winsvc/eventlog"
 	"github.com/btcsuite/winsvc/mgr"
@@ -19,8 +19,8 @@ import (
 )
 
 const (
-	// svcName is the name of pktd service.
-	svcName = "pktdsvc"
+	// svcName is the name of cjdcoind service.
+	svcName = "cjdcoindsvc"
 
 	// svcDisplayName is the service name that will be shown in the windows
 	// services list.  Not the svcName is the "real" name which is used
@@ -35,7 +35,7 @@ const (
 // elog is used to send messages to the Windows event log.
 var elog *eventlog.Log
 
-// logServiceStartOfDay logs information about pktd when the main server has
+// logServiceStartOfDay logs information about cjdcoind when the main server has
 // been started to the Windows event log.
 func logServiceStartOfDay(srvr *server) {
 	var message string
@@ -47,27 +47,27 @@ func logServiceStartOfDay(srvr *server) {
 	elog.Info(1, message)
 }
 
-// pktdService houses the main service handler which handles all service
-// updates and launching pktdMain.
-type pktdService struct{}
+// cjdcoindService houses the main service handler which handles all service
+// updates and launching cjdcoindMain.
+type cjdcoindService struct{}
 
 // Execute is the main entry point the winsvc package calls when receiving
 // information from the Windows service control manager.  It launches the
-// long-running pktdMain (which is the real meat of pktd), handles service
+// long-running cjdcoindMain (which is the real meat of cjdcoind), handles service
 // change requests, and notifies the service control manager of changes.
-func (s *pktdService) Execute(args []string, r <-chan svc.ChangeRequest, changes chan<- svc.Status) (bool, uint32) {
+func (s *cjdcoindService) Execute(args []string, r <-chan svc.ChangeRequest, changes chan<- svc.Status) (bool, uint32) {
 	// Service start is pending.
 	const cmdsAccepted = svc.AcceptStop | svc.AcceptShutdown
 	changes <- svc.Status{State: svc.StartPending}
 
-	// Start pktdMain in a separate goroutine so the service can start
+	// Start cjdcoindMain in a separate goroutine so the service can start
 	// quickly.  Shutdown (along with a potential error) is reported via
 	// doneChan.  serverChan is notified with the main server instance once
 	// it is started so it can be gracefully stopped.
 	doneChan := make(chan er.R)
 	serverChan := make(chan *server)
 	go func() {
-		err := pktdMain(serverChan)
+		err := cjdcoindMain(serverChan)
 		doneChan <- err
 	}()
 
@@ -113,7 +113,7 @@ loop:
 	return false, 0
 }
 
-// installService attempts to install the pktd service.  Typically this should
+// installService attempts to install the cjdcoind service.  Typically this should
 // be done by the msi installer, but it is provided here since it can be useful
 // for development.
 func installService() er.R {
@@ -165,7 +165,7 @@ func installService() er.R {
 	return nil
 }
 
-// removeService attempts to uninstall the pktd service.  Typically this should
+// removeService attempts to uninstall the cjdcoind service.  Typically this should
 // be done by the msi uninstaller, but it is provided here since it can be
 // useful for development.  Not the eventlog entry is intentionally not removed
 // since it would invalidate any existing event log messages.
@@ -191,7 +191,7 @@ func removeService() er.R {
 	return nil
 }
 
-// startService attempts to start the pktd service.
+// startService attempts to start the cjdcoind service.
 func startService() er.R {
 	// Connect to the windows service manager.
 	serviceManager, errr := mgr.Connect()
@@ -300,7 +300,7 @@ func serviceMain() (bool, er.R) {
 	}
 	defer elog.Close()
 
-	errr = svc.Run(svcName, &pktdService{})
+	errr = svc.Run(svcName, &cjdcoindService{})
 	if errr != nil {
 		elog.Error(1, fmt.Sprintf("Service start failed: %v", errr))
 		return true, er.E(errr)

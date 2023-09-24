@@ -1,7 +1,7 @@
 package record
 
 import (
-	"github.com/pkt-cash/pktd/lnd/tlv"
+	"github.com/kaotisk-hund/cjdcoind/lnd/tlv"
 )
 
 const (

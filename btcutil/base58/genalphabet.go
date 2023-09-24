@@ -13,7 +13,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/pkt-cash/pktd/pktconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
 )
 
 var (

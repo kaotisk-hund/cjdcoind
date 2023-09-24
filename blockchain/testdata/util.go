@@ -20,16 +20,16 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // LoadBlocks reads files containing bitcoin block data (gzipped but otherwise
 // in the format bitcoind writes) from disk and returns them as an array of
-// btcutil.Block.  This is largely borrowed from the test code in pktdb.
+// btcutil.Block.  This is largely borrowed from the test code in cjdcoindb.
 func LoadBlocks(filename string) ([]*btcutil.Block, er.R) {
 	var network = protocol.MainNet
 	var dr io.Reader

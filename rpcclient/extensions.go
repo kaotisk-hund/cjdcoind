@@ -8,10 +8,10 @@ package rpcclient
 import (
 	"github.com/json-iterator/go"
 
-	"github.com/pkt-cash/pktd/btcjson"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcjson"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 // FutureGetBestBlockResult is a future promise to deliver the result of a
@@ -48,7 +48,7 @@ func (r FutureGetBestBlockResult) Receive() (*chainhash.Hash, int32, er.R) {
 //
 // See GetBestBlock for the blocking version and more details.
 //
-// NOTE: This is a pktd extension.
+// NOTE: This is a cjdcoind extension.
 func (c *Client) GetBestBlockAsync() FutureGetBestBlockResult {
 	cmd := btcjson.NewGetBestBlockCmd()
 	return c.sendCmd(cmd)
@@ -57,7 +57,7 @@ func (c *Client) GetBestBlockAsync() FutureGetBestBlockResult {
 // GetBestBlock returns the hash and height of the block in the longest (best)
 // chain.
 //
-// NOTE: This is a pktd extension.
+// NOTE: This is a cjdcoind extension.
 func (c *Client) GetBestBlock() (*chainhash.Hash, int32, er.R) {
 	return c.GetBestBlockAsync().Receive()
 }
@@ -90,7 +90,7 @@ func (r FutureGetCurrentNetResult) Receive() (protocol.BitcoinNet, er.R) {
 //
 // See GetCurrentNet for the blocking version and more details.
 //
-// NOTE: This is a pktd extension.
+// NOTE: This is a cjdcoind extension.
 func (c *Client) GetCurrentNetAsync() FutureGetCurrentNetResult {
 	cmd := btcjson.NewGetCurrentNetCmd()
 	return c.sendCmd(cmd)
@@ -98,7 +98,7 @@ func (c *Client) GetCurrentNetAsync() FutureGetCurrentNetResult {
 
 // GetCurrentNet returns the network the server is running on.
 //
-// NOTE: This is a pktd extension.
+// NOTE: This is a cjdcoind extension.
 func (c *Client) GetCurrentNet() (protocol.BitcoinNet, er.R) {
 	return c.GetCurrentNetAsync().Receive()
 }

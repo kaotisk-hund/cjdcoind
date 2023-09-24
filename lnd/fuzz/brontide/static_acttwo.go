@@ -3,7 +3,7 @@
 package brontidefuzz
 
 import (
-	"github.com/pkt-cash/pktd/lnd/brontide"
+	"github.com/kaotisk-hund/cjdcoind/lnd/brontide"
 )
 
 // Fuzz_static_acttwo is a go-fuzz harness for ActTwo in the brontide

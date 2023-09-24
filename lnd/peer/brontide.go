@@ -10,37 +10,37 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/connmgr"
-	"github.com/pkt-cash/pktd/pktlog/log"
-	"github.com/pkt-cash/pktd/txscript"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/connmgr"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
+	"github.com/kaotisk-hund/cjdcoind/txscript"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 
-	"github.com/pkt-cash/pktd/lnd/buffer"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/channelnotifier"
-	"github.com/pkt-cash/pktd/lnd/contractcourt"
-	"github.com/pkt-cash/pktd/lnd/discovery"
-	"github.com/pkt-cash/pktd/lnd/feature"
-	"github.com/pkt-cash/pktd/lnd/fmgr"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hodl"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/input"
-	"github.com/pkt-cash/pktd/lnd/invoices"
-	"github.com/pkt-cash/pktd/lnd/lnpeer"
-	"github.com/pkt-cash/pktd/lnd/lnwallet"
-	"github.com/pkt-cash/pktd/lnd/lnwallet/chainfee"
-	"github.com/pkt-cash/pktd/lnd/lnwallet/chancloser"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/netann"
-	"github.com/pkt-cash/pktd/lnd/pool"
-	"github.com/pkt-cash/pktd/lnd/queue"
-	"github.com/pkt-cash/pktd/lnd/ticker"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtclient"
+	"github.com/kaotisk-hund/cjdcoind/lnd/buffer"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channelnotifier"
+	"github.com/kaotisk-hund/cjdcoind/lnd/contractcourt"
+	"github.com/kaotisk-hund/cjdcoind/lnd/discovery"
+	"github.com/kaotisk-hund/cjdcoind/lnd/feature"
+	"github.com/kaotisk-hund/cjdcoind/lnd/fmgr"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hodl"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/input"
+	"github.com/kaotisk-hund/cjdcoind/lnd/invoices"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnpeer"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet/chainfee"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet/chancloser"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/netann"
+	"github.com/kaotisk-hund/cjdcoind/lnd/pool"
+	"github.com/kaotisk-hund/cjdcoind/lnd/queue"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtclient"
 )
 
 const (
@@ -889,7 +889,7 @@ func (p *Brontide) readNextMessage() (lnwire.Message, er.R) {
 		return nil, er.E(errr)
 	}
 
-	pktLen, err := noiseConn.ReadNextHeader()
+	cjdcoinLen, err := noiseConn.ReadNextHeader()
 	if err != nil {
 		return nil, err
 	}
@@ -911,7 +911,7 @@ func (p *Brontide) readNextMessage() (lnwire.Message, er.R) {
 			return er.E(readErr)
 		}
 
-		rawMsg, err = noiseConn.ReadNextBody(buf[:pktLen])
+		rawMsg, err = noiseConn.ReadNextBody(buf[:cjdcoinLen])
 		return err
 	})
 	atomic.AddUint64(&p.bytesReceived, uint64(len(rawMsg)))

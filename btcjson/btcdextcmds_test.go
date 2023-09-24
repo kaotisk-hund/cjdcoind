@@ -11,12 +11,12 @@ import (
 	"reflect"
 	"testing"
 	"github.com/json-iterator/go"
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/btcjson"
+	"github.com/kaotisk-hund/cjdcoind/btcjson"
 )
 
-// TestBtcdExtCmds tests all of the pktd extended commands marshal and unmarshal
+// TestBtcdExtCmds tests all of the cjdcoind extended commands marshal and unmarshal
 // into valid results include handling of optional fields being omitted in the
 // marshalled command, while optional fields with defaults have the default
 // assigned on unmarshalled commands.

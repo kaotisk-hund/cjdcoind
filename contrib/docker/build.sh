@@ -12,7 +12,7 @@
 # 
 
 DOCKER_FILE_LOCATION=./contrib/docker/Dockerfile
-DOCKER_IMAGE_NAME=pktd
+DOCKER_IMAGE_NAME=cjdcoind
 
 ./do
 echo "Binary built. Building Docker image now."

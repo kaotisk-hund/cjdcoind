@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	sphinx "github.com/pkt-cash/pktd/lightning-onion"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/record"
-	"github.com/pkt-cash/pktd/lnd/tlv"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	sphinx "github.com/kaotisk-hund/cjdcoind/lightning-onion"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/record"
+	"github.com/kaotisk-hund/cjdcoind/lnd/tlv"
 )
 
 // PayloadViolation is an enum encapsulating the possible invalid payload

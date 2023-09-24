@@ -11,9 +11,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pkt-cash/pktd/txscript/opcode"
-	"github.com/pkt-cash/pktd/txscript/parsescript"
-	"github.com/pkt-cash/pktd/txscript/txscripterr"
+	"github.com/kaotisk-hund/cjdcoind/txscript/opcode"
+	"github.com/kaotisk-hund/cjdcoind/txscript/parsescript"
+	"github.com/kaotisk-hund/cjdcoind/txscript/txscripterr"
 )
 
 // TestOpcodeDisabled tests the opcodeDisabled function manually because all

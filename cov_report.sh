@@ -22,9 +22,9 @@ cleanUp() {
 	set +e >/dev/null 2>&1 || true :
 	rm -f ./gocov_report_goleveldb.json 2>&1 || true :
 	rm -f ./gocov_report_goleveldb.json 2>&1 || true :
-	rm -f ./gocov_report_pktd.txt >/dev/null 2>&1 || true :
+	rm -f ./gocov_report_cjdcoind.txt >/dev/null 2>&1 || true :
 	rm -f ./gocov_report_goleveldb.txt >/dev/null 2>&1 || true :
-	rm -f ./gocov_report_pktd.html >/dev/null 2>&1 || true :
+	rm -f ./gocov_report_cjdcoind.html >/dev/null 2>&1 || true :
 	rm -f ./gocov_report_goleveldb.html >/dev/null 2>&1 || true:
 	printf '%s\n' "All cleanup tasks completed." >&2 || true :
 	printf '%s\n' "" || true :
@@ -42,9 +42,9 @@ trap 'global_trap; trap - INT; kill -INT $$; sleep 1; trap - TERM; kill -TERM $$
 trap '' EMT IO LOST SYS URG >/dev/null 2>&1 || true :
 
 set -o pipefail >/dev/null 2>&1
-if [ ! -f "./.pktd_root" ]; then
+if [ ! -f "./.cjdcoind_root" ]; then
 	printf '\n%s\n' "You must run this tool from the root"           >&2
-	printf '%s\n'   "directory of the pktd source tree."             >&2
+	printf '%s\n'   "directory of the cjdcoind source tree."             >&2
 	exit 1 || :;
 fi
 
@@ -64,9 +64,9 @@ cleanUp || true && \
 unset="Error: Testing flags are unset, aborting." &&\
 	export unset
 
-(date 2>/dev/null; gocov test ${TEST_FLAGS:?${unset:?}} strings ./... > gocov_report_pktd.json && \
-	gocov report < gocov_report_pktd.json > gocov_report_pktd.txt) || \
-	{ printf '\n%s\n' "gocov failed complete pktd successfully." >&2
+(date 2>/dev/null; gocov test ${TEST_FLAGS:?${unset:?}} strings ./... > gocov_report_cjdcoind.json && \
+	gocov report < gocov_report_cjdcoind.json > gocov_report_cjdcoind.txt) || \
+	{ printf '\n%s\n' "gocov failed complete cjdcoind successfully." >&2
 		exit 1 || :; };
 
 (date 2>/dev/null; cd goleveldb/leveldb && \
@@ -82,8 +82,8 @@ if [ "${?}" -ne 0 ]; then
     printf '%s\n\n'  "\"go get https://github.com/matm/gocov-html\"" >&2
 	exit 1 || :;
 fi
-(gocov-html < gocov_report_pktd.json > gocov_report_pktd.html) || \
-	{ printf '\n%s\n' "gocov-html failed to complete pktd successfully." >&2
+(gocov-html < gocov_report_cjdcoind.json > gocov_report_cjdcoind.html) || \
+	{ printf '\n%s\n' "gocov-html failed to complete cjdcoind successfully." >&2
 		exit 1 || :; };
 
 printf '%s\n' "" >&2

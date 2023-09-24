@@ -1,8 +1,8 @@
 package wtclientrpc
 
 import (
-	"github.com/pkt-cash/pktd/lnd/lncfg"
-	"github.com/pkt-cash/pktd/lnd/watchtower/wtclient"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lncfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/wtclient"
 )
 
 // Config is the primary configuration struct for the watchtower RPC server. It

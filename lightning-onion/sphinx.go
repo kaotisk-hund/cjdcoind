@@ -8,10 +8,10 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
 )
 
 const (
@@ -197,7 +197,7 @@ func generateSharedSecrets(paymentPath []*btcec.PublicKey,
 // NewOnionPacket creates a new onion packet which is capable of obliviously
 // routing a message through the mix-net path outline by 'paymentPath'.
 func NewOnionPacket(paymentPath *PaymentPath, sessionKey *btcec.PrivateKey,
-	assocData []byte, pktFiller PacketFiller) (*OnionPacket, er.R) {
+	assocData []byte, cjdcoinFiller PacketFiller) (*OnionPacket, er.R) {
 
 	// Check whether total payload size doesn't exceed the hard maximum.
 	if paymentPath.TotalPayloadSize() > routingInfoSize {
@@ -214,7 +214,7 @@ func NewOnionPacket(paymentPath *PaymentPath, sessionKey *btcec.PrivateKey,
 	// We'll force the caller to provide a packet filler, as otherwise we
 	// may default to an insecure filling method (which should only really
 	// be used to generate test vectors).
-	if pktFiller == nil {
+	if cjdcoinFiller == nil {
 		return nil, er.Errorf("packet filler must be specified")
 	}
 
@@ -237,7 +237,7 @@ func NewOnionPacket(paymentPath *PaymentPath, sessionKey *btcec.PrivateKey,
 	)
 
 	// Fill the packet using the caller specified methodology.
-	if err := pktFiller(sessionKey, &mixHeader); err != nil {
+	if err := cjdcoinFiller(sessionKey, &mixHeader); err != nil {
 		return nil, err
 	}
 

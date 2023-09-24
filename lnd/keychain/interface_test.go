@@ -10,16 +10,16 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/pktwallet/snacl"
-	"github.com/pkt-cash/pktd/pktwallet/waddrmgr"
-	"github.com/pkt-cash/pktd/pktwallet/wallet"
-	"github.com/pkt-cash/pktd/pktwallet/walletdb"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/snacl"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/waddrmgr"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/wallet"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb"
 
-	_ "github.com/pkt-cash/pktd/pktwallet/walletdb/bdb" // Required in order to create the default database.
+	_ "github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb/bdb" // Required in order to create the default database.
 )
 
 // versionZeroKeyFamilies is a slice of all the known key families for first

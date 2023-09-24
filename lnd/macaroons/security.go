@@ -2,7 +2,7 @@
 
 package macaroons
 
-import "github.com/pkt-cash/pktd/pktwallet/snacl"
+import "github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/snacl"
 
 var (
 	// Below are the default scrypt parameters that are used when creating

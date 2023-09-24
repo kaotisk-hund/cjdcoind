@@ -11,12 +11,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/difficulty"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/difficulty"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
 )
 
 // These variables are the chain proof-of-work limit parameters for each default
@@ -505,11 +505,11 @@ var TestNet3Params = Params{
 	HDCoinType: 1,
 }
 
-// PktTestNetParams defines the network parameters for the test pkt.cash network
+// PktTestNetParams defines the network parameters for the test cjdcoin.cash network
 // (version 1).  Not to be confused with the regression test network, this
 // network is sometimes simply called "testnet".
 var PktTestNetParams = Params{
-	Name:        "pkttest",
+	Name:        "cjdcointest",
 	Net:         protocol.PktTestNet,
 	DefaultPort: "64512",
 	DNSSeeds: []DNSSeed{
@@ -589,15 +589,15 @@ var PktTestNetParams = Params{
 	HDCoinType: 1,
 }
 
-// PktMainNetParams defines the network parameters for the pkt.cash network.
+// PktMainNetParams defines the network parameters for the cjdcoin.cash network.
 var PktMainNetParams = Params{
-	Name:        "pkt",
+	Name:        "cjdcoin",
 	Net:         protocol.PktMainNet,
 	DefaultPort: "64764",
 	DNSSeeds: []DNSSeed{
 		{"seed.cjd.li", false},
 		{"seed.anode.co", false},
-		{"pktdseed.pkt.world", false},
+		{"cjdcoindseed.cjdcoin.world", false},
 		{"seed.srizbi.com", false},
 	},
 
@@ -626,7 +626,7 @@ var PktMainNetParams = Params{
 	GenerateSupported:        false,
 
 	// Checkpoints ordered from oldest to newest.
-	// for i in $(seq 1 64); do echo "{$i << 13, newHashFromStr(\"$(pktctl getblockhash $(python -c "print $i << 13"))\")},"; done
+	// for i in $(seq 1 64); do echo "{$i << 13, newHashFromStr(\"$(cjdcoinctl getblockhash $(python -c "print $i << 13"))\")},"; done
 	Checkpoints: []Checkpoint{
 		{1 << 13, newHashFromStr("2b6b3d2951d365f26fd5b5362ab8dd5695ea6f5bd6c19ea9b16eb63a3de95ede")},
 		{2 << 13, newHashFromStr("462d3eee0c728cfbb2ba64b6cc221d3176be10494cade158d45ee6007137ed42")},
@@ -722,7 +722,7 @@ var PktMainNetParams = Params{
 	// Human-readable part for Bech32 encoded segwit addresses, as defined in
 	// BIP 173.
 	// https://github.com/satoshilabs/slips/blob/master/slip-0173.md
-	Bech32HRPSegwit: "pkt",
+	Bech32HRPSegwit: "cjdcoin",
 
 	// Address encoding magics
 	PubKeyHashAddrID:        0x75, // starts with p

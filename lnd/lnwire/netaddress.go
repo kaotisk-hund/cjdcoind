@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 // NetAddress represents information pertaining to the identity and network

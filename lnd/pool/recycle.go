@@ -3,7 +3,7 @@ package pool
 import (
 	"time"
 
-	"github.com/pkt-cash/pktd/lnd/queue"
+	"github.com/kaotisk-hund/cjdcoind/lnd/queue"
 )
 
 // Recycler is an interface that allows an object to be reclaimed without

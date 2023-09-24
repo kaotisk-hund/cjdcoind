@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

@@ -4,7 +4,7 @@ import (
 	"io"
 	"net"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // ipType represents the different types of IP addresses supported by the

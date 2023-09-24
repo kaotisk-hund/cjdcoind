@@ -8,9 +8,9 @@ import (
 	"encoding/binary"
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/pcutil"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/pcutil"
 )
 
 // PacketCryptAnn is the in-memory structure of a PacketCrypt announcement

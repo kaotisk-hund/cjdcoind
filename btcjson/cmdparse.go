@@ -12,7 +12,7 @@ import (
 
 	jsoniter "github.com/json-iterator/go"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // makeParams creates a slice of interface values for the given struct.

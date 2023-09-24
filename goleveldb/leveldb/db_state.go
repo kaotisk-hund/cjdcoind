@@ -11,9 +11,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/journal"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/memdb"
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/storage"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/journal"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/memdb"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/storage"
 )
 
 var (

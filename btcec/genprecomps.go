@@ -17,8 +17,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/pktconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
 )
 
 func main() {

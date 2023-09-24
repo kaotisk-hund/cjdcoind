@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
 )
 
 // TestDecodeAcceptChannel tests decoding of an accept channel wire message with

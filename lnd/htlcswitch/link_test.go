@@ -15,28 +15,28 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/btcutil/util"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
-	sphinx "github.com/pkt-cash/pktd/lightning-onion"
-	"github.com/pkt-cash/pktd/lnd/build"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/channeldb/kvdb"
-	"github.com/pkt-cash/pktd/lnd/contractcourt"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hodl"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/input"
-	"github.com/pkt-cash/pktd/lnd/lnpeer"
-	"github.com/pkt-cash/pktd/lnd/lntest/wait"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwallet"
-	"github.com/pkt-cash/pktd/lnd/lnwallet/chainfee"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/ticker"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
+	sphinx "github.com/kaotisk-hund/cjdcoind/lightning-onion"
+	"github.com/kaotisk-hund/cjdcoind/lnd/build"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb/kvdb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/contractcourt"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hodl"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/input"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnpeer"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntest/wait"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet/chainfee"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/ticker"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 const (
@@ -3005,14 +3005,14 @@ func TestChannelLinkTrimCircuitsRemoteCommit(t *testing.T) {
 
 	// Pass both of the htlcs to Bob.
 	for i, addPkt := range addPkts {
-		pkt, ok := addPkt.htlc.(*lnwire.UpdateAddHTLC)
+		cjdcoin, ok := addPkt.htlc.(*lnwire.UpdateAddHTLC)
 		if !ok {
 			t.Fatalf("unable to add packet")
 		}
 
-		pkt.ID = uint64(i)
+		cjdcoin.ID = uint64(i)
 
-		_, err := bobChan.ReceiveHTLC(pkt)
+		_, err := bobChan.ReceiveHTLC(cjdcoin)
 		if err != nil {
 			t.Fatalf("unable to receive htlc: %v", err)
 		}
@@ -4103,9 +4103,9 @@ func (h *persistentLinkHarness) restart(restartSwitch bool,
 }
 
 // checkSent reads the links message stream and verify that the messages are
-// dequeued in the same order as provided by `pkts`.
-func (h *persistentLinkHarness) checkSent(pkts []*htlcPacket) {
-	for _, pkt := range pkts {
+// dequeued in the same order as provided by `cjdcoins`.
+func (h *persistentLinkHarness) checkSent(cjdcoins []*htlcPacket) {
+	for _, cjdcoin := range cjdcoins {
 		var msg lnwire.Message
 		select {
 		case msg = <-h.msgs:
@@ -4113,9 +4113,9 @@ func (h *persistentLinkHarness) checkSent(pkts []*htlcPacket) {
 			h.t.Fatalf("did not receive message")
 		}
 
-		if !reflect.DeepEqual(msg, pkt.htlc) {
+		if !reflect.DeepEqual(msg, cjdcoin.htlc) {
 			h.t.Fatalf("unexpected packet, want %v, got %v",
-				pkt.htlc, msg)
+				cjdcoin.htlc, msg)
 		}
 	}
 }

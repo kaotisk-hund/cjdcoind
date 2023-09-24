@@ -6,10 +6,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/clock"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/clock"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 var (
@@ -32,7 +32,7 @@ type MailBox interface {
 	AddMessage(msg lnwire.Message) er.R
 
 	// AddPacket appends a new message to the end of the packet queue.
-	AddPacket(pkt *htlcPacket) er.R
+	AddPacket(cjdcoin *htlcPacket) er.R
 
 	// HasPacket queries the packets for a circuit key, this is used to drop
 	// packets bound for the switch that already have a queued response.
@@ -50,7 +50,7 @@ type MailBox interface {
 	// packet from being delivered after the link restarts if the switch has
 	// remained online. The generated LinkError will show an
 	// OutgoingFailureDownstreamHtlcAdd FailureDetail.
-	FailAdd(pkt *htlcPacket)
+	FailAdd(cjdcoin *htlcPacket)
 
 	// MessageOutBox returns a channel that any new messages ready for
 	// delivery will be sent on.
@@ -122,14 +122,14 @@ type memoryMailBox struct {
 	addIndex map[CircuitKey]*list.Element
 	addHead  *list.Element
 
-	pktMtx  sync.Mutex
-	pktCond *sync.Cond
+	cjdcoinMtx  sync.Mutex
+	cjdcoinCond *sync.Cond
 
-	pktOutbox chan *htlcPacket
-	pktReset  chan chan struct{}
+	cjdcoinOutbox chan *htlcPacket
+	cjdcoinReset  chan chan struct{}
 
 	wireShutdown chan struct{}
-	pktShutdown  chan struct{}
+	cjdcoinShutdown  chan struct{}
 	quit         chan struct{}
 }
 
@@ -141,17 +141,17 @@ func newMemoryMailBox(cfg *mailBoxConfig) *memoryMailBox {
 		repPkts:       list.New(),
 		addPkts:       list.New(),
 		messageOutbox: make(chan lnwire.Message),
-		pktOutbox:     make(chan *htlcPacket),
+		cjdcoinOutbox:     make(chan *htlcPacket),
 		msgReset:      make(chan chan struct{}, 1),
-		pktReset:      make(chan chan struct{}, 1),
+		cjdcoinReset:      make(chan chan struct{}, 1),
 		repIndex:      make(map[CircuitKey]*list.Element),
 		addIndex:      make(map[CircuitKey]*list.Element),
 		wireShutdown:  make(chan struct{}),
-		pktShutdown:   make(chan struct{}),
+		cjdcoinShutdown:   make(chan struct{}),
 		quit:          make(chan struct{}),
 	}
 	box.wireCond = sync.NewCond(&box.wireMtx)
-	box.pktCond = sync.NewCond(&box.pktMtx)
+	box.cjdcoinCond = sync.NewCond(&box.cjdcoinMtx)
 
 	return box
 }
@@ -169,8 +169,8 @@ const (
 	// wireCourier is a type of courier that handles wire messages.
 	wireCourier courierType = iota
 
-	// pktCourier is a type of courier that handles htlc packets.
-	pktCourier
+	// cjdcoinCourier is a type of courier that handles htlc packets.
+	cjdcoinCourier
 )
 
 // Start starts the mailbox and any goroutines it needs to operate properly.
@@ -179,7 +179,7 @@ const (
 func (m *memoryMailBox) Start() {
 	m.started.Do(func() {
 		go m.mailCourier(wireCourier)
-		go m.mailCourier(pktCourier)
+		go m.mailCourier(cjdcoinCourier)
 	})
 }
 
@@ -197,10 +197,10 @@ func (m *memoryMailBox) ResetMessages() er.R {
 // ResetPackets blocks until the head of packets buffer is reset, causing the
 // packets to be redelivered in order.
 func (m *memoryMailBox) ResetPackets() er.R {
-	pktDone := make(chan struct{})
+	cjdcoinDone := make(chan struct{})
 	select {
-	case m.pktReset <- pktDone:
-		return m.signalUntilReset(pktCourier, pktDone)
+	case m.cjdcoinReset <- cjdcoinDone:
+		return m.signalUntilReset(cjdcoinCourier, cjdcoinDone)
 	case <-m.quit:
 		return ErrMailBoxShuttingDown.Default()
 	}
@@ -216,8 +216,8 @@ func (m *memoryMailBox) signalUntilReset(cType courierType,
 		switch cType {
 		case wireCourier:
 			m.wireCond.Signal()
-		case pktCourier:
-			m.pktCond.Signal()
+		case cjdcoinCourier:
+			m.cjdcoinCond.Signal()
 		}
 
 		select {
@@ -237,8 +237,8 @@ func (m *memoryMailBox) signalUntilReset(cType courierType,
 //
 // NOTE: It is safe to call this method multiple times for the same circuit key.
 func (m *memoryMailBox) AckPacket(inKey CircuitKey) bool {
-	m.pktCond.L.Lock()
-	defer m.pktCond.L.Unlock()
+	m.cjdcoinCond.L.Lock()
+	defer m.cjdcoinCond.L.Unlock()
 
 	if entry, ok := m.repIndex[inKey]; ok {
 		// Check whether we are removing the head of the queue. If so,
@@ -283,9 +283,9 @@ func (m *memoryMailBox) AckPacket(inKey CircuitKey) bool {
 // HasPacket queries the packets for a circuit key, this is used to drop packets
 // bound for the switch that already have a queued response.
 func (m *memoryMailBox) HasPacket(inKey CircuitKey) bool {
-	m.pktCond.L.Lock()
+	m.cjdcoinCond.L.Lock()
 	_, ok := m.repIndex[inKey]
-	m.pktCond.L.Unlock()
+	m.cjdcoinCond.L.Unlock()
 
 	return ok
 }
@@ -298,7 +298,7 @@ func (m *memoryMailBox) Stop() {
 		close(m.quit)
 
 		m.signalUntilShutdown(wireCourier)
-		m.signalUntilShutdown(pktCourier)
+		m.signalUntilShutdown(cjdcoinCourier)
 	})
 }
 
@@ -314,9 +314,9 @@ func (m *memoryMailBox) signalUntilShutdown(cType courierType) {
 	case wireCourier:
 		cond = m.wireCond
 		shutdown = m.wireShutdown
-	case pktCourier:
-		cond = m.pktCond
-		shutdown = m.pktShutdown
+	case cjdcoinCourier:
+		cond = m.cjdcoinCond
+		shutdown = m.cjdcoinShutdown
 	}
 
 	for {
@@ -329,15 +329,15 @@ func (m *memoryMailBox) signalUntilShutdown(cType courierType) {
 	}
 }
 
-// pktWithExpiry wraps an incoming packet and records the time at which it it
+// cjdcoinWithExpiry wraps an incoming packet and records the time at which it it
 // should be canceled from the mailbox. This will be used to detect if it gets
 // stuck in the mailbox and inform when to cancel back.
-type pktWithExpiry struct {
-	pkt    *htlcPacket
+type cjdcoinWithExpiry struct {
+	cjdcoin    *htlcPacket
 	expiry time.Time
 }
 
-func (p *pktWithExpiry) deadline(clock clock.Clock) <-chan time.Time {
+func (p *cjdcoinWithExpiry) deadline(clock clock.Clock) <-chan time.Time {
 	return clock.TickAfter(p.expiry.Sub(clock.Now()))
 }
 
@@ -349,8 +349,8 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 	switch cType {
 	case wireCourier:
 		defer close(m.wireShutdown)
-	case pktCourier:
-		defer close(m.pktShutdown)
+	case cjdcoinCourier:
+		defer close(m.cjdcoinShutdown)
 	}
 
 	// TODO(roasbeef): refactor...
@@ -376,24 +376,24 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 				}
 			}
 
-		case pktCourier:
-			m.pktCond.L.Lock()
+		case cjdcoinCourier:
+			m.cjdcoinCond.L.Lock()
 			for m.repHead == nil && m.addHead == nil {
-				m.pktCond.Wait()
+				m.cjdcoinCond.Wait()
 
 				select {
 				// Resetting the packet queue means just moving
 				// our pointer to the front. This ensures that
 				// any un-ACK'd messages are re-delivered upon
 				// reconnect.
-				case pktDone := <-m.pktReset:
+				case cjdcoinDone := <-m.cjdcoinReset:
 					m.repHead = m.repPkts.Front()
 					m.addHead = m.addPkts.Front()
 
-					close(pktDone)
+					close(cjdcoinDone)
 
 				case <-m.quit:
-					m.pktCond.L.Unlock()
+					m.cjdcoinCond.L.Unlock()
 					return
 				default:
 				}
@@ -403,7 +403,7 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 		var (
 			nextRep   *htlcPacket
 			nextRepEl *list.Element
-			nextAdd   *pktWithExpiry
+			nextAdd   *cjdcoinWithExpiry
 			nextAddEl *list.Element
 			nextMsg   lnwire.Message
 		)
@@ -419,7 +419,7 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 		// been ACK'd by the link. This ensures that if a read packet
 		// doesn't make it into a commitment, then it'll be
 		// re-delivered once the link comes back online.
-		case pktCourier:
+		case cjdcoinCourier:
 			// Peek at the head of the Settle/Fails and Add queues.
 			// We peak both even if there is a Settle/Fail present
 			// because we need to set a deadline for the next
@@ -431,7 +431,7 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 				nextRepEl = m.repHead
 			}
 			if m.addHead != nil {
-				nextAdd = m.addHead.Value.(*pktWithExpiry)
+				nextAdd = m.addHead.Value.(*cjdcoinWithExpiry)
 				nextAddEl = m.addHead
 			}
 		}
@@ -441,8 +441,8 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 		switch cType {
 		case wireCourier:
 			m.wireCond.L.Unlock()
-		case pktCourier:
-			m.pktCond.L.Unlock()
+		case cjdcoinCourier:
+			m.cjdcoinCond.L.Unlock()
 		}
 
 		// With the next message obtained, we'll now select to attempt
@@ -462,9 +462,9 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 				return
 			}
 
-		case pktCourier:
+		case cjdcoinCourier:
 			var (
-				pktOutbox chan *htlcPacket
+				cjdcoinOutbox chan *htlcPacket
 				addOutbox chan *htlcPacket
 				add       *htlcPacket
 				deadline  <-chan time.Time
@@ -483,9 +483,9 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 			// We know from our loop condition that at least one
 			// nextRep and nextAdd are non-nil.
 			if nextRep != nil {
-				pktOutbox = m.pktOutbox
+				cjdcoinOutbox = m.cjdcoinOutbox
 			} else {
-				addOutbox = m.pktOutbox
+				addOutbox = m.cjdcoinOutbox
 			}
 
 			// If we have a pending Add, we'll also construct the
@@ -500,39 +500,39 @@ func (m *memoryMailBox) mailCourier(cType courierType) {
 			// nil, hence we won't accidentally deliver a nil
 			// packet.
 			if nextAdd != nil {
-				add = nextAdd.pkt
+				add = nextAdd.cjdcoin
 				deadline = nextAdd.deadline(m.cfg.clock)
 			}
 
 			select {
-			case pktOutbox <- nextRep:
-				m.pktCond.L.Lock()
+			case cjdcoinOutbox <- nextRep:
+				m.cjdcoinCond.L.Lock()
 				// Only advance the repHead if this Settle or
 				// Fail is still at the head of the queue.
 				if m.repHead != nil && m.repHead == nextRepEl {
 					m.repHead = m.repHead.Next()
 				}
-				m.pktCond.L.Unlock()
+				m.cjdcoinCond.L.Unlock()
 
 			case addOutbox <- add:
-				m.pktCond.L.Lock()
+				m.cjdcoinCond.L.Lock()
 				// Only advance the addHead if this Add is still
 				// at the head of the queue.
 				if m.addHead != nil && m.addHead == nextAddEl {
 					m.addHead = m.addHead.Next()
 				}
-				m.pktCond.L.Unlock()
+				m.cjdcoinCond.L.Unlock()
 
 			case <-deadline:
 				m.FailAdd(add)
 
-			case pktDone := <-m.pktReset:
-				m.pktCond.L.Lock()
+			case cjdcoinDone := <-m.cjdcoinReset:
+				m.cjdcoinCond.L.Lock()
 				m.repHead = m.repPkts.Front()
 				m.addHead = m.addPkts.Front()
-				m.pktCond.L.Unlock()
+				m.cjdcoinCond.L.Unlock()
 
-				close(pktDone)
+				close(cjdcoinDone)
 
 			case <-m.quit:
 				return
@@ -564,48 +564,48 @@ func (m *memoryMailBox) AddMessage(msg lnwire.Message) er.R {
 //
 // NOTE: This method is safe for concrete use and part of the MailBox
 // interface.
-func (m *memoryMailBox) AddPacket(pkt *htlcPacket) er.R {
-	m.pktCond.L.Lock()
-	switch htlc := pkt.htlc.(type) {
+func (m *memoryMailBox) AddPacket(cjdcoin *htlcPacket) er.R {
+	m.cjdcoinCond.L.Lock()
+	switch htlc := cjdcoin.htlc.(type) {
 
 	// Split off Settle/Fail packets into the repPkts queue.
 	case *lnwire.UpdateFulfillHTLC, *lnwire.UpdateFailHTLC:
-		if _, ok := m.repIndex[pkt.inKey()]; ok {
-			m.pktCond.L.Unlock()
+		if _, ok := m.repIndex[cjdcoin.inKey()]; ok {
+			m.cjdcoinCond.L.Unlock()
 			return ErrPacketAlreadyExists.Default()
 		}
 
-		entry := m.repPkts.PushBack(pkt)
-		m.repIndex[pkt.inKey()] = entry
+		entry := m.repPkts.PushBack(cjdcoin)
+		m.repIndex[cjdcoin.inKey()] = entry
 		if m.repHead == nil {
 			m.repHead = entry
 		}
 
 	// Split off Add packets into the addPkts queue.
 	case *lnwire.UpdateAddHTLC:
-		if _, ok := m.addIndex[pkt.inKey()]; ok {
-			m.pktCond.L.Unlock()
+		if _, ok := m.addIndex[cjdcoin.inKey()]; ok {
+			m.cjdcoinCond.L.Unlock()
 			return ErrPacketAlreadyExists.Default()
 		}
 
-		entry := m.addPkts.PushBack(&pktWithExpiry{
-			pkt:    pkt,
+		entry := m.addPkts.PushBack(&cjdcoinWithExpiry{
+			cjdcoin:    cjdcoin,
 			expiry: m.cfg.clock.Now().Add(m.cfg.expiry),
 		})
-		m.addIndex[pkt.inKey()] = entry
+		m.addIndex[cjdcoin.inKey()] = entry
 		if m.addHead == nil {
 			m.addHead = entry
 		}
 
 	default:
-		m.pktCond.L.Unlock()
+		m.cjdcoinCond.L.Unlock()
 		return er.Errorf("unknown htlc type: %T", htlc)
 	}
-	m.pktCond.L.Unlock()
+	m.cjdcoinCond.L.Unlock()
 
 	// With the packet added, we signal to the mailCourier that there are
 	// additional packets to consume.
-	m.pktCond.Signal()
+	m.cjdcoinCond.Signal()
 
 	return nil
 }
@@ -615,11 +615,11 @@ func (m *memoryMailBox) AddPacket(pkt *htlcPacket) er.R {
 // delivered after the link restarts if the switch has remained online. The
 // generated LinkError will show an OutgoingFailureDownstreamHtlcAdd
 // FailureDetail.
-func (m *memoryMailBox) FailAdd(pkt *htlcPacket) {
+func (m *memoryMailBox) FailAdd(cjdcoin *htlcPacket) {
 	// First, remove the packet from mailbox. If we didn't find the packet
 	// because it has already been acked, we'll exit early to avoid sending
 	// a duplicate fail message through the switch.
-	if !m.AckPacket(pkt.inKey()) {
+	if !m.AckPacket(cjdcoin.inKey()) {
 		return
 	}
 
@@ -641,7 +641,7 @@ func (m *memoryMailBox) FailAdd(pkt *htlcPacket) {
 
 	// If the payment was locally initiated (which is indicated by a nil
 	// obfuscator), we do not need to encrypt it back to the sender.
-	if pkt.obfuscator == nil {
+	if cjdcoin.obfuscator == nil {
 		var b bytes.Buffer
 		err := lnwire.EncodeFailure(&b, failure, 0)
 		if err != nil {
@@ -654,7 +654,7 @@ func (m *memoryMailBox) FailAdd(pkt *htlcPacket) {
 		// If the packet is part of a forward, (identified by a non-nil
 		// obfuscator) we need to encrypt the error back to the source.
 		var err er.R
-		reason, err = pkt.obfuscator.EncryptFirstHop(failure)
+		reason, err = cjdcoin.obfuscator.EncryptFirstHop(failure)
 		if err != nil {
 			log.Errorf("Unable to obfuscate error: %v", err)
 			return
@@ -668,10 +668,10 @@ func (m *memoryMailBox) FailAdd(pkt *htlcPacket) {
 	)
 
 	failPkt := &htlcPacket{
-		incomingChanID: pkt.incomingChanID,
-		incomingHTLCID: pkt.incomingHTLCID,
-		circuit:        pkt.circuit,
-		sourceRef:      pkt.sourceRef,
+		incomingChanID: cjdcoin.incomingChanID,
+		incomingHTLCID: cjdcoin.incomingHTLCID,
+		circuit:        cjdcoin.circuit,
+		sourceRef:      cjdcoin.sourceRef,
 		hasSource:      true,
 		localFailure:   localFailure,
 		linkFailure:    linkError,
@@ -699,7 +699,7 @@ func (m *memoryMailBox) MessageOutBox() chan lnwire.Message {
 //
 // NOTE: This method is part of the MailBox interface.
 func (m *memoryMailBox) PacketOutBox() chan *htlcPacket {
-	return m.pktOutbox
+	return m.cjdcoinOutbox
 }
 
 // mailOrchestrator is responsible for coordinating the creation and lifecycle
@@ -828,13 +828,13 @@ func (mo *mailOrchestrator) BindLiveShortChanID(mailbox MailBox,
 	mo.liveIndex[sid] = cid
 
 	// Retrieve any unclaimed packets destined for this mailbox.
-	pkts := mo.unclaimedPackets[sid]
+	cjdcoins := mo.unclaimedPackets[sid]
 	delete(mo.unclaimedPackets, sid)
 	mo.mu.Unlock()
 
 	// Deliver the unclaimed packets.
-	for _, pkt := range pkts {
-		mailbox.AddPacket(pkt)
+	for _, cjdcoin := range cjdcoins {
+		mailbox.AddPacket(cjdcoin)
 	}
 }
 
@@ -843,7 +843,7 @@ func (mo *mailOrchestrator) BindLiveShortChanID(mailbox MailBox,
 // Otherwise the packet is recorded as unclaimed, and will be delivered to the
 // mailbox upon the subsequent call to BindLiveShortChanID.
 func (mo *mailOrchestrator) Deliver(
-	sid lnwire.ShortChannelID, pkt *htlcPacket) er.R {
+	sid lnwire.ShortChannelID, cjdcoin *htlcPacket) er.R {
 
 	var (
 		mailbox MailBox
@@ -861,7 +861,7 @@ func (mo *mailOrchestrator) Deliver(
 
 	// The link is live and target mailbox was found, deliver immediately.
 	if isLive && found {
-		return mailbox.AddPacket(pkt)
+		return mailbox.AddPacket(cjdcoin)
 	}
 
 	// If we detected that the link has not been made live, we will acquire
@@ -891,13 +891,13 @@ func (mo *mailOrchestrator) Deliver(
 		mo.mu.Unlock()
 
 		// Deliver the packet to the mailbox if it was found or created.
-		return mailbox.AddPacket(pkt)
+		return mailbox.AddPacket(cjdcoin)
 	}
 
 	// Finally, if the channel id is still not found in the live index,
 	// we'll add this to the list of unclaimed packets. These will be
 	// delivered upon the next call to BindLiveShortChanID.
-	mo.unclaimedPackets[sid] = append(mo.unclaimedPackets[sid], pkt)
+	mo.unclaimedPackets[sid] = append(mo.unclaimedPackets[sid], cjdcoin)
 	mo.mu.Unlock()
 
 	return nil

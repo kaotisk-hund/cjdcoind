@@ -3,7 +3,7 @@ package autopilot
 import (
 	"sync"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // stack is a simple int stack to help with readability of Brandes'

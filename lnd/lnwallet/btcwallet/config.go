@@ -4,17 +4,17 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 
-	"github.com/pkt-cash/pktd/pktwallet/chain"
-	"github.com/pkt-cash/pktd/pktwallet/wallet"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/chain"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/wallet"
 
 	// This is required to register bdb as a valid walletdb driver. In the
 	// init function of the package, it registers itself. The import is used
 	// to activate the side effects w/o actually binding the package name to
 	// a file-level variable.
-	_ "github.com/pkt-cash/pktd/pktwallet/walletdb/bdb"
+	_ "github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb/bdb"
 )
 
 var (

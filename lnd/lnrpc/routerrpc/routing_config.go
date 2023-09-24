@@ -3,7 +3,7 @@ package routerrpc
 import (
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
 )
 
 // RoutingConfig contains the configurable parameters that control routing.

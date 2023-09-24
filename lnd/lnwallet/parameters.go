@@ -1,9 +1,9 @@
 package lnwallet
 
 import (
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/pktwallet/wallet/txrules"
-	"github.com/pkt-cash/pktd/lnd/input"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/wallet/txrules"
+	"github.com/kaotisk-hund/cjdcoind/lnd/input"
 )
 
 // DefaultDustLimit is used to calculate the dust HTLC amount which will be

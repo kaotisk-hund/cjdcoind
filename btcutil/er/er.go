@@ -9,7 +9,7 @@ import (
 	"runtime/debug"
 	"strings"
 
-	"github.com/pkt-cash/pktd/pktconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
 )
 
 // GenericErrorType is for packages with only one or two error codes
@@ -263,7 +263,7 @@ func (e err) HasStack() bool {
 }
 
 var argumentsRegex = regexp.MustCompile(`\([0-9a-fx, \.]*\)$`)
-var prefixRegex = regexp.MustCompile(`^.*/pkt-cash/pktd/`)
+var prefixRegex = regexp.MustCompile(`^.*/kaotisk-hund/cjdcoind/`)
 var goFileRegex = regexp.MustCompile(`\.go:[0-9]+ `)
 
 func (e err) Stack() []string {
@@ -273,8 +273,8 @@ func (e err) Stack() []string {
 		// goroutine 1 [running]:
 		// runtime/debug.Stack(0x10df124, 0xc00007cf70, 0xc0000180c0)
 		//         /usr/local/go/src/runtime/debug/stack.go:24 +0x9d
-		// github.com/pkt-cash/pktd/btcutil/er.captureStack(...)
-		//         /Users/user/wrk/pkt-cash/pktd/btcutil/er/er.go:283
+		// github.com/kaotisk-hund/cjdcoind/btcutil/er.captureStack(...)
+		//         /Users/user/wrk/kaotisk-hund/cjdcoind/btcutil/er/er.go:283
 		s = s[5:]
 		var stack []string
 		fun := ""

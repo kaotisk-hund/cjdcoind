@@ -9,20 +9,20 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/randhash/util"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/randhash/util"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/announce"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/block/proof"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/announce"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/block/proof"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/difficulty"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/pcutil"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/difficulty"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/pcutil"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/cryptocycle"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/cryptocycle"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 func isWorkOk(ccState *cryptocycle.State, cb *wire.PcCoinbaseCommit, target uint32, packetCryptVersion int) bool {

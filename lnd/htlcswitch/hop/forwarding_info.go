@@ -1,7 +1,7 @@
 package hop
 
 import (
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // ForwardingInfo contains all the information that is necessary to forward and

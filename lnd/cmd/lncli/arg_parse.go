@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // reTimeRange matches systemd.time-like short negative timeranges, e.g. "-200s".

@@ -8,9 +8,9 @@ import (
 	"os"
 	"path"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/healthcheck"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/healthcheck"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 	"go.etcd.io/bbolt"
 )
 

@@ -3,7 +3,7 @@ package autopilot
 import (
 	"math/rand"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 var Err = er.NewErrorType("lnd.autopilot")

@@ -7,10 +7,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/pktwallet/walletdb"
-	_ "github.com/pkt-cash/pktd/pktwallet/walletdb/bdb"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb"
+	_ "github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb/bdb"
 )
 
 func createTestIndex(f func(tx walletdb.ReadWriteTx, hi *headerIndex) er.R) er.R {

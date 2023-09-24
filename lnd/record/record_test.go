@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/pkt-cash/pktd/lnd/lnwire"
-	"github.com/pkt-cash/pktd/lnd/record"
-	"github.com/pkt-cash/pktd/lnd/tlv"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/record"
+	"github.com/kaotisk-hund/cjdcoind/lnd/tlv"
 )
 
 type recordEncDecTest struct {

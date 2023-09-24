@@ -12,19 +12,19 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
-	"github.com/pkt-cash/pktd/integration/rpctest"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs/btcdnotify"
-	"github.com/pkt-cash/pktd/lnd/chainntnfs/neutrinonotify"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/neutrino"
-	_ "github.com/pkt-cash/pktd/pktwallet/walletdb/bdb" // Required to auto-register the boltdb walletdb implementation.
-	"github.com/pkt-cash/pktd/rpcclient"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/integration/rpctest"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs/btcdnotify"
+	"github.com/kaotisk-hund/cjdcoind/lnd/chainntnfs/neutrinonotify"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/neutrino"
+	_ "github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/walletdb/bdb" // Required to auto-register the boltdb walletdb implementation.
+	"github.com/kaotisk-hund/cjdcoind/rpcclient"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 func testSingleConfirmationNotification(miner *rpctest.Harness,

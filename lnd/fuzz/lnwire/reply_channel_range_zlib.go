@@ -7,7 +7,7 @@ import (
 	"compress/zlib"
 	"encoding/binary"
 
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // Fuzz_reply_channel_range_zlib is used by go-fuzz.

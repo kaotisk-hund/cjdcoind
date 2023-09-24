@@ -10,7 +10,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/pkt-cash/pktd/goleveldb/leveldb/comparer"
+	"github.com/kaotisk-hund/cjdcoind/goleveldb/leveldb/comparer"
 )
 
 var defaultIComparer = &iComparer{comparer.DefaultComparer}

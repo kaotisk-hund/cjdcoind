@@ -15,13 +15,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/rpcclient"
-	"github.com/pkt-cash/pktd/wire"
-	"github.com/pkt-cash/pktd/wire/protocol"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/rpcclient"
+	"github.com/kaotisk-hund/cjdcoind/wire"
+	"github.com/kaotisk-hund/cjdcoind/wire/protocol"
 )
 
 const (
@@ -67,10 +67,10 @@ var (
 	ListenAddressGenerator = generateListeningAddresses
 )
 
-// Harness fully encapsulates an active pktd process to provide a unified
-// platform for creating rpc driven integration tests involving pktd. The
-// active pktd node will typically be run in simnet mode in order to allow for
-// easy generation of test blockchains.  The active pktd process is fully
+// Harness fully encapsulates an active cjdcoind process to provide a unified
+// platform for creating rpc driven integration tests involving cjdcoind. The
+// active cjdcoind node will typically be run in simnet mode in order to allow for
+// easy generation of test blockchains.  The active cjdcoind process is fully
 // managed by Harness, which handles the necessary initialization, and teardown
 // of the process along with any temporary directories created as a result.
 // Multiple Harness instances may be run concurrently, in order to allow for
@@ -225,7 +225,7 @@ func New(activeNet *chaincfg.Params, handlers *rpcclient.NotificationHandlers,
 // NOTE: This method and TearDown should always be called from the same
 // goroutine as they are not concurrent safe.
 func (h *Harness) SetUp(createTestChain bool, numMatureOutputs uint32) er.R {
-	// Start the pktd node itself. This spawns a new process which will be
+	// Start the cjdcoind node itself. This spawns a new process which will be
 	// managed
 	if err := h.node.start(); err != nil {
 		return err
@@ -243,7 +243,7 @@ func (h *Harness) SetUp(createTestChain bool, numMatureOutputs uint32) er.R {
 		return err
 	}
 
-	// Ensure pktd properly dispatches our registered call-back for each new
+	// Ensure cjdcoind properly dispatches our registered call-back for each new
 	// block. Otherwise, the memWallet won't function properly.
 	if err := h.Node.NotifyBlocks(); err != nil {
 		return err
@@ -312,7 +312,7 @@ func (h *Harness) TearDown() er.R {
 	return h.tearDown()
 }
 
-// connectRPCClient attempts to establish an RPC connection to the created pktd
+// connectRPCClient attempts to establish an RPC connection to the created cjdcoind
 // process belonging to this Harness instance. If the initial connection
 // attempt fails, this function will retry h.maxConnRetries times, backing off
 // the time between subsequent attempts. If after h.maxConnRetries attempts,
@@ -489,7 +489,7 @@ func generateListeningAddresses() (string, string) {
 
 // baseDir is the directory path of the temp directory for all rpctest files.
 func baseDir() (string, er.R) {
-	dirPath := filepath.Join(os.TempDir(), "pktd", "rpctest")
+	dirPath := filepath.Join(os.TempDir(), "cjdcoind", "rpctest")
 	errr := os.MkdirAll(dirPath, 0755)
 	return dirPath, er.E(errr)
 }

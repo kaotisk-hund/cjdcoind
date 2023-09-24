@@ -3,10 +3,10 @@ package wtwire
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/lnd/feature"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/lnd/feature"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 var ErrUnknownChainHash = er.GenericErrorType.Code("ErrUnknownChainHash")

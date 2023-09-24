@@ -2,7 +2,7 @@
 
 package macaroons
 
-import "github.com/pkt-cash/pktd/pktwallet/waddrmgr"
+import "github.com/kaotisk-hund/cjdcoind/cjdcoinwallet/waddrmgr"
 
 var (
 	// Below are the reduced scrypt parameters that are used when creating

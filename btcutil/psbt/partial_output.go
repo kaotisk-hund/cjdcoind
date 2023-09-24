@@ -5,8 +5,8 @@ import (
 	"io"
 	"sort"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 // POutput is a struct encapsulating all the data that can be attached

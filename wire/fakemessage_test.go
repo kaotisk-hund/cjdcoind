@@ -7,7 +7,7 @@ package wire
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // fakeMessage implements the Message interface and is used to force encode

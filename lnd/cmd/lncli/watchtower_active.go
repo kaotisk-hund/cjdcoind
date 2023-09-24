@@ -5,8 +5,8 @@ package main
 import (
 	"context"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/lnrpc/watchtowerrpc"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc/watchtowerrpc"
 	"github.com/urfave/cli"
 )
 

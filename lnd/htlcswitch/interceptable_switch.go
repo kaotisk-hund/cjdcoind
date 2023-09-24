@@ -3,11 +3,11 @@ package htlcswitch
 import (
 	"sync"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/channeldb"
-	"github.com/pkt-cash/pktd/lnd/htlcswitch/hop"
-	"github.com/pkt-cash/pktd/lnd/lntypes"
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/channeldb"
+	"github.com/kaotisk-hund/cjdcoind/lnd/htlcswitch/hop"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntypes"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 var (
@@ -160,7 +160,7 @@ func (f *interceptedForward) Settle(preimage lntypes.Preimage) er.R {
 // resolve is used for both Settle and Fail and forwards the message to the
 // switch.
 func (f *interceptedForward) resolve(message lnwire.Message) er.R {
-	pkt := &htlcPacket{
+	cjdcoin := &htlcPacket{
 		incomingChanID: f.packet.incomingChanID,
 		incomingHTLCID: f.packet.incomingHTLCID,
 		outgoingChanID: f.packet.outgoingChanID,
@@ -170,5 +170,5 @@ func (f *interceptedForward) resolve(message lnwire.Message) er.R {
 		htlc:           message,
 		obfuscator:     f.packet.obfuscator,
 	}
-	return f.htlcSwitch.mailOrchestrator.Deliver(pkt.incomingChanID, pkt)
+	return f.htlcSwitch.mailOrchestrator.Deliver(cjdcoin.incomingChanID, cjdcoin)
 }

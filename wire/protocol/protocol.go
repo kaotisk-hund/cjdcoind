@@ -159,10 +159,10 @@ const (
 	// SimNet represents the simulation test network.
 	SimNet BitcoinNet = 0x12141c16
 
-	// PktTestNet represents the pkt.cash test network.
+	// PktTestNet represents the cjdcoin.cash test network.
 	PktTestNet BitcoinNet = 0x070911fc
 
-	// PktMainNet represents the pkt.cash main network.
+	// PktMainNet represents the cjdcoin.cash main network.
 	PktMainNet BitcoinNet = 0x082f00fc
 )
 

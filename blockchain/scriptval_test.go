@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/pkt-cash/pktd/txscript"
+	"github.com/kaotisk-hund/cjdcoind/txscript"
 )
 
 // TestCheckBlockScripts ensures that validating the all of the scripts in a

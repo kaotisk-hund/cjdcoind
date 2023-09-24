@@ -9,7 +9,7 @@ package limits
 import (
 	"syscall"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 const (
@@ -17,7 +17,7 @@ const (
 	fileLimitMin  = 1024
 )
 
-// SetLimits raises some process limits to values which allow pktd and
+// SetLimits raises some process limits to values which allow cjdcoind and
 // associated utilities to run.
 func SetLimits() er.R {
 	var rLimit syscall.Rlimit

@@ -12,10 +12,10 @@ import (
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/poly1305"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/randhash/interpret"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/randhash/interpret"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/pcutil"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/randhash/randgen"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/pcutil"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/randhash/randgen"
 )
 
 type State struct {

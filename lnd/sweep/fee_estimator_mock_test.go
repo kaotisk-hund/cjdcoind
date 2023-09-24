@@ -3,8 +3,8 @@ package sweep
 import (
 	"sync"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/lnwallet/chainfee"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwallet/chainfee"
 )
 
 // mockFeeEstimator implements a mock fee estimator. It closely resembles

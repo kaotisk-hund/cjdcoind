@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // Conf specifies the watchtower options that can be configured from the command

@@ -8,10 +8,10 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/randhash/opcodes"
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/randhash/util"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/randhash/opcodes"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/randhash/util"
 )
 
 type Uint64 struct {

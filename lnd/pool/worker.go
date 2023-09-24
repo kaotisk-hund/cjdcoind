@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // ErrWorkerPoolExiting signals that a shutdown of the Worker has been

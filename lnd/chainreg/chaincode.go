@@ -22,7 +22,7 @@ func (c ChainCode) String() string {
 	case LitecoinChain:
 		return "litecoin"
 	case PktChain:
-		return "pkt"
+		return "cjdcoin"
 	default:
 		return "kekcoin"
 	}

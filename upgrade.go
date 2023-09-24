@@ -9,8 +9,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 // dirEmpty returns whether or not the specified directory path is empty.
@@ -31,20 +31,20 @@ func dirEmpty(dirPath string) (bool, er.R) {
 	return len(names) == 0, nil
 }
 
-// oldBtcdHomeDir returns the OS specific home directory pktd used prior to
+// oldBtcdHomeDir returns the OS specific home directory cjdcoind used prior to
 // version 0.3.3.  This has since been replaced with btcutil.AppDataDir, but
 // this function is still provided for the automatic upgrade path.
 func oldBtcdHomeDir() string {
 	// Search for Windows APPDATA first.  This won't exist on POSIX OSes.
 	appData := os.Getenv("APPDATA")
 	if appData != "" {
-		return filepath.Join(appData, "pktd")
+		return filepath.Join(appData, "cjdcoind")
 	}
 
 	// Fall back to standard HOME directory that works for most POSIX OSes.
 	home := os.Getenv("HOME")
 	if home != "" {
-		return filepath.Join(home, ".pktd")
+		return filepath.Join(home, ".cjdcoind")
 	}
 
 	// In the worst case, use the current directory.
@@ -52,7 +52,7 @@ func oldBtcdHomeDir() string {
 }
 
 // upgradeDBPathNet moves the database for a specific network from its
-// location prior to pktd version 0.2.0 and uses heuristics to ascertain the old
+// location prior to cjdcoind version 0.2.0 and uses heuristics to ascertain the old
 // database type to rename to the new format.
 func upgradeDBPathNet(oldDbPath, netName string) er.R {
 	// Prior to version 0.2.0, the database was named the same thing for
@@ -91,7 +91,7 @@ func upgradeDBPathNet(oldDbPath, netName string) er.R {
 	return nil
 }
 
-// upgradeDBPaths moves the databases from their locations prior to pktd
+// upgradeDBPaths moves the databases from their locations prior to cjdcoind
 // version 0.2.0 to their new locations.
 func upgradeDBPaths() er.R {
 	// Prior to version 0.2.0, the databases were in the "db" directory and
@@ -99,15 +99,15 @@ func upgradeDBPaths() er.R {
 	// respective networks.  Check for the old database and update it to the
 	// new path introduced with version 0.2.0 accordingly.
 	oldDbRoot := filepath.Join(oldBtcdHomeDir(), "db")
-	upgradeDBPathNet(filepath.Join(oldDbRoot, "pktd.db"), "mainnet")
-	upgradeDBPathNet(filepath.Join(oldDbRoot, "pktd_testnet.db"), "testnet")
-	upgradeDBPathNet(filepath.Join(oldDbRoot, "pktd_regtest.db"), "regtest")
+	upgradeDBPathNet(filepath.Join(oldDbRoot, "cjdcoind.db"), "mainnet")
+	upgradeDBPathNet(filepath.Join(oldDbRoot, "cjdcoind_testnet.db"), "testnet")
+	upgradeDBPathNet(filepath.Join(oldDbRoot, "cjdcoind_regtest.db"), "regtest")
 
 	// Remove the old db directory.
 	return er.E(os.RemoveAll(oldDbRoot))
 }
 
-// upgradeDataPaths moves the application data from its location prior to pktd
+// upgradeDataPaths moves the application data from its location prior to cjdcoind
 // version 0.3.3 to its new location.
 func upgradeDataPaths() er.R {
 	// No need to migrate if the old and new home paths are the same.
@@ -127,7 +127,7 @@ func upgradeDataPaths() er.R {
 			return er.E(errr)
 		}
 
-		// Move old pktd.conf into new location if needed.
+		// Move old cjdcoind.conf into new location if needed.
 		oldConfPath := filepath.Join(oldHomePath, defaultConfigFilename)
 		newConfPath := filepath.Join(newHomePath, defaultConfigFilename)
 		if fileExists(oldConfPath) && !fileExists(newConfPath) {
@@ -168,7 +168,7 @@ func upgradeDataPaths() er.R {
 	return nil
 }
 
-// doUpgrades performs upgrades to pktd as new versions require it.
+// doUpgrades performs upgrades to cjdcoind as new versions require it.
 func doUpgrades() er.R {
 	err := upgradeDBPaths()
 	if err != nil {

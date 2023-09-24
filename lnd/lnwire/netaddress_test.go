@@ -4,8 +4,8 @@ import (
 	"net"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcec"
-	"github.com/pkt-cash/pktd/btcutil/util"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/util"
 )
 
 func TestNetAddressDisplay(t *testing.T) {

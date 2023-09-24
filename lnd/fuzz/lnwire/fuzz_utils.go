@@ -7,7 +7,7 @@ import (
 	"encoding/binary"
 	"reflect"
 
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // prefixWithMsgType takes []byte and adds a wire protocol prefix

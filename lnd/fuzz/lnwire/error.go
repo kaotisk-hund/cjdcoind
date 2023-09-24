@@ -3,7 +3,7 @@
 package lnwirefuzz
 
 import (
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // Fuzz_error is used by go-fuzz.

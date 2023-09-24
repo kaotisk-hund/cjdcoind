@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pkt-cash/pktd/lnd/tor"
+	"github.com/kaotisk-hund/cjdcoind/lnd/tor"
 )
 
 type unknownAddrType struct{}

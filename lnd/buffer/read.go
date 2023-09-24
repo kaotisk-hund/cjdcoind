@@ -1,7 +1,7 @@
 package buffer
 
 import (
-	"github.com/pkt-cash/pktd/lnd/lnwire"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnwire"
 )
 
 // ReadSize represents the size of the maximum message that can be read off the

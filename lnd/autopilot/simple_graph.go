@@ -1,6 +1,6 @@
 package autopilot
 
-import "github.com/pkt-cash/pktd/btcutil/er"
+import "github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
 // SimpleGraph stores a simplifed adj graph of a channel graph to speed
 // up graph processing by eliminating all unnecessary hashing and map access.

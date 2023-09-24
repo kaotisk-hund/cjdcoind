@@ -4,7 +4,7 @@
 
 package btcjson
 
-import "github.com/pkt-cash/pktd/btcutil/er"
+import "github.com/kaotisk-hund/cjdcoind/btcutil/er"
 
 // Err is an error type for the btcjson errors
 var Err er.ErrorType = er.NewErrorType("btcjson.Err")
@@ -68,7 +68,7 @@ var (
 	ErrRPCTxAlreadyInChain = Err.CodeWithNumber("ErrRPCTxAlreadyInChain", -27)
 )
 
-// Errors that are specific to pktd.
+// Errors that are specific to cjdcoind.
 var (
 	ErrRPCNoWallet      = Err.CodeWithNumber("ErrRPCNoWallet", -1)
 	ErrRPCUnimplemented = Err.CodeWithNumber("ErrRPCUnimplemented", -1)

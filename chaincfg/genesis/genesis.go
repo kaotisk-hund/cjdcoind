@@ -11,9 +11,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/wire"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/wire"
 )
 
 var blockReg = make(map[chainhash.Hash]wire.MsgBlock)
@@ -88,8 +88,8 @@ func init() {
 		Transactions: []*wire.MsgTx{&genesisCoinbaseTx},
 	})
 
-	// pkt
-	register(chaincfg.PktMainNetParams.GenesisHash, blockFromStr(pktTestNetGenesisBlockStr))
+	// cjdcoin
+	register(chaincfg.PktMainNetParams.GenesisHash, blockFromStr(cjdcoinTestNetGenesisBlockStr))
 }
 
 // genesisCoinbaseTx is the coinbase transaction for the genesis blocks for
@@ -150,7 +150,7 @@ func blockFromStr(str string) wire.MsgBlock {
 	return blk
 }
 
-var pktTestNetGenesisBlockStr = "f9beb4d9f516000000000000000000000000000000000000000000000000" +
+var cjdcoinTestNetGenesisBlockStr = "f9beb4d9f516000000000000000000000000000000000000000000000000" +
 	"0000000000000000000000000000df345ba23b13467eec222a919d449dab" +
 	"6506abc555ef307794ecd3d36ac891fb00000000ffff0f1f0000000001fd" +
 	"04160000000000000000df345ba23b13467eec222a919d449dab6506abc5" +

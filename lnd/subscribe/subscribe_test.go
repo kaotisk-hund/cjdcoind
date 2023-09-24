@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/lnd/subscribe"
+	"github.com/kaotisk-hund/cjdcoind/lnd/subscribe"
 )
 
 // TestSubscribe tests that the subscription clients receive the updates sent

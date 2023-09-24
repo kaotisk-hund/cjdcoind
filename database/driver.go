@@ -7,7 +7,7 @@ package database
 import (
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // Driver defines a structure for backend drivers to use when they registered

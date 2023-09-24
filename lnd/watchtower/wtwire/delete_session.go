@@ -3,7 +3,7 @@ package wtwire
 import (
 	"io"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 // DeleteSession is sent from the client to the tower to signal that the tower

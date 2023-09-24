@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/lnd"
-	"github.com/pkt-cash/pktd/lnd/lntest"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/lnd"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lntest"
 )
 
 // testMaxChannelSize tests that lnd handles --maxchansize parameter

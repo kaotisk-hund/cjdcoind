@@ -3,7 +3,7 @@ package blob_test
 import (
 	"testing"
 
-	"github.com/pkt-cash/pktd/lnd/watchtower/blob"
+	"github.com/kaotisk-hund/cjdcoind/lnd/watchtower/blob"
 )
 
 var unknownFlag = blob.Flag(16)

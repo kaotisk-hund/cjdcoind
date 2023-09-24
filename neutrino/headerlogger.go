@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 // headerProgressLogger provides periodic logging for other services in order

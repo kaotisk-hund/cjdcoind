@@ -5,8 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/pkt-cash/pktd/blockchain/packetcrypt/difficulty"
-	"github.com/pkt-cash/pktd/pktconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/blockchain/packetcrypt/difficulty"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
 )
 
 func usage() {

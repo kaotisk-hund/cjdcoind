@@ -8,7 +8,7 @@ import (
 	"net"
 	"testing"
 
-	"github.com/pkt-cash/pktd/btcec"
+	"github.com/kaotisk-hund/cjdcoind/btcec"
 	"github.com/stretchr/testify/require"
 )
 

@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pkt-cash/pktd/lnd/buffer"
-	"github.com/pkt-cash/pktd/lnd/pool"
+	"github.com/kaotisk-hund/cjdcoind/lnd/buffer"
+	"github.com/kaotisk-hund/cjdcoind/lnd/pool"
 )
 
 type mockRecycler bool

@@ -19,23 +19,23 @@ import (
 	"time"
 
 	flags "github.com/jessevdk/go-flags"
-	"github.com/pkt-cash/pktd/blockchain"
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/chaincfg"
-	"github.com/pkt-cash/pktd/chaincfg/chainhash"
-	"github.com/pkt-cash/pktd/chaincfg/globalcfg"
-	"github.com/pkt-cash/pktd/database"
-	_ "github.com/pkt-cash/pktd/database/ffldb"
-	"github.com/pkt-cash/pktd/mempool"
-	"github.com/pkt-cash/pktd/mining"
-	"github.com/pkt-cash/pktd/peer"
-	"github.com/pkt-cash/pktd/pktconfig/version"
-	"github.com/pkt-cash/pktd/pktlog/log"
+	"github.com/kaotisk-hund/cjdcoind/blockchain"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/chainhash"
+	"github.com/kaotisk-hund/cjdcoind/chaincfg/globalcfg"
+	"github.com/kaotisk-hund/cjdcoind/database"
+	_ "github.com/kaotisk-hund/cjdcoind/database/ffldb"
+	"github.com/kaotisk-hund/cjdcoind/mempool"
+	"github.com/kaotisk-hund/cjdcoind/mining"
+	"github.com/kaotisk-hund/cjdcoind/peer"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinlog/log"
 )
 
 const (
-	defaultConfigFilename        = "pktd.conf"
+	defaultConfigFilename        = "cjdcoind.conf"
 	defaultDataDirname           = "data"
 	defaultLogLevel              = "info"
 	defaultLogDirname            = "logs"
@@ -66,7 +66,7 @@ const (
 )
 
 var (
-	defaultHomeDir     = btcutil.AppDataDir("pktd", false)
+	defaultHomeDir     = btcutil.AppDataDir("cjdcoind", false)
 	defaultConfigFile  = filepath.Join(defaultHomeDir, defaultConfigFilename)
 	defaultDataDir     = filepath.Join(defaultHomeDir, defaultDataDirname)
 	knownDbTypes       = database.SupportedDrivers()
@@ -88,7 +88,7 @@ func minUint32(a, b uint32) uint32 {
 	return b
 }
 
-// config defines the configuration options for pktd.
+// config defines the configuration options for cjdcoind.
 //
 // See loadConfig for details on the configuration load process.
 type config struct {
@@ -105,8 +105,8 @@ type config struct {
 	BanDuration          time.Duration `long:"banduration" description:"How long to ban misbehaving peers.  Valid time units are {s, m, h}.  Minimum 1 second"`
 	BanThreshold         uint32        `long:"banthreshold" description:"Maximum allowed ban score before disconnecting and banning misbehaving peers."`
 	Whitelists           []string      `long:"whitelist" description:"Add an IP network or IP that will not be banned. (eg. 192.168.1.0/24 or ::1)"`
-	AgentBlacklist       []string      `long:"agentblacklist" description:"A comma separated list of user-agent substrings which will cause pktd to reject any peers whose user-agent contains any of the blacklisted substrings."`
-	AgentWhitelist       []string      `long:"agentwhitelist" description:"A comma separated list of user-agent substrings which will cause pktd to require all peers' user-agents to contain one of the whitelisted substrings. The blacklist is applied before the blacklist, and an empty whitelist will allow all agents that do not fail the blacklist."`
+	AgentBlacklist       []string      `long:"agentblacklist" description:"A comma separated list of user-agent substrings which will cause cjdcoind to reject any peers whose user-agent contains any of the blacklisted substrings."`
+	AgentWhitelist       []string      `long:"agentwhitelist" description:"A comma separated list of user-agent substrings which will cause cjdcoind to require all peers' user-agents to contain one of the whitelisted substrings. The blacklist is applied before the blacklist, and an empty whitelist will allow all agents that do not fail the blacklist."`
 	HomeDir              string        `long:"homedir" description:"Creates this directory at startup"`
 	RPCUser              string        `short:"u" long:"rpcuser" description:"Username for RPC connections"`
 	RPCPass              string        `short:"P" long:"rpcpass" default-mask:"-" description:"Password for RPC connections"`
@@ -125,9 +125,9 @@ type config struct {
 	DisableDNSSeed       bool          `long:"nodnsseed" description:"Disable DNS seeding for peers"`
 	ExternalIPs          []string      `long:"externalip" description:"Add an ip to the list of local addresses we claim to listen on to peers"`
 	TestNet3             bool          `long:"testnet" description:"Use the test network"`
-	PktTest              bool          `long:"pkttest" description:"Use the pkt.cash test network"`
+	PktTest              bool          `long:"cjdcointest" description:"Use the cjdcoin.cash test network"`
 	BtcMainNet           bool          `long:"btc" description:"Use the bitcoin main network"`
-	PktMainNet           bool          `long:"pkt" description:"Use the pkt.cash main network"`
+	PktMainNet           bool          `long:"cjdcoin" description:"Use the cjdcoin.cash main network"`
 	RegressionTest       bool          `long:"regtest" description:"Use the regression test network"`
 	SimNet               bool          `long:"simnet" description:"Use the simulation test network"`
 	AddCheckpoints       []string      `long:"addcheckpoint" description:"Add a custom checkpoint.  Format: '<height>:<hash>'"`
@@ -333,7 +333,7 @@ func newConfigParser(cfg *config, so *serviceOptions, options flags.Options) *fl
 // 	3) Load configuration file overwriting defaults with any specified options
 // 	4) Parse CLI options and overwrite/add any specified options
 //
-// The above results in pktd functioning properly without any config settings
+// The above results in cjdcoind functioning properly without any config settings
 // while still allowing the user to override settings with config files and
 // command line options.  Command line options always take precedence.
 func loadConfig() (*config, []string, er.R) {
@@ -357,7 +357,7 @@ func loadConfig() (*config, []string, er.R) {
 		FreeTxRelayLimit:     defaultFreeTxRelayLimit,
 		TrickleInterval:      defaultTrickleInterval,
 		Coinbase:             mining.DefaultCoinbaseFlags,
-		MiningAddrs:          []string{"pkt1q6hqsqhqdgqfd8t3xwgceulu7k9d9w5t2amath0qxyfjlvl3s3u4sjza2g2"},
+		MiningAddrs:          []string{"cjdcoin1q6hqsqhqdgqfd8t3xwgceulu7k9d9w5t2amath0qxyfjlvl3s3u4sjza2g2"},
 		BlockMinSize:         defaultBlockMinSize,
 		BlockMaxSize:         defaultBlockMaxSize,
 		BlockMinWeight:       defaultBlockMinWeight,
@@ -469,7 +469,7 @@ func loadConfig() (*config, []string, er.R) {
 	}
 	if cfg.PktTest {
 		numNets++
-		activeNetParams = &pktTestNetParams
+		activeNetParams = &cjdcoinTestNetParams
 	}
 	if cfg.BtcMainNet {
 		numNets++
@@ -477,7 +477,7 @@ func loadConfig() (*config, []string, er.R) {
 	}
 	if cfg.PktMainNet {
 		numNets++
-		activeNetParams = &pktMainNetParams
+		activeNetParams = &cjdcoinMainNetParams
 	}
 	if cfg.RegressionTest {
 		numNets++
@@ -923,14 +923,14 @@ func loadConfig() (*config, []string, er.R) {
 	return &cfg, remainingArgs, nil
 }
 
-// pktdDial connects to the address on the named network using the appropriate
+// cjdcoindDial connects to the address on the named network using the appropriate
 // dial function depending on the address and configuration options.
-func pktdDial(addr net.Addr) (net.Conn, er.R) {
+func cjdcoindDial(addr net.Addr) (net.Conn, er.R) {
 	return cfg.dial(addr.Network(), addr.String(), defaultConnectTimeout)
 }
 
-// pktdLookup resolves the IP of the given host using the correct DNS lookup
+// cjdcoindLookup resolves the IP of the given host using the correct DNS lookup
 // function depending on the configuration options.
-func pktdLookup(host string) ([]net.IP, er.R) {
+func cjdcoindLookup(host string) ([]net.IP, er.R) {
 	return cfg.lookup(host)
 }

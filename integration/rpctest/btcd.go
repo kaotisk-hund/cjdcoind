@@ -10,7 +10,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/pkt-cash/pktd/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
 )
 
 var (
@@ -19,22 +19,22 @@ var (
 	compileMtx sync.Mutex
 
 	// executablePath is the path to the compiled executable. This is the empty
-	// string until pktd is compiled. This should not be accessed directly;
-	// instead use the function pktdExecutablePath().
+	// string until cjdcoind is compiled. This should not be accessed directly;
+	// instead use the function cjdcoindExecutablePath().
 	executablePath string
 )
 
-// pktdExecutablePath returns a path to the pktd executable to be used by
+// cjdcoindExecutablePath returns a path to the cjdcoind executable to be used by
 // rpctests. To ensure the code tests against the most up-to-date version of
-// pktd, this method compiles pktd the first time it is called. After that, the
+// cjdcoind, this method compiles cjdcoind the first time it is called. After that, the
 // generated binary is used for subsequent test harnesses. The executable file
 // is not cleaned up, but since it lives at a static path in a temp directory,
 // it is not a big deal.
-func pktdExecutablePath() (string, er.R) {
+func cjdcoindExecutablePath() (string, er.R) {
 	compileMtx.Lock()
 	defer compileMtx.Unlock()
 
-	// If pktd has already been compiled, just use that.
+	// If cjdcoind has already been compiled, just use that.
 	if len(executablePath) != 0 {
 		return executablePath, nil
 	}
@@ -44,17 +44,17 @@ func pktdExecutablePath() (string, er.R) {
 		return "", err
 	}
 
-	// Build pktd and output an executable in a static temp path.
-	outputPath := filepath.Join(testDir, "pktd")
+	// Build cjdcoind and output an executable in a static temp path.
+	outputPath := filepath.Join(testDir, "cjdcoind")
 	if runtime.GOOS == "windows" {
 		outputPath += ".exe"
 	}
 	cmd := exec.Command(
-		"go", "build", "-o", outputPath, "github.com/pkt-cash/pktd",
+		"go", "build", "-o", outputPath, "github.com/kaotisk-hund/cjdcoind",
 	)
 	err = er.E(cmd.Run())
 	if err != nil {
-		return "", er.Errorf("Failed to build pktd: %v", err)
+		return "", er.Errorf("Failed to build cjdcoind: %v", err)
 	}
 
 	// Save executable path so future calls do not recompile.

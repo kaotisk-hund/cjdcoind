@@ -7,7 +7,7 @@
 
 
 BINARY_FOLDER=.
-FREEBSD_PACKAGE_NAME=pktd
+FREEBSD_PACKAGE_NAME=cjdcoind
 
 ./do
 echo "Binary built. Building TXZ now."

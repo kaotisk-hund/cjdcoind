@@ -12,12 +12,12 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/pkt-cash/pktd/btcutil"
-	"github.com/pkt-cash/pktd/btcutil/er"
-	"github.com/pkt-cash/pktd/lnd/lncfg"
-	"github.com/pkt-cash/pktd/lnd/lnrpc"
-	"github.com/pkt-cash/pktd/lnd/macaroons"
-	"github.com/pkt-cash/pktd/pktconfig/version"
+	"github.com/kaotisk-hund/cjdcoind/btcutil"
+	"github.com/kaotisk-hund/cjdcoind/btcutil/er"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lncfg"
+	"github.com/kaotisk-hund/cjdcoind/lnd/lnrpc"
+	"github.com/kaotisk-hund/cjdcoind/lnd/macaroons"
+	"github.com/kaotisk-hund/cjdcoind/cjdcoinconfig/version"
 	"github.com/urfave/cli"
 
 	"golang.org/x/crypto/ssh/terminal"
@@ -187,7 +187,7 @@ func extractPathArgs(ctx *cli.Context) (string, string, er.R) {
 	// specified.
 	chain := strings.ToLower(ctx.GlobalString("chain"))
 	switch chain {
-	case "bitcoin", "litecoin", "pkt":
+	case "bitcoin", "litecoin", "cjdcoin":
 	default:
 		return "", "", er.Errorf("unknown chain: %v", chain)
 	}
@@ -261,8 +261,8 @@ func main() {
 		},
 		cli.StringFlag{
 			Name:  "chain, c",
-			Usage: "The chain lnd is running on, e.g. pkt.",
-			Value: "pkt",
+			Usage: "The chain lnd is running on, e.g. cjdcoin.",
+			Value: "cjdcoin",
 		},
 		cli.StringFlag{
 			Name: "network, n",

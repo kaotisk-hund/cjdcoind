@@ -8,7 +8,7 @@ import (
 	"github.com/json-iterator/go"
 	"fmt"
 
-	"github.com/pkt-cash/pktd/btcjson"
+	"github.com/kaotisk-hund/cjdcoind/btcjson"
 )
 
 // This example demonstrates how to create and marshal a command into a JSON-RPC
